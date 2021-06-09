@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EBE5976ACC60E6F2D713CF4 /* Pods_QrRestaurantMenuAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */; };
+		477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */; };
 		47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02DFE2670A3D100DFA715 /* AppDelegate.swift */; };
 		47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E002670A3D100DFA715 /* SceneDelegate.swift */; };
 		47A02E062670A3D100DFA715 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A02E042670A3D100DFA715 /* Main.storyboard */; };
@@ -22,7 +23,6 @@
 		47A02E472670A87C00DFA715 /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E3B2670A87900DFA715 /* RestaurantsViewController.swift */; };
 		47A02E482670A87C00DFA715 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */; };
 		47A02E492670A87C00DFA715 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E3D2670A87900DFA715 /* MenuTableViewCell.swift */; };
-		47A02E4A2670A87C00DFA715 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E3E2670A87A00DFA715 /* BasketTableViewCell.swift */; };
 		47A02E4B2670A87C00DFA715 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E3F2670A87A00DFA715 /* LoginViewController.swift */; };
 		47A02E4C2670A87C00DFA715 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E402670A87A00DFA715 /* MainTabBar.swift */; };
 		47A02E4D2670A87C00DFA715 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E412670A87B00DFA715 /* BasketViewController.swift */; };
@@ -55,6 +55,7 @@
 /* Begin PBXFileReference section */
 		0320077A86B24579890FE659 /* Pods-QrRestaurantMenuAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.debug.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		47A02DFB2670A3D100DFA715 /* QrRestaurantMenuApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QrRestaurantMenuApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A02DFE2670A3D100DFA715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47A02E002670A3D100DFA715 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		47A02E3B2670A87900DFA715 /* RestaurantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsViewController.swift; sourceTree = "<group>"; };
 		47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		47A02E3D2670A87900DFA715 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
-		47A02E3E2670A87A00DFA715 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		47A02E3F2670A87A00DFA715 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		47A02E402670A87A00DFA715 /* MainTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		47A02E412670A87B00DFA715 /* BasketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -192,10 +192,10 @@
 		47A02E312670A6C500DFA715 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				47A02E3E2670A87A00DFA715 /* BasketTableViewCell.swift */,
 				47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */,
 				47A02E3D2670A87900DFA715 /* MenuTableViewCell.swift */,
 				47A02E452670A87C00DFA715 /* SectionView.swift */,
+				477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -491,8 +491,8 @@
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
 				47A02E502670A87C00DFA715 /* ProfileViewController.swift in Sources */,
-				47A02E4A2670A87C00DFA715 /* BasketTableViewCell.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
+				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,

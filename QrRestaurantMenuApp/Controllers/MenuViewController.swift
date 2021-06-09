@@ -12,7 +12,7 @@ import SnapKit
 
 
 class MenuViewController: UIViewController {
-    
+            
     var countOfItems = 0 {
         didSet{
             basketCountLabel.text = "\(countOfItems)"
@@ -25,7 +25,11 @@ class MenuViewController: UIViewController {
         }
     }
     
-    var basketItems: [MenuItem : Int] = [:]
+    var basketItems: [MenuItem : Int] = [:] {
+        didSet {
+            menuTableView.reloadData()
+        }
+    }
     
     private var categories: [Category] = [] {
         didSet {
@@ -33,7 +37,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    private var menuItems: [Int : [MenuItem]] = [:] {
+    var menuItems: [Int : [MenuItem]] = [:] {
         didSet {
             menuTableView.reloadData()
         }
@@ -264,7 +268,6 @@ extension MenuViewController: UITableViewDataSource {
         return categories.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(menuItems)
         return menuItems[categories[section].id!]!.count
     }
     
@@ -273,6 +276,12 @@ extension MenuViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as! MenuTableViewCell
         cell.menuItem = menuItems[categories[indexPath.section].id!]![indexPath.row]
         cell.delegate = self
+        if let count = basketItems[cell.menuItem!] {
+            if count > 0 {
+                cell.count = count
+                cell.makeButtonBig()
+            }
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -311,7 +320,9 @@ extension MenuViewController: MenuTableViewCellDelegate {
         countOfItems -= 1
         if count == 0 {
             basketItems[menuItem] = nil
-            basketView.isHidden = true
+            if basketItems.isEmpty {
+                basketView.isHidden = true
+            }
         } else {
             basketItems[menuItem]! -= 1
         }

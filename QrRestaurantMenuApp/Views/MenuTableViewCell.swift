@@ -116,9 +116,8 @@ class MenuTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     lazy var minusButton: UIButton = {
-        let button = UIButton()
+        var button = UIButton()
         button.setTitle("-", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20)
         button.addTarget(self, action: #selector(minusCount), for: .touchUpInside)
@@ -163,7 +162,11 @@ class MenuTableViewCell: UITableViewCell {
         countView.addSubview(buttonStackView)
     }
     
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        count = 0
+        makeButtonSmall()
+    }
     
     @objc private func plusCount() {
             count += 1
@@ -172,24 +175,31 @@ class MenuTableViewCell: UITableViewCell {
     @objc private func minusCount() {
             count -= 1
             if count == 0 {
-                minusButton.isHidden = true
-                countLabel.isHidden = true
-                plusButton.isHidden = true
-                countView.isHidden = true
-                smallButton.isHidden = false
+                makeButtonSmall()
             }
             delegate?.minusButtonTapped(menuItem: menuItem!, count: count)
         }
         
     @objc private func smallButtonAction() {
             count = 1
-            smallButton.isHidden = true
-            countView.isHidden = false
-            minusButton.isHidden = false
-            countLabel.isHidden = false
-            plusButton.isHidden = false
+            makeButtonBig()
             delegate?.smallButtonTapped(menuItem: menuItem!, count: count)
         }
+    func makeButtonBig(){
+        smallButton.isHidden = true
+        countView.isHidden = false
+        minusButton.isHidden = false
+        countLabel.isHidden = false
+        plusButton.isHidden = false
+    }
+    
+    func makeButtonSmall(){
+        minusButton.isHidden = true
+        countLabel.isHidden = true
+        plusButton.isHidden = true
+        countView.isHidden = true
+        smallButton.isHidden = false
+    }
     
     func downloadImage(from url: URL?) {        
         guard let url = url else { return }
