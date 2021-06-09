@@ -311,10 +311,10 @@ extension MenuViewController: MenuTableViewCellDelegate {
         countOfItems -= 1
         if count == 0 {
             basketItems[menuItem] = nil
+            basketView.isHidden = true
         } else {
             basketItems[menuItem]! -= 1
         }
-        
     }
     
     func smallButtonTapped(menuItem: MenuItem, count: Int) {
@@ -322,5 +322,6 @@ extension MenuViewController: MenuTableViewCellDelegate {
         totalPrice += price
         countOfItems += 1
         basketItems[menuItem] = 1
+        basketView.isHidden = false
     }
 }

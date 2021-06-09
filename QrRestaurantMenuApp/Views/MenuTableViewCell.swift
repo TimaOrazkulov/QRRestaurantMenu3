@@ -18,6 +18,7 @@ protocol MenuTableViewCellDelegate: class {
 
 class MenuTableViewCell: UITableViewCell {
     static let identifier = "productCell"
+    
     var count = 0 {
         didSet {
             countLabel.text = "\(count)"
@@ -45,7 +46,6 @@ class MenuTableViewCell: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         label.textAlignment = .left
         return label
@@ -86,7 +86,6 @@ class MenuTableViewCell: UITableViewCell {
     }()
     
     let buttonStackView: UIStackView = {
-        
         let stackView = UIStackView()
         stackView.isUserInteractionEnabled = true
         stackView.axis = .horizontal
@@ -170,7 +169,7 @@ class MenuTableViewCell: UITableViewCell {
             count += 1
             delegate?.plusButtonTapped(menuItem: menuItem!, count: count)
         }
-        @objc private func minusCount() {
+    @objc private func minusCount() {
             count -= 1
             if count == 0 {
                 minusButton.isHidden = true
@@ -182,7 +181,7 @@ class MenuTableViewCell: UITableViewCell {
             delegate?.minusButtonTapped(menuItem: menuItem!, count: count)
         }
         
-        @objc private func smallButtonAction() {
+    @objc private func smallButtonAction() {
             count = 1
             smallButton.isHidden = true
             countView.isHidden = false
