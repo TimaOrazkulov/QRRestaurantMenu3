@@ -251,6 +251,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @objc func transitionToCardVC(){
         let vc = CardViewController()
         vc.cards = qrUser?.cards
+        vc.uid = uid
         navigationController?.pushViewController(vc, animated: true)
     }
     

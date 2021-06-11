@@ -14,6 +14,7 @@ class CardViewController: UIViewController {
     private var db = Firestore.firestore()
    // weak var footerView: FooterView?
     var cards: [Card]?
+    var uid: String?
     private let cardTableView: UITableView = {
         let table = UITableView()
         table.register(CardCellTableViewCell.self, forCellReuseIdentifier: CardCellTableViewCell.cardCell)
