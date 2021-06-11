@@ -13,6 +13,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     let genders = ["Женский", "Мужской"]
     
+    var uid = "wTkLYYvYSYaH3DClKLxG"
+    
     var fullName: String? {
         didSet{
             nameLabel.text = fullName
@@ -128,6 +130,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         textField.textColor = .black
         textField.font = .boldSystemFont(ofSize: 14)
         textField.placeholder = "Пол"
+        textField.addTarget(self, action: #selector(buttonUnlocked), for: .editingChanged)
         return textField
     }()
     
@@ -209,6 +212,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         button.layer.cornerRadius = 10
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         button.alpha = 0.5
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         button.isEnabled = false
         return button
     }()
@@ -223,7 +227,9 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         createDatePicker()
         pickerView.delegate = self
         pickerView.dataSource = self
-        QRFirebaseDatabase.shared.getUser(uid: "wTkLYYvYSYaH3DClKLxG") { [weak self] user in
+        dateTextField.delegate = self
+        genderTextField.delegate = self
+        QRFirebaseDatabase.shared.getUser(uid: uid) { [weak self] user in
             DispatchQueue.main.async {
                 guard user != nil else {return}
                 self?.qrUser = user
@@ -248,12 +254,30 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @objc func buttonUnlocked(uid: String){
+        saveButton.isEnabled = true
+        saveButton.alpha = 1
+    }
+    
     func assignValues(){
-        
         fullName = "\(qrUser?.name ?? "No") \(qrUser?.surname ?? "Name")"
         phoneNumber = qrUser?.phone
         gender = qrUser?.gender
         birthDate = qrUser?.birthDate
+    }
+    
+    @objc func saveButtonTapped(){
+        let docRef = Firestore.firestore().collection("users").document(uid)
+        docRef.updateData([
+            "birthDate" : self.dateTextField.text,
+            "gender" : self.genderTextField.text
+        ]) { err in
+            if let err = err {
+                print(err.localizedDescription)
+            }
+        }
+        saveButton.isEnabled = false
+        saveButton.alpha = 0.5
     }
     
     func createDatePicker(){
@@ -475,4 +499,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
-
+extension ProfileViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.buttonUnlocked(uid: self.uid)
+    }
+}

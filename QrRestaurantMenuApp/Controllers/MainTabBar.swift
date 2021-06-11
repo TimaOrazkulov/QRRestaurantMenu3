@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainTabBar: UITabBarController {
 
@@ -15,11 +16,15 @@ class MainTabBar: UITabBarController {
         return label
     }()
     
+    let qrImage = UIImage(named: "qr-code")
+    let profileImage = UIImage(named: "profile")
+    let homeImage = UIImage(named: "home")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //delegate = self
         setupTabBar()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)        
     }
     
     private func setupTabBar() {
@@ -29,15 +34,16 @@ class MainTabBar: UITabBarController {
         tabBar.layer.borderColor = UIColor.clear.cgColor
         tabBar.clipsToBounds = true
         let qrVC = UINavigationController(rootViewController:QRScannerViewController())
-        qrVC.tabBarItem.image = UIImage(named: "qr-code")
+        qrVC.tabBarItem.image = qrImage
         qrVC.tabBarItem.title = "Заказать"
+        qrVC.navigationItem.title = "Сканер"
 
         let restVC = UINavigationController(rootViewController:RestaurantsViewController())
-        restVC.tabBarItem.image = UIImage(named: "home")
+        restVC.tabBarItem.image = homeImage
         restVC.tabBarItem.title = "Рестораны"
 
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
-        profileVC.tabBarItem.image = UIImage(named: "profile")
+        profileVC.tabBarItem.image = profileImage
         profileVC.tabBarItem.title = "Профиль"
             
         viewControllers = [restVC, qrVC, profileVC]

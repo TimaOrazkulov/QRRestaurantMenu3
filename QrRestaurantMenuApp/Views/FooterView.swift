@@ -55,6 +55,7 @@ class FooterView: UITableViewHeaderFooterView {
         iconDestenation.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(19)
             $0.right.equalToSuperview().inset(19.69)
+            $0.width.height.equalTo(15)
         }
         
         addCardButton.snp.makeConstraints {

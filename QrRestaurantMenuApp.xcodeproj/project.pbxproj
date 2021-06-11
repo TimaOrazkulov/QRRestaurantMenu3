@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EBE5976ACC60E6F2D713CF4 /* Pods_QrRestaurantMenuAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */; };
+		473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EB47526733FAD0083068F /* CardCellTableViewCell.swift */; };
 		477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */; };
 		477377C6267214E300C9F2B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C5267214E300C9F2B2 /* User.swift */; };
 		477377CC2672507300C9F2B2 /* QRFirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377CB2672507300C9F2B2 /* QRFirebaseDatabase.swift */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		0320077A86B24579890FE659 /* Pods-QrRestaurantMenuAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.debug.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		473EB47526733FAD0083068F /* CardCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCellTableViewCell.swift; sourceTree = "<group>"; };
 		477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		477377C5267214E300C9F2B2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		477377CB2672507300C9F2B2 /* QRFirebaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRFirebaseDatabase.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		47A02E312670A6C500DFA715 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				473EB47526733FAD0083068F /* CardCellTableViewCell.swift */,
 				477377CF26725B3100C9F2B2 /* FooterView.swift */,
 				477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */,
 				47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */,
@@ -507,6 +510,7 @@
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
 				47A02E502670A87C00DFA715 /* ProfileViewController.swift in Sources */,
+				473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */,
 				477377CC2672507300C9F2B2 /* QRFirebaseDatabase.swift in Sources */,
 				477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
