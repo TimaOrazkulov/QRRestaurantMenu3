@@ -114,7 +114,7 @@ class MenuViewController: UIViewController {
         getMenuItems()
         setupNavigationController()
         setupBasketView()
-        setupConstraints()
+        setupConstraints()        
     }
     
     func setupBasketView(){
