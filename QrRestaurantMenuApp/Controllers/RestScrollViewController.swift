@@ -20,7 +20,9 @@ class RestScrollViewController: UIViewController, UIScrollViewDelegate {
         label.text = "Luckee Yu - здесь должно быть какое-то описание. Например, какая кухня или как тут вкусно и красиво. Пока."
         label.textColor = .black
         label.numberOfLines = 3
+        
         return label
+        
     }()
     let addressLabel: UILabel = {
         let label = UILabel()
