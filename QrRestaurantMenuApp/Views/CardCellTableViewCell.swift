@@ -63,7 +63,7 @@ class CardCellTableViewCell: UITableViewCell {
             if let icon = UIImage(named: "masterCardIcon") {
                 iconImage.image = icon
             }
-            if let brandCard = card?.cardName {
+            if let brandCard = card?.cardHolderName {
                 nameCardLabel.text = brandCard
             }
             if let numberCard = card?.cardNumber {

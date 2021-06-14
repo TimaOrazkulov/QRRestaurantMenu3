@@ -15,7 +15,7 @@
 		477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377CD26725A2400C9F2B2 /* CardViewController.swift */; };
 		477377D026725B3100C9F2B2 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377CF26725B3100C9F2B2 /* FooterView.swift */; };
 		477377D22672992000C9F2B2 /* RestaurantsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */; };
-		477377D42672992500C9F2B2 /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377D32672992500C9F2B2 /* RestaurantsViewController.swift */; };
+		4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6BB26773C9900688792 /* RestaurantsViewController.swift */; };
 		47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02DFE2670A3D100DFA715 /* AppDelegate.swift */; };
 		47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E002670A3D100DFA715 /* SceneDelegate.swift */; };
 		47A02E062670A3D100DFA715 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A02E042670A3D100DFA715 /* Main.storyboard */; };
@@ -68,7 +68,7 @@
 		477377CD26725A2400C9F2B2 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		477377CF26725B3100C9F2B2 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsTableViewCell.swift; sourceTree = "<group>"; };
-		477377D32672992500C9F2B2 /* RestaurantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestaurantsViewController.swift; path = ../../../../../../Downloads/RestaurantsViewController.swift; sourceTree = "<group>"; };
+		4776E6BB26773C9900688792 /* RestaurantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsViewController.swift; sourceTree = "<group>"; };
 		47A02DFB2670A3D100DFA715 /* QrRestaurantMenuApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QrRestaurantMenuApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A02DFE2670A3D100DFA715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47A02E002670A3D100DFA715 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 				47A02E422670A87B00DFA715 /* PhoneVerificationViewController.swift */,
 				47A02E442670A87C00DFA715 /* ProfileViewController.swift */,
 				47A02E432670A87B00DFA715 /* QRScannerViewController.swift */,
-				477377D32672992500C9F2B2 /* RestaurantsViewController.swift */,
+				4776E6BB26773C9900688792 /* RestaurantsViewController.swift */,
 				47A02E3A2670A87900DFA715 /* MenuViewController.swift */,
 				47A02E402670A87A00DFA715 /* MainTabBar.swift */,
 				47A02E3F2670A87A00DFA715 /* LoginViewController.swift */,
@@ -504,7 +504,6 @@
 			files = (
 				47A02E4C2670A87C00DFA715 /* MainTabBar.swift in Sources */,
 				47A02E482670A87C00DFA715 /* CategoryCollectionViewCell.swift in Sources */,
-				477377D42672992500C9F2B2 /* RestaurantsViewController.swift in Sources */,
 				477377D22672992000C9F2B2 /* RestaurantsTableViewCell.swift in Sources */,
 				47A02E4D2670A87C00DFA715 /* BasketViewController.swift in Sources */,
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
@@ -515,6 +514,7 @@
 				477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
+				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
