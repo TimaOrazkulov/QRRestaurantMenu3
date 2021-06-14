@@ -12,7 +12,7 @@ import SnapKit
 class QRScannerViewController: UIViewController {
     
     var video = AVCaptureVideoPreviewLayer()
-    let session = AVCaptureSession()
+    var session = AVCaptureSession()
     
     let qrImageView = UIImageView()
     
@@ -22,6 +22,13 @@ class QRScannerViewController: UIViewController {
         setupConstraints()
         navigationController?.navigationBar.isHidden = true
         setupQR()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.navigationItem.title = "QR"
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = nil
     }
     
     private func setupQR() {
@@ -50,7 +57,8 @@ class QRScannerViewController: UIViewController {
     }
     
     private func transitionToMenu(){
-        let menuVC = ProfileViewController()
+        let menuVC = MenuViewController()
+        menuVC.session = session
         navigationController?.pushViewController(menuVC, animated: true)
     }
     

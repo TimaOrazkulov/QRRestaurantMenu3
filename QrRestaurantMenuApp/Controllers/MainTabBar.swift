@@ -15,6 +15,8 @@ class MainTabBar: UITabBarController {
         label.text = "Ошибка при сканировании, попробуйте еще раз"
         return label
     }()
+    private lazy var searchBar = UISearchBar()
+    
     
     let qrImage = UIImage(named: "qr-code")
     let profileImage = UIImage(named: "profile")
@@ -24,7 +26,7 @@ class MainTabBar: UITabBarController {
         super.viewDidLoad()
         //delegate = self
         setupTabBar()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)        
+        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
     }
     
     private func setupTabBar() {
@@ -36,7 +38,6 @@ class MainTabBar: UITabBarController {
         let qrVC = UINavigationController(rootViewController:QRScannerViewController())
         qrVC.tabBarItem.image = qrImage
         qrVC.tabBarItem.title = "Заказать"
-        qrVC.navigationItem.title = "Сканер"
 
         let restVC = UINavigationController(rootViewController:RestaurantsViewController())
         restVC.tabBarItem.image = homeImage
@@ -45,7 +46,7 @@ class MainTabBar: UITabBarController {
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
         profileVC.tabBarItem.image = profileImage
         profileVC.tabBarItem.title = "Профиль"
-            
+        profileVC.tabBarController?.title = "Профиль"
         viewControllers = [restVC, qrVC, profileVC]
 
         guard let items = tabBar.items else { return }

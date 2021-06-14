@@ -9,10 +9,13 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import SnapKit
+import AVFoundation
 
 
 class MenuViewController: UIViewController {
             
+    var session: AVCaptureSession?
+    
     var countOfItems = 0 {
         didSet{
             basketCountLabel.text = "\(countOfItems)"
@@ -127,17 +130,22 @@ class MenuViewController: UIViewController {
     
     func setupNavigationController(){
         searchBar.sizeToFit()
-        navigationItem.title = "Ресторан"
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.title = "Ресторан"
+        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.tintColor = .black
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
+        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "QR", style: .done, target: self, action: #selector(popVC))
+    }
+    
+    @objc func popVC(){
+        _ = navigationController?.popViewController(animated: true)
     }
     
     @objc func handleSearchBar(){
-        navigationItem.titleView = searchBar
+        tabBarController?.navigationItem.titleView = searchBar
         searchBar.showsCancelButton = true
-        navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
         searchBar.becomeFirstResponder()
     }
     
@@ -299,8 +307,8 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.titleView = nil
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
     }
 }

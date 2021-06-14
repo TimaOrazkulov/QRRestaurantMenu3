@@ -16,6 +16,11 @@
 		477377D026725B3100C9F2B2 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377CF26725B3100C9F2B2 /* FooterView.swift */; };
 		477377D22672992000C9F2B2 /* RestaurantsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */; };
 		4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6BB26773C9900688792 /* RestaurantsViewController.swift */; };
+		4776E6C0267753AB00688792 /* RestoranInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6BF267753AB00688792 /* RestoranInfoViewController.swift */; };
+		4776E6C22677562F00688792 /* RestScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6C12677562F00688792 /* RestScrollViewController.swift */; };
+		4776E6C426776FB900688792 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6C326776FB900688792 /* AddCardViewController.swift */; };
+		4776E6C62677731600688792 /* ExtensionForCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6C52677731600688792 /* ExtensionForCard.swift */; };
+		4776E6C82677733800688792 /* ExtensionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4776E6C72677733800688792 /* ExtensionUI.swift */; };
 		47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02DFE2670A3D100DFA715 /* AppDelegate.swift */; };
 		47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A02E002670A3D100DFA715 /* SceneDelegate.swift */; };
 		47A02E062670A3D100DFA715 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A02E042670A3D100DFA715 /* Main.storyboard */; };
@@ -69,6 +74,11 @@
 		477377CF26725B3100C9F2B2 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsTableViewCell.swift; sourceTree = "<group>"; };
 		4776E6BB26773C9900688792 /* RestaurantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantsViewController.swift; sourceTree = "<group>"; };
+		4776E6BF267753AB00688792 /* RestoranInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoranInfoViewController.swift; sourceTree = "<group>"; };
+		4776E6C12677562F00688792 /* RestScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestScrollViewController.swift; sourceTree = "<group>"; };
+		4776E6C326776FB900688792 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
+		4776E6C52677731600688792 /* ExtensionForCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionForCard.swift; sourceTree = "<group>"; };
+		4776E6C72677733800688792 /* ExtensionUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUI.swift; sourceTree = "<group>"; };
 		47A02DFB2670A3D100DFA715 /* QrRestaurantMenuApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QrRestaurantMenuApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A02DFE2670A3D100DFA715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47A02E002670A3D100DFA715 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +214,8 @@
 		47A02E312670A6C500DFA715 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4776E6C72677733800688792 /* ExtensionUI.swift */,
+				4776E6C52677731600688792 /* ExtensionForCard.swift */,
 				473EB47526733FAD0083068F /* CardCellTableViewCell.swift */,
 				477377CF26725B3100C9F2B2 /* FooterView.swift */,
 				477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */,
@@ -221,7 +233,10 @@
 				47A02E422670A87B00DFA715 /* PhoneVerificationViewController.swift */,
 				47A02E442670A87C00DFA715 /* ProfileViewController.swift */,
 				47A02E432670A87B00DFA715 /* QRScannerViewController.swift */,
+				4776E6C12677562F00688792 /* RestScrollViewController.swift */,
 				4776E6BB26773C9900688792 /* RestaurantsViewController.swift */,
+				4776E6BF267753AB00688792 /* RestoranInfoViewController.swift */,
+				4776E6C326776FB900688792 /* AddCardViewController.swift */,
 				47A02E3A2670A87900DFA715 /* MenuViewController.swift */,
 				47A02E402670A87A00DFA715 /* MainTabBar.swift */,
 				47A02E3F2670A87A00DFA715 /* LoginViewController.swift */,
@@ -508,23 +523,28 @@
 				47A02E4D2670A87C00DFA715 /* BasketViewController.swift in Sources */,
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
+				4776E6C426776FB900688792 /* AddCardViewController.swift in Sources */,
 				47A02E502670A87C00DFA715 /* ProfileViewController.swift in Sources */,
 				473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */,
 				477377CC2672507300C9F2B2 /* QRFirebaseDatabase.swift in Sources */,
 				477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */,
+				4776E6C82677733800688792 /* ExtensionUI.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
+				4776E6C0267753AB00688792 /* RestoranInfoViewController.swift in Sources */,
 				47A02E492670A87C00DFA715 /* MenuTableViewCell.swift in Sources */,
+				4776E6C62677731600688792 /* ExtensionForCard.swift in Sources */,
 				477377D026725B3100C9F2B2 /* FooterView.swift in Sources */,
 				47A02E372670A86800DFA715 /* MenuItem.swift in Sources */,
 				477377C6267214E300C9F2B2 /* User.swift in Sources */,
 				47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */,
 				47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */,
 				47A02E4B2670A87C00DFA715 /* LoginViewController.swift in Sources */,
+				4776E6C22677562F00688792 /* RestScrollViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,6 +724,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 349CP2QXD4;
 				INFOPLIST_FILE = QrRestaurantMenuApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -724,6 +745,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 349CP2QXD4;
 				INFOPLIST_FILE = QrRestaurantMenuApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

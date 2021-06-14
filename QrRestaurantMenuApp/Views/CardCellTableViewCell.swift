@@ -8,9 +8,14 @@
 import UIKit
 import SnapKit
 
+protocol CardCellDelegate: class {
+    func deleteCard(itemCard: Card)
+}
+
 class CardCellTableViewCell: UITableViewCell {
     
     static var cardCell = "cardCell"
+    weak var delegate: CardCellDelegate?
     
     private let iconImage: UIImageView = {
         let image = UIImageView()
@@ -82,8 +87,9 @@ class CardCellTableViewCell: UITableViewCell {
     }
     
     @objc private func removeCard() {
-        
+        delegate?.deleteCard(itemCard: card!)
     }
+    
     private func addToView() {
         contentView.addSubview(iconImage)
         contentView.addSubview(removeButton)

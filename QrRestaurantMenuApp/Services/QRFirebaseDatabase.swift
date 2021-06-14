@@ -117,3 +117,26 @@ class QRFirebaseDatabase {
     }
        
 }
+
+func getCardsOfUser(uid: String, completion: @escaping ([Card]?) -> Void ){
+    let db = Firestore.firestore()
+    let docRef = db.collection("users").document(uid)
+    docRef.getDocument { document, error in
+        guard error == nil else { completion(nil); return }
+        if let document = document, document.exists {
+            let data = document.data()
+            var userCards: [Card] = []
+            let cards = data?["cards"] as! [String : [String : Any]]
+            cards.forEach { cardInfo, mapInfo in
+                let map = mapInfo as [String : Any]
+                let cardNumber = map["numberCard"] as? String ?? ""
+                let cardHolderName = map["holderName"] as? String ?? ""
+                let cvv = map["cvv"] as? String ?? ""
+                let date = map["validDate"] as? String ?? ""
+                let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv)
+                userCards.append(card)
+                }
+            completion(userCards)
+        }
+    }
+}

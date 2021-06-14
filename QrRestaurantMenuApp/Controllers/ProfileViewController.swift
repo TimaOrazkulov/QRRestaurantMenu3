@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     let genders = ["Женский", "Мужской"]
     
+    var cards: [Card]?
+    
     var uid = "wTkLYYvYSYaH3DClKLxG"
     
     var fullName: String? {
@@ -221,15 +223,13 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         button.isEnabled = false
         return button
     }()
-    
-    // private let transition = PanelTransition()
+        
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
-        navigationItem.title = "Профиль"
         setupViews()
         setupConstraints()
         createDatePicker()
@@ -248,7 +248,12 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    var cards: [Card]?
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.navigationItem.title = "Профиль"
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+    }
     
     private func parseDataCard(uid: String) -> [String: Any] {
         var newCards: [String: Any] = [:]

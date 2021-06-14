@@ -16,10 +16,12 @@ class RestaurantsViewController: UIViewController  {
         didSet {
             restarauntTableView.reloadData()
         }
-        
     }
+    
     private var db = Firestore.firestore()
             
+    private lazy var searchBar = UISearchBar()
+    
     private let restarauntTableView: UITableView = {
         let table = UITableView()
         table.register(RestaurantsTableViewCell.self, forCellReuseIdentifier: RestaurantsTableViewCell.identifire)
@@ -28,45 +30,35 @@ class RestaurantsViewController: UIViewController  {
         return table
     }()
     
-    private let searchBar = UISearchBar()
-    
-    private let categoryCollectionView: UICollectionView = {
-        let layer = UICollectionViewFlowLayout()
-        layer.scrollDirection = .horizontal
-        layer.minimumLineSpacing = 10
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layer)
-        collection.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        collection.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        collection.showsHorizontalScrollIndicator = false
-        collection.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.restaurantId)
-        return collection
-    }()
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        restarauntTableView.frame = view.bounds
+        super.viewDidLoad()        
         restarauntTableView.delegate = self
         restarauntTableView.dataSource = self
-        
         view.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
         setupViews()
         setupConstraints()
         getRestaurants()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController()
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+    }
+      
     func setupNavigationController(){
         searchBar.sizeToFit()
-        navigationItem.title = "Ресторан"
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.title = "Ресторан"
+        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.tintColor = .black
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
     }
     
     @objc func handleSearchBar(){
-        navigationItem.titleView = searchBar
+        tabBarController?.navigationItem.titleView = searchBar
         searchBar.showsCancelButton = true
-        navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
         searchBar.becomeFirstResponder()
     }
     
@@ -99,17 +91,10 @@ class RestaurantsViewController: UIViewController  {
     
     func setupViews(){
         view.addSubview(restarauntTableView)
-        view.addSubview(categoryCollectionView)
     }
     
     func setupConstraints(){
-        restarauntTableView.snp.makeConstraints { make in
-            make.top.equalTo(categoryCollectionView.snp.bottom).offset(20)
-        }
-        categoryCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(150)
-            make.height.equalTo(50)
-        }
+        restarauntTableView.frame = view.bounds
     }
 }
 
@@ -131,20 +116,20 @@ extension RestaurantsViewController: UITableViewDataSource {
 
 extension RestaurantsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // let menuVC = RestDetail()
-        // navigationController?.pushViewController(menuVC, animated: true)
+        let menuVC = RestoranInfoViewController()
+        navigationController?.pushViewController(menuVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-        
+        return 200        
     }
 }
 
 extension RestaurantsViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.titleView = nil
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
     }
 }
+
