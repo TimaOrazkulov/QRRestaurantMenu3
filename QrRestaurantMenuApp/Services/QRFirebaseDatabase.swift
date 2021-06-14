@@ -32,19 +32,21 @@ class QRFirebaseDatabase {
                 var userCards: [Card] = []
                 let name = data?["name"] as? String ?? "No"                
                 let surname = data?["surname"] as? String ?? "Name"
+                let profileURL = data?["profileURL"] as? String ?? "nil"
                 let phone = data?["phone"] as? String ?? ""
                 let gender = data?["gender"] as? String ?? ""
                 let birthDate = data?["birthDate"] as? String ?? ""
-                let cards = data?["cards"] as! [String : [Any]]
-                cards.forEach { cardInfo, arrayInfo in
-                    let arr = arrayInfo as [Any]
-                    let cardName = arr[0] as? String
-                    let cardNumber = arr[1] as? String
-                    let date = arr[2] as? String
-                    let card = Card(cardName: cardName, cardNumber: cardNumber, date: date)
+                let cards = data?["cards"] as! [String : [String : Any]]
+                cards.forEach { cardInfo, mapInfo in
+                    let map = mapInfo as [String : Any]
+                    let cardNumber = map["numberCard"] as? String ?? ""
+                    let cardHolderName = map["holderName"] as? String ?? ""
+                    let cvv = map["cvv"] as? String ?? ""
+                    let date = map["validDate"] as? String ?? ""
+                    let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv)
                     userCards.append(card)
                     }
-                let user = User(name: name, surname: surname, phone: phone, gender: gender, birthDate: birthDate, cards: userCards)
+                let user = User(name: name, profileURL: profileURL, surname: surname, phone: phone, gender: gender, birthDate: birthDate, cards: userCards)
                 completion(user)
             }
         }

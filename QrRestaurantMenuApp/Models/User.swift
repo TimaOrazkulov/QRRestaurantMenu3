@@ -8,13 +8,15 @@
 import Foundation
 
 struct Card : Codable, Hashable{
-    var cardName: String?
+    var cardHolderName: String?
     var cardNumber: String?
     var date: String?
+    var cvv: String?
 }
 
 struct User : Codable {
     var name: String?
+    var profileURL: String?
     var surname: String?
     var phone: String
     var gender: String?

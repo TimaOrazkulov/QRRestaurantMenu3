@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Firebase
+import FirebaseStorage
 
 class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -37,6 +38,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     var qrUser: User?
+    
+    var profileUrl: String?
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -158,6 +161,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     let pickerView = UIPickerView()
     
+    var uploadImage: UIImage?
+    
     private let cardLabel: UILabel = {
         let label = UILabel()
         label.text = "Мои карты"
@@ -217,6 +222,9 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         return button
     }()
     
+    // private let transition = PanelTransition()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -230,18 +238,48 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         dateTextField.delegate = self
         genderTextField.delegate = self
         QRFirebaseDatabase.shared.getUser(uid: uid) { [weak self] user in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 guard user != nil else {return}
                 self?.qrUser = user
                 self?.assignValues()
+                guard let url = user?.profileURL else {return}
+                self?.downloadImage(from: URL(string: url))
             }
         }
     }
     
+    var cards: [Card]?
+    
+    private func parseDataCard(uid: String) -> [String: Any] {
+        var newCards: [String: Any] = [:]
+        for(index, item) in cards!.enumerated() {
+                    let key = "card\(index)"
+                    let value = ["cvv" : item.cvv, "holderName" : item.cardHolderName, "numberCard" : item.cardNumber, "validDate" : item.date]
+                    newCards[key] = value
+            }
+            return newCards
+        }
+    
+    private func checkAuth() {
+        if Auth.auth().currentUser?.uid == nil {
+            // let child = SnackbarViewController()
+            // child.transitioningDelegate = transition   // 2
+            // child.modalPresentationStyle = .custom  // 3
+            // present(child, animated: true)
+        }
+    }
+
+    func logoutUser() {
+            // call from any screen
+            do { try Auth.auth().signOut() }
+            catch { print("already logged out") }
+            navigationController?.popToRootViewController(animated: true)
+        }
+    
     @objc func logOutPressed(){
-        let vc = LoginViewController()
-        navigationController?.pushViewController(vc, animated: true)
-        vc.tabBarController?.tabBar.isHidden = true
+        uid = ""
+        logoutUser()
+        
     }
     
     @objc func profileButtonTapped(){
@@ -266,12 +304,32 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         gender = qrUser?.gender
         birthDate = qrUser?.birthDate
     }
-    
+        
     @objc func saveButtonTapped(){
+        guard let imageSelected = self.uploadImage else {
+            print("Avatar is nil")
+            return
+        }
+        guard let imageData = imageSelected.jpegData(compressionQuality: 0.4) else {return}
+        let storageRef = Storage.storage().reference(forURL: "gs://arcanaqrmenu.appspot.com")
+        let storageProfileRef = storageRef.child("profilePictures").child(uid)
+        let metaData = StorageMetadata()
         let docRef = Firestore.firestore().collection("users").document(uid)
+        metaData.contentType = "image/jpg"
+        storageProfileRef.putData(imageData, metadata: metaData) { storageMetaData, error in
+            if error != nil {
+                print(error?.localizedDescription)
+                return
+            }
+        }
+        storageProfileRef.downloadURL { url, error in
+            if let imageURL = url?.absoluteString {
+                docRef.updateData(["profileURL" : imageURL])
+            }
+        }
         docRef.updateData([
             "birthDate" : self.dateTextField.text,
-            "gender" : self.genderTextField.text
+            "gender" : self.genderTextField.text,
         ]) { err in
             if let err = err {
                 print(err.localizedDescription)
@@ -300,6 +358,20 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
     }
     
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL?) {
+        guard let url = url else { return }
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            // always update the UI from the main thread
+            DispatchQueue.main.async() { [weak self] in
+                self?.profileImageButton.setImage(UIImage(data: data), for: .normal)
+            }
+        }
+    }
     
     @objc func doneDatePressed(){
         let formatter = DateFormatter()
@@ -495,8 +567,11 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
+        uploadImage = selectedImage
         self.profileImageButton.backgroundColor = .none
         self.profileImageButton.setBackgroundImage(selectedImage, for: .normal)
+        saveButton.isEnabled = true
+        saveButton.alpha = 1
     }
 }
 

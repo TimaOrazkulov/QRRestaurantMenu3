@@ -28,7 +28,7 @@ class CardViewController: UIViewController {
         setupTableView()
         setupConstraintsTableView()
         title = "Мои карты"
-    }
+    }       
     
     private func setupTableView() {
         view.addSubview(cardTableView)
