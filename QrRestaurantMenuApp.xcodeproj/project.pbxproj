@@ -678,13 +678,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.tima.QrRestaurantMenuApp;
+				PRODUCT_BUNDLE_IDENTIFIER = co.QrRestaurantMenuApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -698,13 +698,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.tima.QrRestaurantMenuApp;
+				PRODUCT_BUNDLE_IDENTIFIER = co.QrRestaurantMenuApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -718,7 +718,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -741,7 +741,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -762,8 +762,9 @@
 			baseConfigurationReference = D21A5E41E325A55ED246635E /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -772,6 +773,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.tima.QrRestaurantMenuAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = QrRestaurantMenuApp;
@@ -783,8 +785,9 @@
 			baseConfigurationReference = A19D50A3F2EB5E11163C452B /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 349CP2QXD4;
+				DEVELOPMENT_TEAM = X4R48ZRHCN;
 				INFOPLIST_FILE = QrRestaurantMenuAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -793,6 +796,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.tima.QrRestaurantMenuAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = QrRestaurantMenuApp;
