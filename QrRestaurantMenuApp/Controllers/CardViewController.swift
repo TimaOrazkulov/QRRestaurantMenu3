@@ -11,8 +11,12 @@ import SnapKit
 
 class CardViewController: UIViewController {
 
+    private var newCards: [String: Any]? {
+        didSet {
+            parseDataToCards()
+        }
+    }
     private var db = Firestore.firestore()
-   // weak var footerView: FooterView?
     var cards: [Card]? {
         didSet {
             cardTableView.reloadData()
@@ -32,16 +36,13 @@ class CardViewController: UIViewController {
         setupTableView()
         setupConstraintsTableView()
         title = "Мои карты"
-    }       
-    
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.navigationItem.title = "Карты"
-        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .done, target: self, action: #selector(transitionToProfile))
-    }
-    
-    @objc private func transitionToProfile(){
-        _ = navigationController?.popViewController(animated: true)
+        QRFirebaseDatabase.shared.getCardsOfUser(uid: uid ?? "") { [weak self] cards in
+            self?.newCards = cards
+        }
+        
     }
     
     private func setupTableView() {
@@ -66,11 +67,30 @@ class CardViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self]  action in
              let addCardVC = AddCardViewController()
+            addCardVC.saveCard = { [weak self] in
+                guard let uid = self?.uid else { return }
+                QRFirebaseDatabase.shared.getCardsOfUser(uid: uid) { [weak self] (cards) in
+                    self?.newCards = cards
+                }
+            }
              self?.navigationController?.present(addCardVC, animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
     }
-
+    
+    private func parseDataToCards() {
+        var updateCards: [Card] = []
+        newCards?.forEach({ key, value in
+            let info = value as? [String: Any]
+            let cardNumber = info?["numberCard"] as? String
+            let cardHolderName = info?["holderName"] as? String
+            let cvv = info?["cvv"] as? String
+            let date = info?["validDate"] as? String
+            let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv, key: key)
+            updateCards.append(card)
+        })
+        self.cards = updateCards
+    }
 }
 extension CardViewController: UITableViewDataSource, UITableViewDelegate {
 
@@ -98,8 +118,15 @@ extension CardViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension CardViewController: CardCellDelegate {
     func deleteCard(itemCard: Card) {
+        newCards?[itemCard.key!] = nil
+        cards?.removeAll(where: { card -> Bool in
+            if card == itemCard {
+                return true
+            }
+            return false
+        })
         db.collection("users").document("wTkLYYvYSYaH3DClKLxG").updateData([
-            "cards": FieldValue.delete(),
+            "cards": newCards
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -113,7 +140,5 @@ extension CardViewController: CardCellDelegate {
                 return false
             }
         }
-        
-       
     }
 }

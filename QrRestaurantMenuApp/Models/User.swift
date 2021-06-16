@@ -12,6 +12,7 @@ struct Card : Codable, Hashable{
     var cardNumber: String?
     var date: String?
     var cvv: String?
+    var key: String?
 }
 
 struct User : Codable {

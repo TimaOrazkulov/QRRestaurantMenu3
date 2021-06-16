@@ -14,6 +14,7 @@ protocol CardCellDelegate: class {
 
 class CardCellTableViewCell: UITableViewCell {
     
+    var key: String?
     static var cardCell = "cardCell"
     weak var delegate: CardCellDelegate?
     
