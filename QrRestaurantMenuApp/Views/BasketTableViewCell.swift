@@ -1,24 +1,25 @@
 //
 //  BasketTableViewCell.swift
-//  QRRestarantMenuApp
+//  QrRestaurantMenuApp
 //
-//  Created by IOS-Developer on 7.06.2021.
+//  Created by Temirlan Orazkulov on 09.06.2021.
 //
 
 import UIKit
 
-
-protocol BasketTableViewCellDelegate: AnyObject {
-    func plusButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int
-    func minusButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int
-    func smallButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int
+protocol BasketTableViewCellDelegate: class {
+    func plusButtonTapped(menuItem: MenuItem, count: Int)
+    func minusButtonTapped(menuItem: MenuItem, count: Int)
+    func smallButtonTapped(menuItem: MenuItem, count: Int)
+    func closeButtonTapped(menuItem: MenuItem, count: Int)
 }
 
 class BasketTableViewCell: UITableViewCell {
+
+    static let identifier = "productCell"
     
-    static let identifier = "basketCell"
     var count = 0 {
-        didSet{
+        didSet {
             countLabel.text = "\(count)"
         }
     }
@@ -45,7 +46,6 @@ class BasketTableViewCell: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         label.textAlignment = .left
         return label
@@ -76,6 +76,13 @@ class BasketTableViewCell: UITableViewCell {
         return icon
     }()
     
+    lazy var closeButton: UIButton = {
+        var button = UIButton()
+        button.setImage(UIImage(named: "CloseButton"), for: .normal)
+        button.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
     let countView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.668738544, green: 0.6788057089, blue: 0.6612537503, alpha: 1)
@@ -86,7 +93,6 @@ class BasketTableViewCell: UITableViewCell {
     }()
     
     let buttonStackView: UIStackView = {
-        
         let stackView = UIStackView()
         stackView.isUserInteractionEnabled = true
         stackView.axis = .horizontal
@@ -117,9 +123,8 @@ class BasketTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     lazy var minusButton: UIButton = {
-        let button = UIButton()
+        var button = UIButton()
         button.setTitle("-", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20)
         button.addTarget(self, action: #selector(minusCount), for: .touchUpInside)
@@ -142,16 +147,14 @@ class BasketTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupConstraint()
+        setupViews()
         setupConstraints()
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.contentView.isUserInteractionEnabled = true
         isUserInteractionEnabled = true
-        
-        
     }
     
-    private func setupConstraint(){
+    private func setupViews(){
         
         contentView.addSubview(countView)
         contentView.addSubview(nameLabel)
@@ -159,26 +162,53 @@ class BasketTableViewCell: UITableViewCell {
         contentView.addSubview(menuImageView)
         contentView.addSubview(priceLabel)
         contentView.addSubview(smallButton)
-        
+        contentView.addSubview(closeButton)
         [minusButton, countLabel, plusButton].forEach{
             buttonStackView.addArrangedSubview($0)
         }
         countView.addSubview(buttonStackView)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        count = 0
+        makeButtonSmall()
+    }
+    @objc private func closeButtonAction(){
+        delegate?.closeButtonTapped(menuItem: menuItem!, count: count)        
+    }
     
     @objc private func plusCount() {
-        guard let quantityCount = delegate?.plusButtonTapped(tableViewCell: self, quantityCounter: count) else {return}
-        count = quantityCount
-    }
+            count += 1
+            delegate?.plusButtonTapped(menuItem: menuItem!, count: count)
+        }
     @objc private func minusCount() {
-        guard let quantityCount = delegate?.minusButtonTapped(tableViewCell: self, quantityCounter: count) else {return}
-        count = quantityCount
+            count -= 1
+            if count == 0 {
+                makeButtonSmall()
+            }
+            delegate?.minusButtonTapped(menuItem: menuItem!, count: count)
+        }
+        
+    @objc private func smallButtonAction() {
+            count = 1
+            makeButtonBig()
+            delegate?.smallButtonTapped(menuItem: menuItem!, count: count)
+        }
+    func makeButtonBig(){
+        smallButton.isHidden = true
+        countView.isHidden = false
+        minusButton.isHidden = false
+        countLabel.isHidden = false
+        plusButton.isHidden = false
     }
     
-    @objc private func smallButtonAction() {
-        guard let quantityCount = delegate?.smallButtonTapped(tableViewCell: self, quantityCounter: count) else {return}
-        count = quantityCount
+    func makeButtonSmall(){
+        minusButton.isHidden = true
+        countLabel.isHidden = true
+        plusButton.isHidden = true
+        countView.isHidden = true
+        smallButton.isHidden = false
     }
     
     func downloadImage(from url: URL?) {
@@ -193,6 +223,7 @@ class BasketTableViewCell: UITableViewCell {
     }
     
     func setupConstraints(){
+        
         nameLabel.snp.makeConstraints { make in
             make.left.top.equalToSuperview().inset(10)
         }
@@ -206,21 +237,24 @@ class BasketTableViewCell: UITableViewCell {
             make.top.equalTo(descriptionLabel.snp.bottom).offset(12)
         }
         menuImageView.snp.makeConstraints({ make in
-            make.top.equalToSuperview().offset(5)
-            make.right.equalToSuperview().inset(5)
+            make.top.equalToSuperview().offset(20)
+            make.right.equalToSuperview().inset(25)
             make.width.equalTo(103)
             make.height.equalTo(90)
         })
-        
+        closeButton.snp.makeConstraints{
+            $0.right.top.equalToSuperview().inset(10)
+            $0.width.height.equalTo(10)
+        }
         countView.snp.makeConstraints { make in
-            make.top.equalTo(menuImageView.snp.bottom).offset(6)
-            make.right.equalToSuperview().inset(10)
+            make.top.equalTo(menuImageView.snp.bottom).offset(10)
+            make.right.equalToSuperview().inset(25)
             make.height.equalTo(22)
             make.width.equalTo(103)
         }
         smallButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(10)
-            make.top.equalTo(menuImageView.snp.bottom).offset(6)
+            make.right.equalToSuperview().inset(25)
+            make.top.equalTo(menuImageView.snp.bottom).offset(10)
             make.width.height.equalTo(22)
         }
         minusButton.snp.makeConstraints { make in
@@ -245,5 +279,4 @@ class BasketTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

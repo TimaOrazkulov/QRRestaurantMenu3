@@ -10,8 +10,16 @@ import FirebaseFirestore
 
 class BasketViewController: UIViewController {
 
-    var basketMenu: [MenuItem : Int] = [:]
-    var menuItems: [MenuItem] = []
+    var basketMenu: [MenuItem : Int] = [:] {
+        didSet {
+            basketTableView.reloadData()
+        }
+    }
+    var menuItems: [MenuItem] = [] {
+        didSet {
+            basketTableView.reloadData()
+        }
+    }
     
     var counter = 0 {
         didSet{
@@ -33,13 +41,13 @@ class BasketViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.allowsSelection = false
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
     
     private let basketView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.2784313725, blue: 0.2784313725, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.4195685685, green: 0.4196329713, blue: 0.4195545018, alpha: 1)
         view.layer.cornerRadius = 10
         view.isHidden = false
         view.isUserInteractionEnabled = true
@@ -48,23 +56,27 @@ class BasketViewController: UIViewController {
     
     private let basketButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .none
+        button.backgroundColor = #colorLiteral(red: 0.2784037888, green: 0.2784489989, blue: 0.2783938646, alpha: 1)
+        button.setTitle("Оплатить", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(basketViewOnTapped), for: .touchUpInside)
         return button
     }()
     
     private let basketNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Оплатить"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.text = "Итого"
+        label.textColor = #colorLiteral(red: 0.7175832391, green: 0.717688024, blue: 0.7175602913, alpha: 1)
+        label.font = .systemFont(ofSize: 12)
         return label
     }()
     
     private let basketCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.7332600355, green: 0.7333846688, blue: 0.7332436442, alpha: 1)
-        label.font = .boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 12)
         return label
     }()
     
@@ -116,14 +128,13 @@ class BasketViewController: UIViewController {
     }
 
     private func parseMenuData() {
-        
+        menuItems = Array(basketMenu.keys)
     }
     
     private func setupTableView() {
         view.addSubview(basketTableView)
-    
-        basketTableView.delegate = self
         basketTableView.dataSource = self
+        basketTableView.delegate = self
     }
     
     private func setupConstraints() {
@@ -136,22 +147,25 @@ class BasketViewController: UIViewController {
         basketView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(80)
-            $0.height.equalTo(50)
+            $0.height.equalTo(60)
         }
         basketButton.snp.makeConstraints{
-            $0.left.right.bottom.top.equalToSuperview()
-        }
-        basketNameLabel.snp.makeConstraints{
-            $0.centerY.equalTo(basketView.snp.centerY)
-            $0.left.equalTo(basketView.snp.left).inset(15)
-        }
-        basketCountLabel.snp.makeConstraints{
-            $0.centerY.equalTo(basketView.snp.centerY)
-            $0.left.equalTo(basketNameLabel.snp.right).offset(5)
+            $0.right.bottom.top.equalToSuperview().inset(10)
+            $0.width.equalTo(135)
         }
         basketTotalPriceLabel.snp.makeConstraints{
-            $0.right.equalTo(basketView.snp.right).inset(15)
-            $0.centerY.equalTo(basketView.snp.centerY)
+            $0.left.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(10)
+        }
+        basketNameLabel.snp.makeConstraints{
+            $0.left.equalToSuperview().inset(15)
+            $0.top.equalTo(basketTotalPriceLabel.snp.bottom)
+            $0.bottom.equalToSuperview().inset(10)
+        }
+        basketCountLabel.snp.makeConstraints{
+            $0.left.equalTo(basketNameLabel.snp.right).offset(5)
+            $0.bottom.equalToSuperview().inset(10)
+            $0.top.equalTo(basketTotalPriceLabel.snp.bottom)
         }
     }
 }
@@ -165,6 +179,12 @@ extension BasketViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: BasketTableViewCell.identifier, for: indexPath) as! BasketTableViewCell
         cell.menuItem = menuItems[indexPath.row]
+        if let count = basketMenu[cell.menuItem!]{
+        if count > 0  {
+            cell.count = count
+            cell.makeButtonBig()
+            }
+        }
         cell.delegate = self
         return cell
     }
@@ -172,7 +192,7 @@ extension BasketViewController: UITableViewDataSource {
 
 extension BasketViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 175
     }
 }
 
@@ -185,40 +205,48 @@ extension BasketViewController: UISearchBarDelegate {
 }
 
 extension BasketViewController: BasketTableViewCellDelegate{
-    
-    func plusButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int {
-        guard let basketItem = tableViewCell.menuItem else {return quantityCounter}
-        guard let price = basketItem.price else {return quantityCounter}
+    func plusButtonTapped(menuItem: MenuItem, count: Int) {
+        guard let price = menuItem.price else {return}
         totalPrice += price
         counter += 1
-        return quantityCounter + 1
+        basketMenu[menuItem]! += 1
     }
-    func minusButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int {
-        guard let menuItem = tableViewCell.menuItem else {return quantityCounter}
-        guard let price = menuItem.price else {return quantityCounter}
-        counter -= 1
+    
+    func minusButtonTapped(menuItem: MenuItem, count: Int) {
+        guard let price = menuItem.price else {return}
         totalPrice -= price
-        if (quantityCounter - 1) == 0 {
-            tableViewCell.minusButton.isHidden = true
-            tableViewCell.countLabel.isHidden = true
-            tableViewCell.plusButton.isHidden = true
-            tableViewCell.countView.isHidden = true
-            tableViewCell.smallButton.isHidden = false
+        counter -= 1
+        if count == 0 {
+            basketMenu[menuItem] = nil
+            if basketMenu.isEmpty {
+                basketView.isHidden = true
+            }
+        } else {
+            basketMenu[menuItem]! -= 1
         }
-        return quantityCounter - 1
     }
     
-    func smallButtonTapped(tableViewCell: BasketTableViewCell, quantityCounter: Int) -> Int {
-        guard let basketItem = tableViewCell.menuItem else {return quantityCounter}
-        guard let price = basketItem.price else {return quantityCounter}
-        tableViewCell.smallButton.isHidden = true
-        tableViewCell.countView.isHidden = false
-        tableViewCell.minusButton.isHidden = false
-        tableViewCell.countLabel.isHidden = false
-        tableViewCell.plusButton.isHidden = false
-        basketView.isHidden = false
+    func smallButtonTapped(menuItem: MenuItem, count: Int) {
+        guard let price = menuItem.price else {return}
         totalPrice += price
         counter += 1
-        return quantityCounter + 1
+        basketMenu[menuItem] = 1
+        basketView.isHidden = false
+    }
+    
+    func closeButtonTapped(menuItem: MenuItem, count: Int) {
+        menuItems.removeAll { item in
+            if item == menuItem {
+                return true
+            }
+            return false
+        }
+        basketMenu[menuItem] = nil
+        guard let price = menuItem.price else {return}
+        totalPrice -= price * Double(count)
+        counter -= count
+        if menuItems.isEmpty {
+            basketView.isHidden = true
+        }
     }
 }

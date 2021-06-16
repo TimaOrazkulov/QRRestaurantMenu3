@@ -9,9 +9,12 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import SnapKit
+import AVFoundation
 
 
 class MenuViewController: UIViewController {
+            
+    var session: AVCaptureSession?
     
     var countOfItems = 0 {
         didSet{
@@ -25,7 +28,11 @@ class MenuViewController: UIViewController {
         }
     }
     
-    var basketItems: [MenuItem : Int] = [:]
+    var basketItems: [MenuItem : Int] = [:] {
+        didSet {
+            menuTableView.reloadData()
+        }
+    }
     
     private var categories: [Category] = [] {
         didSet {
@@ -33,7 +40,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    private var menuItems: [Int : [MenuItem]] = [:] {
+    var menuItems: [Int : [MenuItem]] = [:] {
         didSet {
             menuTableView.reloadData()
         }
@@ -110,7 +117,7 @@ class MenuViewController: UIViewController {
         getMenuItems()
         setupNavigationController()
         setupBasketView()
-        setupConstraints()
+        setupConstraints()        
     }
     
     func setupBasketView(){
@@ -123,17 +130,22 @@ class MenuViewController: UIViewController {
     
     func setupNavigationController(){
         searchBar.sizeToFit()
-        navigationItem.title = "Ресторан"
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.title = "Ресторан"
+        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.tintColor = .black
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
+        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "QR", style: .done, target: self, action: #selector(popVC))
+    }
+    
+    @objc func popVC(){
+        _ = navigationController?.popViewController(animated: true)
     }
     
     @objc func handleSearchBar(){
-        navigationItem.titleView = searchBar
+        tabBarController?.navigationItem.titleView = searchBar
         searchBar.showsCancelButton = true
-        navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
         searchBar.becomeFirstResponder()
     }
     
@@ -264,7 +276,6 @@ extension MenuViewController: UITableViewDataSource {
         return categories.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(menuItems)
         return menuItems[categories[section].id!]!.count
     }
     
@@ -273,6 +284,12 @@ extension MenuViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as! MenuTableViewCell
         cell.menuItem = menuItems[categories[indexPath.section].id!]![indexPath.row]
         cell.delegate = self
+        if let count = basketItems[cell.menuItem!] {
+            if count > 0 {
+                cell.count = count
+                cell.makeButtonBig()
+            }
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -290,8 +307,8 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.titleView = nil
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
     }
 }
@@ -311,7 +328,9 @@ extension MenuViewController: MenuTableViewCellDelegate {
         countOfItems -= 1
         if count == 0 {
             basketItems[menuItem] = nil
-            basketView.isHidden = true
+            if basketItems.isEmpty {
+                basketView.isHidden = true
+            }
         } else {
             basketItems[menuItem]! -= 1
         }

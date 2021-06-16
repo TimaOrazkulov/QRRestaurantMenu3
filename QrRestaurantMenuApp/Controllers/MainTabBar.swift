@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainTabBar: UITabBarController {
 
@@ -14,6 +15,12 @@ class MainTabBar: UITabBarController {
         label.text = "Ошибка при сканировании, попробуйте еще раз"
         return label
     }()
+    private lazy var searchBar = UISearchBar()
+    
+    
+    let qrImage = UIImage(named: "qr-code")
+    let profileImage = UIImage(named: "profile")
+    let homeImage = UIImage(named: "home")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,17 +36,17 @@ class MainTabBar: UITabBarController {
         tabBar.layer.borderColor = UIColor.clear.cgColor
         tabBar.clipsToBounds = true
         let qrVC = UINavigationController(rootViewController:QRScannerViewController())
-        qrVC.tabBarItem.image = UIImage(named: "qr-code")
+        qrVC.tabBarItem.image = qrImage
         qrVC.tabBarItem.title = "Заказать"
 
         let restVC = UINavigationController(rootViewController:RestaurantsViewController())
-        restVC.tabBarItem.image = UIImage(named: "home")
+        restVC.tabBarItem.image = homeImage
         restVC.tabBarItem.title = "Рестораны"
 
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
-        profileVC.tabBarItem.image = UIImage(named: "profile")
+        profileVC.tabBarItem.image = profileImage
         profileVC.tabBarItem.title = "Профиль"
-            
+        profileVC.tabBarController?.title = "Профиль"
         viewControllers = [restVC, qrVC, profileVC]
 
         guard let items = tabBar.items else { return }
