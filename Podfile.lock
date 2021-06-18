@@ -304,6 +304,7 @@ PODS:
   - FlagPhoneNumber (0.8.0):
     - FlagPhoneNumber/libPhoneNumberiOS (= 0.8.0)
   - FlagPhoneNumber/libPhoneNumberiOS (0.8.0)
+  - FloatingPanel (2.4.0)
   - GoogleAppMeasurement (8.0.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.0.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -381,6 +382,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FlagPhoneNumber
+  - FloatingPanel
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
@@ -397,6 +399,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseStorage
     - FlagPhoneNumber
+    - FloatingPanel
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -421,6 +424,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: c4aab1005d6547b00a7529777fe52f5d4d45165b
   FirebaseStorage: 61bcd27880fa17362f68be67d3683d04bfd7b1c7
   FlagPhoneNumber: 3712455b95f66cb0f2016fef7d9e34cddf8c7f9a
+  FloatingPanel: fa60183672ed86313b9e241e34465e82211260e8
   GoogleAppMeasurement: c6bbc9753d046b5456dd4f940057fbad2c28419e
   GoogleDataTransport: 11e3a5f2c190327df1a4a5d7e7ae3d4d5b9c9e4c
   GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
@@ -432,6 +436,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 917079d42218bd096beb40155ab4c048de727880
+PODFILE CHECKSUM: 7454fb840634933e9782dbb8443e9354c5ede9bb
 
 COCOAPODS: 1.10.1

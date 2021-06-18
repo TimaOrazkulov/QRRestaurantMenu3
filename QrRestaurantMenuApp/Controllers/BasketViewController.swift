@@ -7,9 +7,14 @@
 
 import UIKit
 import FirebaseFirestore
+import SnapKit
+import FloatingPanel
+
 
 class BasketViewController: UIViewController {
 
+    var baskeView: BasketViewController!
+    var floationgPanel = FloatingPanelController()
     var basketMenu: [MenuItem : Int] = [:] {
         didSet {
             basketTableView.reloadData()
@@ -91,6 +96,7 @@ class BasketViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        floationgPanel.delegate = self
         setupTableView()
         setupNavigationController()
         setupBasketView()
@@ -98,7 +104,7 @@ class BasketViewController: UIViewController {
         parseMenuData()
     }
     
-    func setupBasketView(){
+    private func setupBasketView() {
         view.addSubview(basketView)
         basketView.addSubview(basketNameLabel)
         basketView.addSubview(basketCountLabel)
@@ -107,7 +113,7 @@ class BasketViewController: UIViewController {
     }
     
     
-    private func setupNavigationController(){
+    private func setupNavigationController() {
         searchBar.sizeToFit()
         navigationItem.title = "Корзина"
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
@@ -116,15 +122,19 @@ class BasketViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    @objc func handleSearchBar(){
+    @objc func handleSearchBar() {
         navigationItem.titleView = searchBar
         searchBar.showsCancelButton = true
         navigationItem.rightBarButtonItem = nil
         searchBar.becomeFirstResponder()
     }
     
-    @objc func basketViewOnTapped(){
-        
+    @objc func basketViewOnTapped() {
+        let selectVC = SelectCardViewController()
+        floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
+            self.floationgPanel.set(contentViewController: selectVC)
+            
+        }
     }
 
     private func parseMenuData() {
@@ -249,4 +259,7 @@ extension BasketViewController: BasketTableViewCellDelegate{
             basketView.isHidden = true
         }
     }
+}
+extension BasketViewController: FloatingPanelControllerDelegate {
+    
 }

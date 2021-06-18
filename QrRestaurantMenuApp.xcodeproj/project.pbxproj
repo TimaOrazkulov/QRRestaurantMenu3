@@ -44,6 +44,17 @@
 		47A02E562670AC2500DFA715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47A02E552670AC2500DFA715 /* GoogleService-Info.plist */; };
 		58B41E28381769DC2DE583AE /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AE9F6A0218D95D84328131 /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework */; };
 		7DF4F6065FAD12457CD16594 /* Pods_QrRestaurantMenuApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */; };
+		B602826B267B34F9005CE565 /* SelectCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602826A267B34F9005CE565 /* SelectCardViewController.swift */; };
+		B602828B267B831D005CE565 /* SelectedFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602828A267B831D005CE565 /* SelectedFooter.swift */; };
+		B6028290267B84E7005CE565 /* SelectedCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602828F267B84E7005CE565 /* SelectedCardCell.swift */; };
+		B60282C0267C8241005CE565 /* OrderSuccessfulTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282BF267C8241005CE565 /* OrderSuccessfulTableViewCell.swift */; };
+		B60282C5267C824B005CE565 /* OrderFailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282C4267C824B005CE565 /* OrderFailedViewController.swift */; };
+		B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */; };
+		B60282CF267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282CE267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift */; };
+		B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */; };
+		B60282D9267CA5AC005CE565 /* RestaurantInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282D8267CA5AB005CE565 /* RestaurantInfoTableViewCell.swift */; };
+		B60282DE267CA5B6005CE565 /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282DD267CA5B6005CE565 /* RestaurantsViewController.swift */; };
+		B60282E3267CA5C7005CE565 /* RestoranInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282E2267CA5C7005CE565 /* RestoranInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +120,17 @@
 		80AE9F6A0218D95D84328131 /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19D50A3F2EB5E11163C452B /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B602826A267B34F9005CE565 /* SelectCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCardViewController.swift; sourceTree = "<group>"; };
+		B602828A267B831D005CE565 /* SelectedFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFooter.swift; sourceTree = "<group>"; };
+		B602828F267B84E7005CE565 /* SelectedCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCardCell.swift; sourceTree = "<group>"; };
+		B60282BF267C8241005CE565 /* OrderSuccessfulTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewCell.swift; sourceTree = "<group>"; };
+		B60282C4267C824B005CE565 /* OrderFailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderFailedViewController.swift; sourceTree = "<group>"; };
+		B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewFooter.swift; sourceTree = "<group>"; };
+		B60282CE267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewHeader.swift; sourceTree = "<group>"; };
+		B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulViewController.swift; sourceTree = "<group>"; };
+		B60282D8267CA5AB005CE565 /* RestaurantInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantInfoTableViewCell.swift; sourceTree = "<group>"; };
+		B60282DD267CA5B6005CE565 /* RestaurantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestaurantsViewController.swift; path = ../../../../Desktop/RestaurantsViewController.swift; sourceTree = "<group>"; };
+		B60282E2267CA5C7005CE565 /* RestoranInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestoranInfoViewController.swift; path = ../../../../Desktop/RestoranInfoViewController.swift; sourceTree = "<group>"; };
 		CA5BDC0A6AD12A4D59A76AF0 /* Pods-QrRestaurantMenuAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		CC895F76BC5222FC21DCE62A /* Pods-QrRestaurantMenuApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp/Pods-QrRestaurantMenuApp.release.xcconfig"; sourceTree = "<group>"; };
 		D21A5E41E325A55ED246635E /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -218,11 +240,17 @@
 				4776E6C52677731600688792 /* ExtensionForCard.swift */,
 				473EB47526733FAD0083068F /* CardCellTableViewCell.swift */,
 				477377CF26725B3100C9F2B2 /* FooterView.swift */,
+				B60282BF267C8241005CE565 /* OrderSuccessfulTableViewCell.swift */,
 				477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */,
 				47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */,
+				B60282D8267CA5AB005CE565 /* RestaurantInfoTableViewCell.swift */,
 				47A02E3D2670A87900DFA715 /* MenuTableViewCell.swift */,
 				47A02E452670A87C00DFA715 /* SectionView.swift */,
 				477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */,
+				B602828A267B831D005CE565 /* SelectedFooter.swift */,
+				B60282CE267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift */,
+				B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */,
+				B602828F267B84E7005CE565 /* SelectedCardCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,11 +265,16 @@
 				4776E6BB26773C9900688792 /* RestaurantsViewController.swift */,
 				4776E6BF267753AB00688792 /* RestoranInfoViewController.swift */,
 				4776E6C326776FB900688792 /* AddCardViewController.swift */,
+				B60282DD267CA5B6005CE565 /* RestaurantsViewController.swift */,
 				47A02E3A2670A87900DFA715 /* MenuViewController.swift */,
 				47A02E402670A87A00DFA715 /* MainTabBar.swift */,
 				47A02E3F2670A87A00DFA715 /* LoginViewController.swift */,
+				B60282E2267CA5C7005CE565 /* RestoranInfoViewController.swift */,
 				47A02E412670A87B00DFA715 /* BasketViewController.swift */,
+				B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */,
+				B60282C4267C824B005CE565 /* OrderFailedViewController.swift */,
 				477377CD26725A2400C9F2B2 /* CardViewController.swift */,
+				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -518,32 +551,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				47A02E4C2670A87C00DFA715 /* MainTabBar.swift in Sources */,
+				B60282E3267CA5C7005CE565 /* RestoranInfoViewController.swift in Sources */,
 				47A02E482670A87C00DFA715 /* CategoryCollectionViewCell.swift in Sources */,
+				B602826B267B34F9005CE565 /* SelectCardViewController.swift in Sources */,
 				477377D22672992000C9F2B2 /* RestaurantsTableViewCell.swift in Sources */,
 				47A02E4D2670A87C00DFA715 /* BasketViewController.swift in Sources */,
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
 				4776E6C426776FB900688792 /* AddCardViewController.swift in Sources */,
+				B60282C5267C824B005CE565 /* OrderFailedViewController.swift in Sources */,
+				B60282CF267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift in Sources */,
 				47A02E502670A87C00DFA715 /* ProfileViewController.swift in Sources */,
+				B60282D9267CA5AC005CE565 /* RestaurantInfoTableViewCell.swift in Sources */,
+				B602828B267B831D005CE565 /* SelectedFooter.swift in Sources */,
 				473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */,
 				477377CC2672507300C9F2B2 /* QRFirebaseDatabase.swift in Sources */,
+				B60282C0267C8241005CE565 /* OrderSuccessfulTableViewCell.swift in Sources */,
 				477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */,
 				4776E6C82677733800688792 /* ExtensionUI.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
+				B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
 				4776E6C0267753AB00688792 /* RestoranInfoViewController.swift in Sources */,
 				47A02E492670A87C00DFA715 /* MenuTableViewCell.swift in Sources */,
 				4776E6C62677731600688792 /* ExtensionForCard.swift in Sources */,
+				B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */,
 				477377D026725B3100C9F2B2 /* FooterView.swift in Sources */,
 				47A02E372670A86800DFA715 /* MenuItem.swift in Sources */,
 				477377C6267214E300C9F2B2 /* User.swift in Sources */,
 				47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */,
 				47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */,
 				47A02E4B2670A87C00DFA715 /* LoginViewController.swift in Sources */,
+				B60282DE267CA5B6005CE565 /* RestaurantsViewController.swift in Sources */,
+				B6028290267B84E7005CE565 /* SelectedCardCell.swift in Sources */,
 				4776E6C22677562F00688792 /* RestScrollViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

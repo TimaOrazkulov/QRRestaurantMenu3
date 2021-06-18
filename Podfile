@@ -14,6 +14,7 @@ target 'QrRestaurantMenuApp' do
   pod "FlagPhoneNumber"
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'FloatingPanel'
 
   target 'QrRestaurantMenuAppTests' do
     inherit! :search_paths

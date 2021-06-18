@@ -24,3 +24,7 @@ struct User : Codable {
     var birthDate: String?
     var cards: [Card]?
 }
+
+struct Order: Codable {
+    
+}
