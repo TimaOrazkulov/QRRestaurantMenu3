@@ -8,24 +8,34 @@
 import UIKit
 
 class SelectedCardCell: UITableViewCell {
-
-    static var selectID = "selectID"
     
+    static var selectID = "selectID"
     var key: String?
     
-    private let radioButton: UIButton = {
-        let button = UIButton()
-        
+    private let circleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.layer.borderWidth = 1
+        view.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        view.layer.cornerRadius = 16 / 2
+        return view
+    }()
+    private let dotView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.layer.cornerRadius = 10 / 2
+        return view
     }()
     private let iconImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         return image
     }()
-    private let dotIcon: UIImageView = {
-        let icon = UIImageView()
-        icon.contentMode = .scaleAspectFit
-        return icon
+    private let dotIcon: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        view.layer.cornerRadius = 1
+        return view
     }()
     private let cardStackView: UIStackView = {
         let stackView = UIStackView()
@@ -59,18 +69,31 @@ class SelectedCardCell: UITableViewCell {
     
     var card: Card? {
         didSet {
-            if let icon = UIImage(named: "masterCardIcon") {
-                iconImage.image = icon
-            }
-            if let brandCard = card?.cardHolderName {
-                nameCardLabel.text = brandCard
-            }
             if let numberCard = card?.cardNumber {
-                numberCardLabel.text = numberCard
+                let index = numberCard.index(numberCard.startIndex, offsetBy: 4)
+                numberCardLabel.text = String(numberCard[..<index])
+                
+                if numberCard.starts(with: "3") {
+                    iconImage.image = UIImage(named: "amex")
+                    nameCardLabel.text = "Amex"
+                } else if numberCard.starts(with: "4") {
+                    iconImage.image = UIImage(named: "visa")
+                    nameCardLabel.text = "Visa"
+                } else if numberCard.starts(with: "5") {
+                    iconImage.image = UIImage(named: "masterCard")
+                    nameCardLabel.text = "MasterCard"
+                } else if numberCard.starts(with: "6") {
+                    iconImage.image = UIImage(named: "discover")
+                    nameCardLabel.text = "Discover"
+                } else {
+                    iconImage.image = UIImage(named: "credit-card")
+                    nameCardLabel.text = "Unknown card"
+                }
             }
             if let validDate = card?.date {
                 validDateLabel.text = validDate
             }
+            
         }
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -80,30 +103,66 @@ class SelectedCardCell: UITableViewCell {
         backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        removeDot()
+    }
+    
+    func fillDot() {
+        dotView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    }
+    
+    func removeDot() {
+        dotView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    
     private func addToView() {
         contentView.addSubview(iconImage)
         contentView.addSubview(validDateLabel)
         contentView.addSubview(cardStackView)
+        contentView.addSubview(circleView)
+        circleView.addSubview(dotView)
         
         [nameCardLabel, dotIcon, numberCardLabel].forEach { cardStackView.addArrangedSubview($0) }
     }
     
     private func setupConstraints() {
-        iconImage.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(3)
-            $0.left.equalToSuperview().inset(15)
-            $0.height.width.equalTo(60)
+        circleView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().inset(20)
+            $0.width.height.equalTo(16)
         }
-        
+        dotView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(3)
+        }
+        iconImage.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalTo(circleView.snp.right).offset(12)
+            $0.width.equalTo(50)
+            $0.height.equalTo(35)
+        }
         cardStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(15)
-            $0.left.equalTo(iconImage.snp.right).offset(7)
+            $0.top.equalToSuperview().inset(10)
+            $0.left.equalTo(iconImage.snp.right).offset(10)
+            $0.height.equalTo(20)
+            
+        }
+        dotIcon.snp.makeConstraints {
+            $0.bottom.top.equalToSuperview().inset(3)
+            $0.width.equalTo(3)
         }
         validDateLabel.snp.makeConstraints {
-            $0.top.equalTo(cardStackView.snp.bottom).offset(3)
-            $0.left.equalTo(iconImage.snp.right).offset(7)
+            $0.top.equalTo(cardStackView.snp.bottom).offset(5)
+            $0.left.equalTo(iconImage.snp.right).offset(10)
         }
+        
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+           super.setSelected(selected, animated: animated)
+
+           // Configure the view for the selected state
+       }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -12,6 +12,20 @@ import SnapKit
 
 class SelectCardViewController: UIViewController {
     
+    var orderItems: [MenuItem : Int] = [:]
+    var menuItems: [MenuItem] = []
+    var totalPrice: Double?
+    var totalCount: Int?
+    
+    var card: Card? {
+        didSet {
+            payButton.isEnabled = true
+            payButton.alpha = 1
+        }
+    }
+
+    
+    private var cardsCondition: [Card: Bool] = [:]
     private var newCards: [String: Any]? {
         didSet {
             parseDataToCards()
@@ -49,10 +63,12 @@ class SelectCardViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Оплатить", for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.411716789, green: 0.4117922783, blue: 0.4117119908, alpha: 1)
+        button.isEnabled = false
+        button.alpha = 0.5
         button.layer.cornerRadius = 10
         button.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-       // button.addTarget(self, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+        button.addTarget(self, action: #selector(transitionToResultOfPayment), for: .touchUpInside)
         return button
     }()
     override func viewDidLoad() {
@@ -64,12 +80,31 @@ class SelectCardViewController: UIViewController {
         QRFirebaseDatabase.shared.getCardsOfUser(uid: uid ?? "") { [weak self] cards in
             self?.newCards = cards
         }
-        
     }
     
 
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func transitionToResultOfPayment() {
+        if validationFunc() == true {
+            let orderVC = OrderSuccessfulViewController()
+            orderVC.totalPrice = totalPrice
+            orderVC.totalCount = totalCount
+            orderVC.orderItems = orderItems
+            navigationController?.pushViewController(orderVC, animated: true)
+        } else {
+            let orderFailureVC = OrderFailedViewController()
+            navigationController?.pushViewController(orderFailureVC, animated: true)
+        }
+    }
+    private func validationFunc() -> Bool {
+        guard let numberCard = card?.cardNumber else { return false }
+        if numberCard.starts(with: "3") || numberCard.starts(with: "4") || numberCard.starts(with: "5") || numberCard.starts(with: "6") {
+            return true
+        }
+        return false
     }
     private func configureUI() {
         view.addSubview(selectCardLabel)
@@ -132,6 +167,11 @@ class SelectCardViewController: UIViewController {
         }
         
     }
+    
+    private func checkCard(_ card: Card) -> Bool {
+        
+        return true
+    }
 }
 extension SelectCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -141,6 +181,9 @@ extension SelectCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectedCardCell.selectID, for: indexPath) as! SelectedCardCell
         cell.card = cards?[indexPath.row]
+        if cardsCondition[cell.card!] == true {
+            cell.fillDot()
+        }
         return cell
     }
     
@@ -155,10 +198,22 @@ extension SelectCardViewController: UITableViewDataSource {
     }
 }
 extension SelectCardViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-//
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? SelectedCardCell
+        cardsCondition[card!] = false
+        cell?.removeDot()
+        
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentCell = tableView.cellForRow(at: indexPath) as? SelectedCardCell
+        cardsCondition[(currentCell?.card)!] = true
+        card = currentCell?.card
+        currentCell?.fillDot()
+        
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }

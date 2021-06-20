@@ -131,6 +131,10 @@ class BasketViewController: UIViewController {
     
     @objc func basketViewOnTapped() {
         let selectVC = SelectCardViewController()
+        selectVC.totalCount = counter
+        selectVC.totalPrice = totalPrice
+        selectVC.menuItems = menuItems
+        selectVC.orderItems = basketMenu
         floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
             self.floationgPanel.set(contentViewController: selectVC)
             
