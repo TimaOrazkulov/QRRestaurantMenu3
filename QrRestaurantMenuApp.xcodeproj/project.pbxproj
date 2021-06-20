@@ -46,6 +46,8 @@
 		940B7B1826773CCD007E2E5A /* DismissAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940B7B1226773CCD007E2E5A /* DismissAnimation.swift */; };
 		940B7B2026773E0E007E2E5A /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940B7B1F26773E0E007E2E5A /* RestaurantsViewController.swift */; };
 		940B7B71267F5150007E2E5A /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940B7B70267F5150007E2E5A /* OrderListViewController.swift */; };
+		940B7B97267F623D007E2E5A /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940B7B96267F623C007E2E5A /* OrderTableViewCell.swift */; };
+		940B7BBD267F740E007E2E5A /* OrderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940B7BBC267F740D007E2E5A /* OrderHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +113,8 @@
 		940B7B1226773CCD007E2E5A /* DismissAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimation.swift; sourceTree = "<group>"; };
 		940B7B1F26773E0E007E2E5A /* RestaurantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsViewController.swift; sourceTree = "<group>"; };
 		940B7B70267F5150007E2E5A /* OrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
+		940B7B96267F623C007E2E5A /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		940B7BBC267F740D007E2E5A /* OrderHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHeaderView.swift; sourceTree = "<group>"; };
 		A19D50A3F2EB5E11163C452B /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA5BDC0A6AD12A4D59A76AF0 /* Pods-QrRestaurantMenuAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,7 +223,9 @@
 			isa = PBXGroup;
 			children = (
 				473EB47526733FAD0083068F /* CardCellTableViewCell.swift */,
+				940B7B96267F623C007E2E5A /* OrderTableViewCell.swift */,
 				477377CF26725B3100C9F2B2 /* FooterView.swift */,
+				940B7BBC267F740D007E2E5A /* OrderHeaderView.swift */,
 				477377D12672992000C9F2B2 /* RestaurantsTableViewCell.swift */,
 				47A02E3C2670A87900DFA715 /* CategoryCollectionViewCell.swift */,
 				47A02E3D2670A87900DFA715 /* MenuTableViewCell.swift */,
@@ -539,6 +545,7 @@
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
 				940B7B1426773CCD007E2E5A /* PanelTransition.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
+				940B7BBD267F740E007E2E5A /* OrderHeaderView.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
@@ -552,6 +559,7 @@
 				477377C6267214E300C9F2B2 /* User.swift in Sources */,
 				47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */,
 				47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */,
+				940B7B97267F623D007E2E5A /* OrderTableViewCell.swift in Sources */,
 				47A02E4B2670A87C00DFA715 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navController = UINavigationController(rootViewController: PhoneVerificationViewController())
+        let navController = UINavigationController(rootViewController: OrderListViewController())
         window?.rootViewController = navController
 
     }

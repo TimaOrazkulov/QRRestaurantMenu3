@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests : NSObject
+@end
+@implementation PodsDummy_Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests
+@end
