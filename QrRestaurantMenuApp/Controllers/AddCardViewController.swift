@@ -11,7 +11,9 @@ import FirebaseFirestore
 
 class AddCardViewController: UIViewController {
     
+    var saveCard: (() -> Void)?
     private let db = Firestore.firestore()
+    var newCards: [String: Any]?
     var cards: [Card]? = []
     private let addCardLabel: UILabel = {
         let label = UILabel()
@@ -23,7 +25,8 @@ class AddCardViewController: UIViewController {
     }()
     
     lazy var cancelButton: UIButton = {
-        let button = UIButton()        
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "remove"), for: .normal)
         button.addTarget(self, action: #selector(tapDismiss), for: .touchUpInside)
         return button
     }()
@@ -100,12 +103,16 @@ class AddCardViewController: UIViewController {
         return textField
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addElements()
         setupConstraints()
         addTextFieldDelegate()
         view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        QRFirebaseDatabase.shared.getCardsOfUser(uid: uid) { [weak self] cards in
+            self?.newCards = cards
+        }
     }
     
     private func addTextFieldDelegate() {
@@ -168,23 +175,22 @@ class AddCardViewController: UIViewController {
     }
     
     let uid = "wTkLYYvYSYaH3DClKLxG"
-    private func parseDataCard(uid: String) -> [String: Any] {
-        var newCards: [String: Any] = [:]
     
-        for index in 0...cards!.count{
-            let key = "card\(index)"
-            let value = ["cvv" : cvvCode.text, "holderName" : holderName.text, "numberCard" : numberCard.text, "validDate" : validDate.text]
-            newCards[key] = value
-        }
-        print(newCards)
-        return newCards
+    private func parseDataCard(uid: String) {
+        
+        let key = "card\(newCards?.count ?? 0 + 1)"
+        let value = ["cvv" : cvvCode.text, "holderName" : holderName.text, "numberCard" : numberCard.text, "validDate" : validDate.text]
+        
+        newCards?[key] = value
+        
     }
     
     @objc private func addCard() {
-        cards?.append(Card(cardHolderName: holderName.text, cardNumber: numberCard.text, date: validDate.text, cvv: cvvCode.text))
         let document = db.collection("users").document(uid)
-        document.updateData(["cards": parseDataCard(uid: uid)
+        parseDataCard(uid: uid)
+        document.updateData(["cards": newCards ?? 0
         ])
+        saveCard?()
         dismiss(animated: true, completion: nil)
     }
 }

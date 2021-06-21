@@ -17,14 +17,14 @@ class MainTabBar: UITabBarController {
     }()
     private lazy var searchBar = UISearchBar()
     
-    
     let qrImage = UIImage(named: "qr-code")
     let profileImage = UIImage(named: "profile")
     let homeImage = UIImage(named: "home")
     
+    var uid = "wTkLYYvYSYaH3DClKLxG"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //delegate = self
         setupTabBar()
         view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
     }
