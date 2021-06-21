@@ -54,6 +54,9 @@
 		B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */; };
 		B60282D9267CA5AC005CE565 /* RestaurantInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282D8267CA5AB005CE565 /* RestaurantInfoTableViewCell.swift */; };
 		B60282E8267CB8F8005CE565 /* ChechButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282E7267CB8F8005CE565 /* ChechButton.swift */; };
+		B62BB2B7267F3F60003C3C8B /* OrdersHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */; };
+		B62BB2BC267F41B9003C3C8B /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62BB2BB267F41B9003C3C8B /* OrderCell.swift */; };
+		B62BB2C1267F5F4A003C3C8B /* OrderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62BB2C0267F5F4A003C3C8B /* OrderFooter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +132,9 @@
 		B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulViewController.swift; sourceTree = "<group>"; };
 		B60282D8267CA5AB005CE565 /* RestaurantInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantInfoTableViewCell.swift; sourceTree = "<group>"; };
 		B60282E7267CB8F8005CE565 /* ChechButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChechButton.swift; sourceTree = "<group>"; };
+		B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersHistoryViewController.swift; sourceTree = "<group>"; };
+		B62BB2BB267F41B9003C3C8B /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
+		B62BB2C0267F5F4A003C3C8B /* OrderFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFooter.swift; sourceTree = "<group>"; };
 		CA5BDC0A6AD12A4D59A76AF0 /* Pods-QrRestaurantMenuAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		CC895F76BC5222FC21DCE62A /* Pods-QrRestaurantMenuApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp/Pods-QrRestaurantMenuApp.release.xcconfig"; sourceTree = "<group>"; };
 		D21A5E41E325A55ED246635E /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -251,6 +257,8 @@
 				B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */,
 				B602828F267B84E7005CE565 /* SelectedCardCell.swift */,
 				B60282E7267CB8F8005CE565 /* ChechButton.swift */,
+				B62BB2BB267F41B9003C3C8B /* OrderCell.swift */,
+				B62BB2C0267F5F4A003C3C8B /* OrderFooter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +281,7 @@
 				B60282C4267C824B005CE565 /* OrderFailedViewController.swift */,
 				477377CD26725A2400C9F2B2 /* CardViewController.swift */,
 				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
+				B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -570,12 +579,14 @@
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
+				B62BB2BC267F41B9003C3C8B /* OrderCell.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
 				4776E6C0267753AB00688792 /* RestoranInfoViewController.swift in Sources */,
 				47A02E492670A87C00DFA715 /* MenuTableViewCell.swift in Sources */,
+				B62BB2C1267F5F4A003C3C8B /* OrderFooter.swift in Sources */,
 				4776E6C62677731600688792 /* ExtensionForCard.swift in Sources */,
 				B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */,
 				477377D026725B3100C9F2B2 /* FooterView.swift in Sources */,
@@ -585,6 +596,7 @@
 				47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */,
 				47A02E4B2670A87C00DFA715 /* LoginViewController.swift in Sources */,
 				B6028290267B84E7005CE565 /* SelectedCardCell.swift in Sources */,
+				B62BB2B7267F3F60003C3C8B /* OrdersHistoryViewController.swift in Sources */,
 				4776E6C22677562F00688792 /* RestScrollViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

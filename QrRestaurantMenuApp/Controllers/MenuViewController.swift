@@ -34,13 +34,26 @@ class MenuViewController: UIViewController {
         }
     }
     
+    var categoriesForTableView: [Category] = [] {
+        didSet{
+            menuTableView.reloadData()
+        }
+    }
+    
     private var categories: [Category] = [] {
         didSet {
             categoryCollectionView.reloadData()
+            menuTableView.reloadData()
         }
     }
     
     var menuItems: [Int : [MenuItem]] = [:] {
+        didSet {
+            menuTableView.reloadData()
+        }
+    }
+    
+    var menuItemsForTableView: [Int : [MenuItem]] = [:] {
         didSet {
             menuTableView.reloadData()
         }
@@ -117,7 +130,7 @@ class MenuViewController: UIViewController {
         getMenuItems()
         setupNavigationController()
         setupBasketView()
-        setupConstraints()        
+        setupConstraints()
     }
     
     func setupBasketView(){
@@ -215,20 +228,37 @@ class MenuViewController: UIViewController {
                 let name = data["name"] as? String ?? ""
                 categories.append(Category(id: id, name: name))
             }
+            categories.append(Category(id: 5, name: "Все"))
+            
             DispatchQueue.main.async {
                 self.categories = categories
+                self.categoriesForTableView = categories
             }
             
         }
     }
     
+    private func getMenuItemsByCategoryId(id: Int){
+       
+        var menuItems: [Int : [MenuItem]] = [:]
+        self.menuItems.forEach { categoryId, menuItem in
+            if id == categoryId{
+                menuItems[categoryId] = menuItem
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.menuItemsForTableView = menuItems
+        }
+    }
+    
     private func getMenuItems() {
+        var menuItems: [Int : [MenuItem]] = [:]
         db.collection("menu").addSnapshotListener { querySnapshot, error in
             guard let documents = querySnapshot?.documents else{
                 print("No Documents")
                 return
             }
-            var menuItems: [Int : [MenuItem]] = [:]
             documents.forEach { queryDocumentSnapshot in
                 let data = queryDocumentSnapshot.data()
                 let categoryId = data["categoryID"] as? Int ?? -1
@@ -244,9 +274,9 @@ class MenuViewController: UIViewController {
                 }
                 menuItems[categoryId]?.append(menuItem)
             }
-            
             DispatchQueue.main.async {
                 self.menuItems = menuItems
+                self.menuItemsForTableView = menuItems
             }
         }
     }
@@ -255,6 +285,20 @@ class MenuViewController: UIViewController {
 extension MenuViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CategoryCollectionViewCell
+        if cell.categoryItem?.id == 5 {
+            menuItemsForTableView = menuItems
+            categoriesForTableView = categories
+        }else{
+            guard let item = cell.categoryItem else {return}
+            guard let id = item.id else {return}
+            getMenuItemsByCategoryId(id: id)
+            categoriesForTableView = []
+            categoriesForTableView.append(item)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -273,16 +317,19 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
 extension MenuViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count
+        if categoriesForTableView.count > 1 {
+            return categoriesForTableView.count - 1
+        }
+        return categoriesForTableView.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems[categories[section].id!]!.count
+        return menuItemsForTableView[categoriesForTableView[section].id!]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as! MenuTableViewCell
-        cell.menuItem = menuItems[categories[indexPath.section].id!]![indexPath.row]
+        cell.menuItem = menuItemsForTableView[categoriesForTableView[indexPath.section].id!]![indexPath.row]
         cell.delegate = self
         if let count = basketItems[cell.menuItem!] {
             if count > 0 {
@@ -294,7 +341,7 @@ extension MenuViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionView.identifier) as! SectionView
-        view.category = categories[section]
+        view.category = categoriesForTableView[section]
         return view
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class RestaurantInfoTableViewCell: UITableViewCell {
 
     static let identifier = "tableViewCell"
+   
     
     var addressText: String? {
         didSet{
@@ -23,6 +24,14 @@ class RestaurantInfoTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
+    
+    var restLocation: Location? {
+        didSet {
+            if let location = restLocation?.rest_location_street {
+                addressLabel.text = location
+            }
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

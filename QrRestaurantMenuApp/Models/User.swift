@@ -13,7 +13,6 @@ struct Card : Codable, Hashable{
     var date: String?
     var cvv: String?
     var key: String?
-    var check: Bool?
 }
 
 struct User : Codable {
@@ -24,8 +23,13 @@ struct User : Codable {
     var gender: String?
     var birthDate: String?
     var cards: [Card]?
+    var orders: [Order]?
 }
 
 struct Order: Codable {
-    
+    var restaurantName: String?
+    var date: String?
+    var totalPrice: Double?
+    var seatNumber: String?
+    var orderItems: [MenuItem: Int]?
 }

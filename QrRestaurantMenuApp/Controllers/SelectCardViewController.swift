@@ -11,7 +11,8 @@ import FirebaseFirestore
 import SnapKit
 
 class SelectCardViewController: UIViewController {
-    
+    var newOrders: [String: Order] = [:]
+    let db = Firestore.firestore()
     var orderItems: [MenuItem : Int] = [:]
     var menuItems: [MenuItem] = []
     var totalPrice: Double?
@@ -31,7 +32,7 @@ class SelectCardViewController: UIViewController {
             parseDataToCards()
         }
     }
-    private var db = Firestore.firestore()
+    
     var cards: [Card]? {
         didSet {
             cardTableView.reloadData()
@@ -52,6 +53,7 @@ class SelectCardViewController: UIViewController {
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         return button
     }()
+    
     private let cardTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -59,6 +61,7 @@ class SelectCardViewController: UIViewController {
         tableView.register(SelectedFooter.self, forHeaderFooterViewReuseIdentifier: "footerID")
         return tableView
     }()
+    
     private let payButton: UIButton = {
         let button = UIButton()
         button.setTitle("Оплатить", for: .normal)
@@ -71,6 +74,7 @@ class SelectCardViewController: UIViewController {
         button.addTarget(self, action: #selector(transitionToResultOfPayment), for: .touchUpInside)
         return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -82,7 +86,7 @@ class SelectCardViewController: UIViewController {
         }
     }
     
-
+    
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
     }
@@ -99,6 +103,28 @@ class SelectCardViewController: UIViewController {
             navigationController?.pushViewController(orderFailureVC, animated: true)
         }
     }
+    
+    private func getOrdersOfUser() {
+        let ref = db.collection("order").document(uid!)
+        ref.getDocument { (documentSnapshot, error) in
+            guard error != nil else { return }
+            if let document = documentSnapshot, document.exists {
+                guard let data = document.data() else { return }
+                let restaurantName = data["restaurantName"] as? String ?? ""
+                let date = data["date"] as? String ?? ""
+                let totalPrice = data["totalPrice"] as? Double ?? 0
+                let seatNumber = data["seatNumber"] as? String ?? ""
+                let orderItems = data["orderItems"] as! [String: Any]
+                
+//                orderItems.forEach { key, menuItems in
+//                    <#code#>
+//                }
+                
+            }
+        }
+        
+    }
+    
     private func validationFunc() -> Bool {
         guard let numberCard = card?.cardNumber else { return false }
         if numberCard.starts(with: "3") || numberCard.starts(with: "4") || numberCard.starts(with: "5") || numberCard.starts(with: "6") {
@@ -106,6 +132,7 @@ class SelectCardViewController: UIViewController {
         }
         return false
     }
+    
     private func configureUI() {
         view.addSubview(selectCardLabel)
         view.addSubview(cancelButton)
