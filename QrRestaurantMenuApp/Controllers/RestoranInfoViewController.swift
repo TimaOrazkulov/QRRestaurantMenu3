@@ -16,19 +16,12 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
     
     var restaurant: Restaurant? {
         didSet {
-            descLabel.text = restaurant?.rest_discription
-//            addressTableView.reloadData()
             downloadImage(from: URL(string: restaurant?.rest_image_url ?? ""))
-        }
-    }
-    
-    private var restLocation: [Location] = [] {
-        didSet {
+            descLabel.text = restaurant?.rest_description
             addressTableView.reloadData()
         }
     }
-        
-    
+                    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -63,12 +56,13 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
     private let addressTableView: UITableView = {
         let tableView = UITableView()
         tableView.allowsSelection = false
-        tableView.backgroundColor = .none
         tableView.isScrollEnabled = false
+        tableView.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        tableView.separatorStyle = .none
         tableView.register(RestaurantInfoTableViewCell.self, forCellReuseIdentifier: RestaurantInfoTableViewCell.identifier)
         return tableView
     }()
-
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -77,43 +71,19 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
         setupConstraints()
         addressTableView.dataSource = self
         addressTableView.delegate = self
-        getRestaurants()
    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.navigationItem.title = "Описание"
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .done, target: self, action: #selector(popVC))
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
     
     @objc func popVC(){
         _ = navigationController?.popViewController(animated: true)
     }
-    
-    private func getRestaurants(){
-        db.collection("restoran").addSnapshotListener { querySnapShot, error in
-            guard let documents = querySnapShot?.documents else{
-                print("No Documents")
-                return
-            }
-            var arr: [Restaurant] = []
-            documents.forEach { queryDocumentSnapshot in
-                let data = queryDocumentSnapshot.data()
-                let id = data["id"] as? Int ?? 0
-                let desc = data["rest_description"] as? String ?? ""
-                let name = data["rest_name"] as? String ?? ""
-                let restImg = data["rest_image_url"] as? String ?? ""
-                let restLoc = data["rest_locations"] as? Array<Location> ?? []
-                let restorant = Restaurant(id: id, rest_name: name, rest_discription: desc, rest_image_url: restImg, rest_location: restLoc)
-                arr.append(restorant)
-                print(arr)
-            }
-//            DispatchQueue.main.async {
-//                self.restLocation = arr
-//            }
-            
-        }
-    }
+       
     func setupViews(){
         view.addSubview(scrollView)
         view.addSubview(pageControl)
@@ -142,8 +112,8 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
         }
         addressTableView.snp.makeConstraints { make in
             make.top.equalTo(addressLabel.snp.bottom).offset(15)
-            make.left.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+            make.height.equalTo(250)
         }
     }
         
@@ -179,13 +149,12 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
 extension RestoranInfoViewController: UITableViewDataSource, UITableViewDelegate{
             
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restLocation.count
-        
+        return restaurant?.rest_location.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RestaurantInfoTableViewCell.identifier) as! RestaurantInfoTableViewCell
-        cell.restLocation = restLocation[indexPath.row]
+        cell.addressText = restaurant?.rest_location[indexPath.row]
         return cell
     }
     

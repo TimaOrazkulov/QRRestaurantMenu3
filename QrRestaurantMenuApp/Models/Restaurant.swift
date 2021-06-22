@@ -10,9 +10,9 @@ import Foundation
 struct Restaurant: Codable {
     var id: Int?
     var rest_name: String?
-    var rest_discription: String?
+    var rest_description: String?
     var rest_image_url: String?
-    var rest_location: [Location]
+    var rest_location: [String]
 }
 
 struct Location: Codable {

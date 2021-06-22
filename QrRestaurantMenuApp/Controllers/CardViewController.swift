@@ -42,7 +42,12 @@ class CardViewController: UIViewController {
         QRFirebaseDatabase.shared.getCardsOfUser(uid: uid ?? "") { [weak self] cards in
             self?.newCards = cards
         }
+        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
         
+    }
+    
+    @objc private func popVC(){
+        _ = navigationController?.popViewController(animated: true)
     }
     
     private func setupTableView() {

@@ -72,13 +72,16 @@ class RestaurantsViewController: UIViewController  {
             documents.forEach { queryDocumentSnapshot in
                 let data = queryDocumentSnapshot.data()
                 let id = data["id"] as? Int ?? 0
-                let desc = data["rest_discription"] as? String ?? ""
-                let restLoc = data["rest_locations"] as? Array<Location> ?? []
+                let desc = data["rest_description"] as? String ?? ""
+                let restLoc = data["rest_locations"] as? [String] ?? []
                 let name = data["rest_name"] as? String ?? ""
                 let restImg = data["rest_image_url"] as? String ?? ""
-                let restorant = Restaurant(id: id, rest_name: name, rest_discription: desc, rest_image_url: restImg, rest_location: restLoc)
-                arr.append(restorant)
-                print(arr)
+                var locArr: [String] = []
+                restLoc.forEach { location in
+                    locArr.append(location)
+                }
+                let restorant = Restaurant(id: id, rest_name: name, rest_description: desc, rest_image_url: restImg, rest_location: locArr)
+                arr.append(restorant)                
             }
             
             DispatchQueue.main.async {
@@ -117,6 +120,7 @@ extension RestaurantsViewController: UITableViewDataSource {
 extension RestaurantsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuVC = RestoranInfoViewController()
+        menuVC.restaurant = restaurant[indexPath.row]
         navigationController?.pushViewController(menuVC, animated: true)
     }
     

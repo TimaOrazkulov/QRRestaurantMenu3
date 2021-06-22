@@ -18,6 +18,10 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var uid = "wTkLYYvYSYaH3DClKLxG"
     
+    var qrUser: User?
+    
+    var profileUrl: String?
+    
     var fullName: String? {
         didSet{
             nameLabel.text = fullName
@@ -38,10 +42,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             dateTextField.text = birthDate
         }
     }
-    
-    var qrUser: User?
-    
-    var profileUrl: String?
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
