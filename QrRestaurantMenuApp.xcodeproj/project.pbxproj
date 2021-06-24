@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2EBE5976ACC60E6F2D713CF4 /* Pods_QrRestaurantMenuAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */; };
+		471317112684CE6D00570D74 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317102684CE6D00570D74 /* OrderTableViewCell.swift */; };
+		471317132684CE7B00570D74 /* OrderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317122684CE7B00570D74 /* OrderHeaderView.swift */; };
+		471317152684CE8100570D74 /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317142684CE8100570D74 /* OrderListViewController.swift */; };
 		473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EB47526733FAD0083068F /* CardCellTableViewCell.swift */; };
 		477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */; };
 		477377C6267214E300C9F2B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C5267214E300C9F2B2 /* User.swift */; };
@@ -79,6 +82,9 @@
 /* Begin PBXFileReference section */
 		0320077A86B24579890FE659 /* Pods-QrRestaurantMenuAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuAppTests.debug.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuAppTests/Pods-QrRestaurantMenuAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		471317102684CE6D00570D74 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		471317122684CE7B00570D74 /* OrderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderHeaderView.swift; sourceTree = "<group>"; };
+		471317142684CE8100570D74 /* OrderListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
 		473EB47526733FAD0083068F /* CardCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCellTableViewCell.swift; sourceTree = "<group>"; };
 		477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		477377C5267214E300C9F2B2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -259,6 +265,8 @@
 				B60282E7267CB8F8005CE565 /* ChechButton.swift */,
 				B62BB2BB267F41B9003C3C8B /* OrderCell.swift */,
 				B62BB2C0267F5F4A003C3C8B /* OrderFooter.swift */,
+				471317122684CE7B00570D74 /* OrderHeaderView.swift */,
+				471317102684CE6D00570D74 /* OrderTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,6 +289,7 @@
 				B60282C4267C824B005CE565 /* OrderFailedViewController.swift */,
 				477377CD26725A2400C9F2B2 /* CardViewController.swift */,
 				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
+				471317142684CE8100570D74 /* OrderListViewController.swift */,
 				B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */,
 			);
 			path = Controllers;
@@ -560,6 +569,7 @@
 				47A02E4C2670A87C00DFA715 /* MainTabBar.swift in Sources */,
 				47A02E482670A87C00DFA715 /* CategoryCollectionViewCell.swift in Sources */,
 				B60282E8267CB8F8005CE565 /* ChechButton.swift in Sources */,
+				471317152684CE8100570D74 /* OrderListViewController.swift in Sources */,
 				B602826B267B34F9005CE565 /* SelectCardViewController.swift in Sources */,
 				477377D22672992000C9F2B2 /* RestaurantsTableViewCell.swift in Sources */,
 				47A02E4D2670A87C00DFA715 /* BasketViewController.swift in Sources */,
@@ -581,6 +591,7 @@
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
 				B62BB2BC267F41B9003C3C8B /* OrderCell.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
+				471317112684CE6D00570D74 /* OrderTableViewCell.swift in Sources */,
 				B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */,
 				47A02E4E2670A87C00DFA715 /* PhoneVerificationViewController.swift in Sources */,
 				47A02E512670A87C00DFA715 /* SectionView.swift in Sources */,
@@ -590,6 +601,7 @@
 				4776E6C62677731600688792 /* ExtensionForCard.swift in Sources */,
 				B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */,
 				477377D026725B3100C9F2B2 /* FooterView.swift in Sources */,
+				471317132684CE7B00570D74 /* OrderHeaderView.swift in Sources */,
 				47A02E372670A86800DFA715 /* MenuItem.swift in Sources */,
 				477377C6267214E300C9F2B2 /* User.swift in Sources */,
 				47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */,

@@ -15,6 +15,7 @@ class SelectedFooter: UITableViewHeaderFooterView {
         let button = UIButton()
         button.backgroundColor = .none
         button.addTarget(self, action: #selector(moveToAddCard), for: .touchUpInside)
+        button.setTitleColor(.black, for: .normal)        
         return button
     }()
     private let iconDestenation: UIImageView = {

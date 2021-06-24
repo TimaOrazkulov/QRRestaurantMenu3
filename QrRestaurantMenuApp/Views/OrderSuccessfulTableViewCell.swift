@@ -23,6 +23,7 @@ class OrderSuccessfulTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 14)
         label.textColor = .black
+        label.numberOfLines = 0
         return label
     }()
     
@@ -42,6 +43,7 @@ class OrderSuccessfulTableViewCell: UITableViewCell {
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.bottom.top.equalToSuperview().inset(5)
+            make.width.equalTo(150)
         }
         priceLabel.snp.makeConstraints { make in
             make.right.equalToSuperview()

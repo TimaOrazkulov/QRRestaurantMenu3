@@ -17,7 +17,8 @@ class SelectCardViewController: UIViewController {
     var menuItems: [MenuItem] = []
     var totalPrice: Double?
     var totalCount: Int?
-    
+    var result: String = ""
+    var restaurants: [Restaurant] = []
     var card: Card? {
         didSet {
             payButton.isEnabled = true
@@ -52,6 +53,11 @@ class SelectCardViewController: UIViewController {
         button.setImage(#imageLiteral(resourceName: "remove"), for: .normal)
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         return button
+    }()
+    
+    private let spaceView: UIView = {
+        let view = UIView()
+        return view
     }()
     
     private let cardTableView: UITableView = {
@@ -97,9 +103,13 @@ class SelectCardViewController: UIViewController {
             orderVC.totalPrice = totalPrice
             orderVC.totalCount = totalCount
             orderVC.orderItems = orderItems
+            orderVC.result = result
+            orderVC.restaurants = restaurants
             navigationController?.pushViewController(orderVC, animated: true)
         } else {
             let orderFailureVC = OrderFailedViewController()
+            orderFailureVC.result = result
+            orderFailureVC.restaurants = restaurants
             navigationController?.pushViewController(orderFailureVC, animated: true)
         }
     }        
@@ -119,23 +129,22 @@ class SelectCardViewController: UIViewController {
         view.addSubview(payButton)
         
         selectCardLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(29)
+            $0.top.equalToSuperview().inset(20)
             $0.left.equalToSuperview().inset(20)
         }
         cancelButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(32.75)
-            $0.right.equalToSuperview().inset(27.75)
+            $0.top.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
         }
         cardTableView.snp.makeConstraints {
-            $0.top.equalTo(selectCardLabel.snp.bottom).offset(24)
+            $0.top.equalTo(selectCardLabel.snp.bottom).offset(20)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(180)
         }
         payButton.snp.makeConstraints {
-            $0.top.equalTo(cardTableView.snp.bottom).offset(30)
+            $0.top.equalTo(cardTableView.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(30)
             $0.height.equalTo(53)
-            
         }
     }
     

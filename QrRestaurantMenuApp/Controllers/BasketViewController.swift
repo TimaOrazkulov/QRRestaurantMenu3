@@ -12,7 +12,8 @@ import FloatingPanel
 
 
 class BasketViewController: UIViewController {
-
+    var result: String = ""
+    var restaurants: [Restaurant] = []
     var baskeView: BasketViewController!
     var floationgPanel = FloatingPanelController()
     var basketMenu: [MenuItem : Int] = [:] {
@@ -119,7 +120,7 @@ class BasketViewController: UIViewController {
     
     private func setupNavigationController() {
         searchBar.sizeToFit()
-        tabBarController?.navigationItem.title = "Корзина"
+        tabBarController?.navigationItem.title = setRestaurantName(id: String(result.split(separator: "_")[0]))
         tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = nil
@@ -127,6 +128,18 @@ class BasketViewController: UIViewController {
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Очистить", style: .plain, target: self, action: #selector(clearItems))
         searchBar.delegate = self
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func setRestaurantName(id: String) -> String {
+        var name = ""
+        restaurants.forEach { restaurant in
+            guard let restId = restaurant.id else {return}
+            if String(restId) == id {
+                guard let restName = restaurant.rest_name else {return}
+                name = restName
+            }
+        }
+        return name
     }
     
     @objc func clearItems(){
@@ -154,9 +167,10 @@ class BasketViewController: UIViewController {
         selectVC.totalPrice = totalPrice
         selectVC.menuItems = menuItems
         selectVC.orderItems = basketMenu
+        selectVC.result = result
+        selectVC.restaurants = restaurants
         floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
             self.floationgPanel.set(contentViewController: selectVC)
-            
         }
     }
 

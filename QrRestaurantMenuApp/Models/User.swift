@@ -35,6 +35,8 @@ struct Order : Codable {
 }
 
 struct OrderItem : Codable {
+    var id: Int
+    var categoryId: Int
     var description: String?
     var imageUrl: String?
     var name: String?

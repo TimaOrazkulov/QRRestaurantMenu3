@@ -13,7 +13,6 @@ class QRScannerViewController: UIViewController {
     
     var video = AVCaptureVideoPreviewLayer()
     var session = AVCaptureSession()
-    
     let qrImageView = UIImageView()
     
     override func viewDidLoad() {
@@ -29,6 +28,7 @@ class QRScannerViewController: UIViewController {
         tabBarController?.navigationItem.title = "QR"
         tabBarController?.navigationItem.rightBarButtonItem = nil
         tabBarController?.navigationItem.leftBarButtonItem = nil
+        session.startRunning()
     }
     
     private func setupQR() {
@@ -56,9 +56,10 @@ class QRScannerViewController: UIViewController {
         session.startRunning()
     }
     
-    private func transitionToMenu(){
+    private func transitionToMenu(result: String){
         let menuVC = MenuViewController()
         menuVC.session = session
+        menuVC.result = result
         navigationController?.pushViewController(menuVC, animated: true)
     }
     
@@ -79,10 +80,9 @@ extension QRScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if metadataObjects.count != 0 {
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr {
-                    guard let stringValue = object.stringValue else { return }
-                    print(stringValue)
+                    guard let result = object.stringValue else {return}
                     session.stopRunning()
-                    transitionToMenu()
+                    transitionToMenu(result: result)
                 }
             }
         }

@@ -9,6 +9,9 @@ import UIKit
 
 class OrderFailedViewController: UIViewController {
     
+    var result: String = ""
+    var restaurants: [Restaurant] = []
+    
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = "Не удалось оплатить заказ"
@@ -67,6 +70,25 @@ class OrderFailedViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
         setupViews()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.title = setRestaurantName(id: String(result.split(separator: "_")[0]))
+    }
+    
+    private func setRestaurantName(id: String) -> String {
+        var name = ""
+        restaurants.forEach { restaurant in
+            guard let restId = restaurant.id else {return}
+            if String(restId) == id {
+                guard let restName = restaurant.rest_name else {return}
+                name = restName
+            }
+        }
+        return name
     }
     
     func setupViews(){

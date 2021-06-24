@@ -15,7 +15,8 @@ import AVFoundation
 class MenuViewController: UIViewController {
             
     var session: AVCaptureSession?
-    
+    var result: String = ""
+    var restaurants: [Restaurant] = []
     var countOfItems = 0 {
         didSet{
             basketCountLabel.text = "\(countOfItems)"
@@ -126,8 +127,10 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         setupTableView()
+        getRestaurants()
         getCategories()
         getMenuItems()
+        setupNavigationController()
         setupBasketView()
         setupConstraints()
     }
@@ -145,9 +148,20 @@ class MenuViewController: UIViewController {
         basketView.addSubview(basketButton)
     }
     
+    private func setRestaurantName(id: String) -> String {
+        var name = ""
+        restaurants.forEach { restaurant in
+            guard let restId = restaurant.id else {return}
+            if String(restId) == id {
+                guard let restName = restaurant.rest_name else {return}
+                name = restName
+            }
+        }
+        return name
+    }
+    
     func setupNavigationController(){
         searchBar.sizeToFit()
-        tabBarController?.navigationItem.title = "Ресторан"
         tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
@@ -172,9 +186,41 @@ class MenuViewController: UIViewController {
         vc.basketMenu = basketItems
         vc.totalPrice = totalPrice
         vc.counter = countOfItems
+        vc.restaurants = restaurants
+        vc.result = result
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    
+    private func getRestaurants(){
+        db.collection("restoran").addSnapshotListener { querySnapShot, error in
+            guard let documents = querySnapShot?.documents else{
+                print("No Documents")
+                return
+            }
+            var arr: [Restaurant] = []
+            documents.forEach { queryDocumentSnapshot in
+                let data = queryDocumentSnapshot.data()
+                let id = data["id"] as? Int ?? 0
+                let desc = data["rest_description"] as? String ?? ""
+                let restLoc = data["rest_locations"] as? [String] ?? []
+                let name = data["rest_name"] as? String ?? ""
+                let restImg = data["rest_image_url"] as? String ?? ""
+                var locArr: [String] = []
+                restLoc.forEach { location in
+                    locArr.append(location)
+                }
+                let restorant = Restaurant(id: id, rest_name: name, rest_description: desc, rest_image_url: restImg, rest_location: locArr)
+                arr.append(restorant)
+            }
+            
+            DispatchQueue.main.async {
+                self.restaurants = arr
+                self.tabBarController?.navigationItem.title = self.setRestaurantName(id: String(self.result.split(separator: "_")[0]))
+            }
+            
+        }
+    }
     private func setupTableView() {
         view.addSubview(categoryCollectionView)
         view.addSubview(menuTableView)

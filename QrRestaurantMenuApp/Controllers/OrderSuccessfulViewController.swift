@@ -15,6 +15,8 @@ class OrderSuccessfulViewController: UIViewController {
     var menuItems: [MenuItem] = []
     var totalPrice: Double?
     var totalCount: Int?
+    var result: String = ""
+    var restaurants: [Restaurant] = []
     var uid: String = "wTkLYYvYSYaH3DClKLxG"
     
     private let doneImageView: UIImageView = {
@@ -27,6 +29,7 @@ class OrderSuccessfulViewController: UIViewController {
         let label = UILabel()
         label.text = "Ваш заказ успешно оплачен!"
         label.font = .boldSystemFont(ofSize: 18)
+        label.textColor = .black
         return label
     }()
     
@@ -48,6 +51,7 @@ class OrderSuccessfulViewController: UIViewController {
         button.setTitle("На главную", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = #colorLiteral(red: 0.4862297773, green: 0.4863032103, blue: 0.4862136245, alpha: 1)
+        button.addTarget(self, action: #selector(transitionToRootVC), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         return button
@@ -62,16 +66,40 @@ class OrderSuccessfulViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.7958194613, green: 0.7514733672, blue: 0.7521334291, alpha: 1)
         setupConstraints()
         getOrdersOfUser()
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.title = setRestaurantName(id: String(result.split(separator: "_")[0]))
     }
         
-    // 1. Сделать массив Orders чтобы потом по нему пробегаться и создавать dict [String : Any] и закидывать потом в базу
-    // 2. Поменять key 
+    private func setRestaurantName(id: String) -> String {
+        var name = ""
+        restaurants.forEach { restaurant in
+            guard let restId = restaurant.id else {return}
+            if String(restId) == id {
+                guard let restName = restaurant.rest_name else {return}
+                name = restName
+            }
+        }
+        return name
+    }
+    
+    @objc private func transitionToRootVC(){
+        navigationController?.popToRootViewController(animated: true)
+    }
     
     private func addItemsToOrderHistory(){
         orderList.forEach { key, order in
             var orderItems: [String : Any] = [:]
             order.orderItems?.forEach({ key, orderItem in
                 var orderItemsDict: [String : Any] = [:]
+                orderItemsDict["id"] = orderItem.name
+                orderItemsDict["categoryId"] = orderItem.categoryId
                 orderItemsDict["name"] = orderItem.name
                 orderItemsDict["imageUrl"] = orderItem.imageUrl
                 orderItemsDict["description"] = orderItem.description
@@ -85,7 +113,7 @@ class OrderSuccessfulViewController: UIViewController {
         
         var orderItems: [String : Any] = [:]
         self.orderItems.forEach { menuItem, count in
-            let orderItem = OrderItem(description: menuItem.description, imageUrl: menuItem.imageUrl, name: menuItem.name, price: menuItem.price, restaurantId: menuItem.restaurantId, count: count)
+            let orderItem = OrderItem(id: menuItem.id ?? -1, categoryId: menuItem.categoryId ?? -1, description: menuItem.description, imageUrl: menuItem.imageUrl, name: menuItem.name, price: menuItem.price, restaurantId: menuItem.restaurantId, count: count)
             var orderItemsDict: [String : Any] = [:]
             orderItemsDict["name"] = orderItem.name
             orderItemsDict["imageUrl"] = orderItem.imageUrl
@@ -102,7 +130,8 @@ class OrderSuccessfulViewController: UIViewController {
         let formatterForDict = DateFormatter()
         formatterForDict.dateFormat = "dd.MM.yyyy"
         let result = formatter.string(from: date)
-        self.orders[result] = ["restaurantName" : "Luckee Yu", "date" : formatterForDict.string(from: date), "totalPrice" : totalPrice, "seatNumber" : "Стол №5", "orderItems" : orderItems]
+        let restInfo = self.result.split(separator: "_")
+        self.orders[result] = ["restaurantName" : setRestaurantName(id: String(restInfo[0])), "date" : formatterForDict.string(from: date), "totalPrice" : totalPrice, "seatNumber" : "Стол №\(restInfo[1])", "orderItems" : orderItems]
         // let order = Order(restaurantName: "Luckee Yu", date: result, totalPrice: self.totalPrice, seatNumber: "Стол №5", orderItems: orderItems)
         DispatchQueue.main.async {
             Firestore.firestore().collection("users").document(self.uid).updateData([
@@ -131,13 +160,15 @@ class OrderSuccessfulViewController: UIViewController {
                     var orderItemList: [String : OrderItem] = [:]
                     orderItems.forEach { key, orderItem in
                         let orderItemData = orderItems[key] as? [String : Any] ?? [:]
+                        let id = orderItemData["id"] as? Int ?? 0
+                        let categoryId = orderItemData["categoryId"] as? Int ?? 0
                         let description = orderItemData["description"] as? String ?? ""
                         let name = orderItemData["name"] as? String ?? ""
                         let imageUrl = orderItemData["imageUrl"] as? String ?? ""
                         let count = orderItemData["count"] as? Int ?? 0
                         let price = orderItemData["price"] as? Double ?? 0
                         let restaurantId = orderItemData["restaurantId"] as? Int ?? 0
-                        let orderItem = OrderItem(description: description, imageUrl: imageUrl, name: name, price: price, restaurantId: restaurantId , count: count)
+                        let orderItem = OrderItem(id: id, categoryId: categoryId,description: description, imageUrl: imageUrl, name: name, price: price, restaurantId: restaurantId , count: count)
                         orderItemList[key] = orderItem
                     }
                     let order = Order(restaurantName: restaurantName, date: date, totalPrice: totalPrice, seatNumber: seatNumber, orderItems: orderItemList)
@@ -166,7 +197,7 @@ class OrderSuccessfulViewController: UIViewController {
     
     func setupConstraints(){
         doneImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(250)
+            make.top.equalToSuperview().inset(200)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(70)
         }
@@ -226,4 +257,12 @@ extension OrderSuccessfulViewController: UITableViewDelegate, UITableViewDataSou
         return UITableView.automaticDimension
     }
     
+}
+
+extension UINavigationController {
+
+    var rootViewController: UIViewController? {
+        return viewControllers.first
+    }
+
 }

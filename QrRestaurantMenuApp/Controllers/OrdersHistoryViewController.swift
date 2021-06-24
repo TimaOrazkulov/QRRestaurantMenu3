@@ -75,13 +75,15 @@ class OrdersHistoryViewController: UIViewController {
                     var orderItemList: [String : OrderItem] = [:]
                     orderItems.forEach { key, orderItem in
                         let orderItemData = orderItems[key] as! [String : Any]
+                        let id = orderItemData["id"] as? Int ?? -1
+                        let categoryId = orderItemData["categoryId"] as? Int ?? -1
                         let description = orderItemData["description"] as? String ?? ""
                         let name = orderItemData["name"] as? String ?? ""
                         let imageUrl = orderItemData["imageUrl"] as? String ?? ""
                         let count = orderItemData["count"] as? Int ?? 0
                         let price = orderItemData["price"] as? Double ?? 0
                         let restaurantId = orderItemData["restaurantId"] as? Int ?? 0
-                        let orderItem = OrderItem(description: description, imageUrl: imageUrl, name: name, price: price, restaurantId: restaurantId , count: count)
+                        let orderItem = OrderItem(id: id, categoryId: categoryId, description: description, imageUrl: imageUrl, name: name, price: price, restaurantId: restaurantId , count: count)
                         orderItemList[key] = orderItem
                     }
                     let order = Order(restaurantName: restaurantName, date: date, totalPrice: totalPrice, seatNumber: seatNumber, orderItems: orderItemList)
@@ -97,18 +99,24 @@ class OrdersHistoryViewController: UIViewController {
 }
 
 extension OrdersHistoryViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return orders?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: OrderCell.orderID, for: indexPath) as! OrderCell
-        cell.order = orders?[indexPath.row]
+        guard let order = orders?[indexPath.row] else {
+            return cell
+        }
+        cell.order = order        
         return cell
     }
 }
 extension OrdersHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let vc = OrderListViewController()
+        vc.order = orders?[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

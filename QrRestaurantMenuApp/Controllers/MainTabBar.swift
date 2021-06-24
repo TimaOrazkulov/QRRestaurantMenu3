@@ -25,8 +25,7 @@ class MainTabBar: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        
+        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)        
     }
     
     private func setupTabBar() {
@@ -56,3 +55,4 @@ class MainTabBar: UITabBarController {
 
     }
 }
+
