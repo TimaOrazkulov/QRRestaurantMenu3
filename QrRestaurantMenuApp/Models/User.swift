@@ -26,10 +26,19 @@ struct User : Codable {
     var orders: [Order]?
 }
 
-struct Order: Codable {
+struct Order : Codable {
     var restaurantName: String?
     var date: String?
     var totalPrice: Double?
     var seatNumber: String?
-    var orderItems: [MenuItem: Int]?
+    var orderItems: [String : OrderItem]?
+}
+
+struct OrderItem : Codable {
+    var description: String?
+    var imageUrl: String?
+    var name: String?
+    var price: Double?
+    var restaurantId: Int?
+    var count: Int?
 }

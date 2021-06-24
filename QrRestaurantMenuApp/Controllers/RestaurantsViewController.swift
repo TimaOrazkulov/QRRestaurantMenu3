@@ -27,6 +27,7 @@ class RestaurantsViewController: UIViewController  {
         table.register(RestaurantsTableViewCell.self, forCellReuseIdentifier: RestaurantsTableViewCell.identifire)
         table.showsVerticalScrollIndicator = false
         table.backgroundColor = #colorLiteral(red: 0.7863221765, green: 0.7518113256, blue: 0.752297163, alpha: 1)
+        table.separatorStyle = .none
         return table
     }()
     
@@ -53,6 +54,7 @@ class RestaurantsViewController: UIViewController  {
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
+        navigationController?.navigationBar.isHidden = true
     }
     
     @objc func handleSearchBar(){

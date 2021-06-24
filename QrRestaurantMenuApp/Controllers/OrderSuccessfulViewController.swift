@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import Firebase
 
 class OrderSuccessfulViewController: UIViewController {
-
+    var orders: [String : Any] = [:]
+    var orderList: [String : Order] = [:]
     var orderItems: [MenuItem : Int] = [:]
     var menuItems: [MenuItem] = []
     var totalPrice: Double?
     var totalCount: Int?
+    var uid: String = "wTkLYYvYSYaH3DClKLxG"
     
     private let doneImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,6 +61,100 @@ class OrderSuccessfulViewController: UIViewController {
         dataParseToMenuItems()
         view.backgroundColor = #colorLiteral(red: 0.7958194613, green: 0.7514733672, blue: 0.7521334291, alpha: 1)
         setupConstraints()
+        getOrdersOfUser()
+    }
+        
+    // 1. Сделать массив Orders чтобы потом по нему пробегаться и создавать dict [String : Any] и закидывать потом в базу
+    // 2. Поменять key 
+    
+    private func addItemsToOrderHistory(){
+        orderList.forEach { key, order in
+            var orderItems: [String : Any] = [:]
+            order.orderItems?.forEach({ key, orderItem in
+                var orderItemsDict: [String : Any] = [:]
+                orderItemsDict["name"] = orderItem.name
+                orderItemsDict["imageUrl"] = orderItem.imageUrl
+                orderItemsDict["description"] = orderItem.description
+                orderItemsDict["count"] = orderItem.count
+                orderItemsDict["price"] = orderItem.price
+                orderItems[key] = orderItemsDict
+            })
+            
+            orders[key] = ["restaurantName" : order.restaurantName, "date" : order.date, "totalPrice" : order.totalPrice, "seatNumber" : order.seatNumber, "orderItems" : orderItems]
+        }
+        
+        var orderItems: [String : Any] = [:]
+        self.orderItems.forEach { menuItem, count in
+            let orderItem = OrderItem(description: menuItem.description, imageUrl: menuItem.imageUrl, name: menuItem.name, price: menuItem.price, restaurantId: menuItem.restaurantId, count: count)
+            var orderItemsDict: [String : Any] = [:]
+            orderItemsDict["name"] = orderItem.name
+            orderItemsDict["imageUrl"] = orderItem.imageUrl
+            orderItemsDict["description"] = orderItem.description
+            orderItemsDict["count"] = orderItem.count
+            orderItemsDict["price"] = orderItem.price
+            guard let name = orderItem.name else {return}
+            orderItems["order: \(name)"] = orderItemsDict
+            
+        }
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        let formatterForDict = DateFormatter()
+        formatterForDict.dateFormat = "dd.MM.yyyy"
+        let result = formatter.string(from: date)
+        self.orders[result] = ["restaurantName" : "Luckee Yu", "date" : formatterForDict.string(from: date), "totalPrice" : totalPrice, "seatNumber" : "Стол №5", "orderItems" : orderItems]
+        // let order = Order(restaurantName: "Luckee Yu", date: result, totalPrice: self.totalPrice, seatNumber: "Стол №5", orderItems: orderItems)
+        DispatchQueue.main.async {
+            Firestore.firestore().collection("users").document(self.uid).updateData([
+                "orders" : self.orders
+            ]) { error in
+                guard let err = error else {return}
+                print(err.localizedDescription)
+            }
+        }
+    }
+    
+    private func getOrdersOfUser() {
+        let ref = Firestore.firestore().collection("users").document(uid)
+        ref.getDocument { documentSnapshot, _ in
+            if let document = documentSnapshot, document.exists {
+                guard let data = document.data() else { return }
+                let orders = data["orders"] as? [String : Any] ?? [:]
+                var orderList: [String : Order] = [:]
+                orders.forEach { key, order in
+                    let orderData = orders[key] as? [String : Any] ?? [:]
+                    let date = orderData["date"] as? String ?? ""
+                    let restaurantName = orderData["restaurantName"] as? String ?? ""
+                    let seatNumber = orderData["seatNumber"] as? String ?? ""
+                    let totalPrice = orderData["totalPrice"] as? Double ?? 0
+                    let orderItems = orderData["orderItems"] as? [String : Any] ?? [:]
+                    var orderItemList: [String : OrderItem] = [:]
+                    orderItems.forEach { key, orderItem in
+                        let orderItemData = orderItems[key] as? [String : Any] ?? [:]
+                        let description = orderItemData["description"] as? String ?? ""
+                        let name = orderItemData["name"] as? String ?? ""
+                        let imageUrl = orderItemData["imageUrl"] as? String ?? ""
+                        let count = orderItemData["count"] as? Int ?? 0
+                        let price = orderItemData["price"] as? Double ?? 0
+                        let restaurantId = orderItemData["restaurantId"] as? Int ?? 0
+                        let orderItem = OrderItem(description: description, imageUrl: imageUrl, name: name, price: price, restaurantId: restaurantId , count: count)
+                        orderItemList[key] = orderItem
+                    }
+                    let order = Order(restaurantName: restaurantName, date: date, totalPrice: totalPrice, seatNumber: seatNumber, orderItems: orderItemList)
+                    orderList[key] = order
+                }
+                DispatchQueue.main.async {
+                    self.orderList = orderList
+                    self.addItemsToOrderHistory()
+                }
+            }
+        }
+    }
+    
+    func dataParseToMenuItems(){
+        orderItems.keys.forEach { menuItem in
+            menuItems.append(menuItem)
+        }
     }
     
     func setupViews(){
@@ -86,12 +183,6 @@ class OrderSuccessfulViewController: UIViewController {
             make.top.equalTo(orderTableView.snp.bottom).offset(50)
             make.right.left.equalToSuperview().inset(30)
             make.height.equalTo(55)
-        }
-    }
-    
-    func dataParseToMenuItems(){
-        orderItems.keys.forEach { menuItem in
-            menuItems.append(menuItem)
         }
     }
 }

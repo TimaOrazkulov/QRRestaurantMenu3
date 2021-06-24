@@ -128,9 +128,13 @@ class MenuViewController: UIViewController {
         setupTableView()
         getCategories()
         getMenuItems()
-        setupNavigationController()
         setupBasketView()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController()
     }
     
     func setupBasketView(){
@@ -148,7 +152,8 @@ class MenuViewController: UIViewController {
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
-        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "QR", style: .done, target: self, action: #selector(popVC))
+        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
+        navigationController?.navigationBar.isHidden = true
     }
     
     @objc func popVC(){
@@ -191,11 +196,11 @@ class MenuViewController: UIViewController {
             $0.top.equalTo(categoryCollectionView.snp.bottom)
             $0.left.equalToSuperview().offset(10)
             $0.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(160)
         }
         basketView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(80)
+            $0.bottom.equalToSuperview().inset(100)
             $0.height.equalTo(50)
         }
         basketButton.snp.makeConstraints{
@@ -358,6 +363,36 @@ extension MenuViewController: UISearchBarDelegate {
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
     }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        menuItemsForTableView = [:]
+        categoriesForTableView = []
+        if searchText == "" {
+            menuItemsForTableView = menuItems
+            categoriesForTableView = categories
+        }else{
+            menuItems.forEach { key, menuItem in
+                menuItem.forEach { item in
+                    guard let name = item.name else {return}
+                    guard let description = item.description else {return}
+                    if name.lowercased().contains(searchText.lowercased()) || description.lowercased().contains(searchText.lowercased()){
+                        if menuItemsForTableView[key] == nil {
+                            menuItemsForTableView[key] = []
+                        }
+                        menuItemsForTableView[key]?.append(item)
+                    }
+                }
+            }
+            let keys = menuItemsForTableView.keys
+            categories.forEach { category in
+                if keys.contains(where: { key in
+                    if category.id == key {return true}
+                    return false
+                }){
+                    categoriesForTableView.append(category)
+                }
+            }
+        }
+    }
 }
 
 extension MenuViewController: MenuTableViewCellDelegate {
@@ -391,3 +426,4 @@ extension MenuViewController: MenuTableViewCellDelegate {
         basketView.isHidden = false
     }
 }
+

@@ -34,6 +34,12 @@ class OrderCell: UITableViewCell {
         return label
     }()
     
+    private let borderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        return view
+    }()
+    
     var order: Order? {
         didSet {
             if let restName = order?.restaurantName {
@@ -57,6 +63,7 @@ class OrderCell: UITableViewCell {
         contentView.addSubview(resName)
         contentView.addSubview(dateOrder)
         contentView.addSubview(totalPrice)
+        contentView.addSubview(borderView)
         
         resName.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
@@ -69,6 +76,10 @@ class OrderCell: UITableViewCell {
         totalPrice.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(26)
             $0.right.equalToSuperview().inset(20)
+        }
+        borderView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(1)
         }
         
     }

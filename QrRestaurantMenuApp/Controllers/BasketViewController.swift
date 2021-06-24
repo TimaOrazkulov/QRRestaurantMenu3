@@ -97,11 +97,15 @@ class BasketViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         floationgPanel.delegate = self
-        setupTableView()
-        setupNavigationController()
+        setupTableView()        
         setupBasketView()
         setupConstraints()
         parseMenuData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController()
     }
     
     private func setupBasketView() {
@@ -115,11 +119,26 @@ class BasketViewController: UIViewController {
     
     private func setupNavigationController() {
         searchBar.sizeToFit()
-        navigationItem.title = "Корзина"
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
+        tabBarController?.navigationItem.title = "Корзина"
+        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.tintColor = .black
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Очистить", style: .plain, target: self, action: #selector(clearItems))
         searchBar.delegate = self
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    @objc func clearItems(){
+        menuItems = []
+        basketMenu = [:]
+    }
+    
+    @objc func popVC(){
+        let vc = navigationController?.popViewController(animated: true) as? MenuViewController
+        vc?.totalPrice = totalPrice
+        vc?.countOfItems = counter
+        vc?.basketItems = basketMenu
     }
     
     @objc func handleSearchBar() {
@@ -160,7 +179,7 @@ class BasketViewController: UIViewController {
         }
         basketView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(80)
+            $0.bottom.equalToSuperview().inset(100)
             $0.height.equalTo(60)
         }
         basketButton.snp.makeConstraints{

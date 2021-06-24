@@ -11,7 +11,7 @@ import FirebaseFirestore
 import SnapKit
 
 class SelectCardViewController: UIViewController {
-    var newOrders: [String: Order] = [:]
+    
     let db = Firestore.firestore()
     var orderItems: [MenuItem : Int] = [:]
     var menuItems: [MenuItem] = []
@@ -102,28 +102,7 @@ class SelectCardViewController: UIViewController {
             let orderFailureVC = OrderFailedViewController()
             navigationController?.pushViewController(orderFailureVC, animated: true)
         }
-    }
-    
-    private func getOrdersOfUser() {
-        let ref = db.collection("order").document(uid!)
-        ref.getDocument { (documentSnapshot, error) in
-            guard error != nil else { return }
-            if let document = documentSnapshot, document.exists {
-                guard let data = document.data() else { return }
-                let restaurantName = data["restaurantName"] as? String ?? ""
-                let date = data["date"] as? String ?? ""
-                let totalPrice = data["totalPrice"] as? Double ?? 0
-                let seatNumber = data["seatNumber"] as? String ?? ""
-                let orderItems = data["orderItems"] as! [String: Any]
-                
-//                orderItems.forEach { key, menuItems in
-//                    <#code#>
-//                }
-                
-            }
-        }
-        
-    }
+    }        
     
     private func validationFunc() -> Bool {
         guard let numberCard = card?.cardNumber else { return false }

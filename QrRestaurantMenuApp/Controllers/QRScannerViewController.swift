@@ -79,6 +79,8 @@ extension QRScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if metadataObjects.count != 0 {
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr {
+                    guard let stringValue = object.stringValue else { return }
+                    print(stringValue)
                     session.stopRunning()
                     transitionToMenu()
                 }

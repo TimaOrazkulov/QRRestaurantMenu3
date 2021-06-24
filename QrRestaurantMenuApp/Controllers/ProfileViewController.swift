@@ -200,6 +200,13 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         return imageView
     }()
     
+    private lazy var historyButton: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = .none
+        button.addTarget(self, action: #selector(transitionToHistory), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var logOutButton: UIButton = {
         let button = UIButton()
         button.setTitle( "Выйти", for: .normal)
@@ -265,6 +272,11 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             return newCards
         }
     
+    @objc private func transitionToHistory(){
+        let vc = OrdersHistoryViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func checkAuth() {
         if Auth.auth().currentUser?.uid == nil {
             // let child = SnackbarViewController()
@@ -322,10 +334,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let docRef = Firestore.firestore().collection("users").document(uid)
         metaData.contentType = "image/jpg"
         storageProfileRef.putData(imageData, metadata: metaData) { storageMetaData, error in
-            if error != nil {
-                print(error?.localizedDescription)
-                return
-            }
+            guard let error = error else {return}
+            print(error.localizedDescription)
         }
         storageProfileRef.downloadURL { url, error in
             if let imageURL = url?.absoluteString {
@@ -420,6 +430,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         genderView.addSubview(genderTextField)
         historyView.addSubview(historyLabel)
         historyView.addSubview(historyNextImageView)
+        historyView.addSubview(historyButton)
         cardView.addSubview(cardLabel)
         cardView.addSubview(cardNextImageView)
         cardView.addSubview(cardbutton)
@@ -513,6 +524,9 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             make.height.width.equalTo(15)
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(24)
+        }
+        historyButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         logOutButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(100)

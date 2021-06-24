@@ -43,6 +43,7 @@ class CardViewController: UIViewController {
             self?.newCards = cards
         }
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
+        tabBarController?.navigationItem.title = "Карты"
         
     }
     
@@ -81,7 +82,7 @@ class CardViewController: UIViewController {
              self?.navigationController?.present(addCardVC, animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
-    }
+    }        
     
     private func parseDataToCards() {
         var updateCards: [Card] = []
@@ -124,7 +125,7 @@ extension CardViewController: UITableViewDataSource, UITableViewDelegate {
 extension CardViewController: CardCellDelegate {
     func deleteCard(itemCard: Card) {
         newCards?[itemCard.key!] = nil
-        cards?.removeAll(where: { card -> Bool in
+        cards?.removeAll(where: { card in
             if card == itemCard {
                 return true
             }
