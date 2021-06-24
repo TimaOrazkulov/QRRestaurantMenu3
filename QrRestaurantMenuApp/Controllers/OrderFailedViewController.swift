@@ -1,16 +1,9 @@
-//
-//  OrderFailedViewController.swift
-//  QrRestaurantMenuApp
-//
-//  Created by Temirlan Orazkulov on 17.06.2021.
-//
-
 import UIKit
+import FloatingPanel
 
 class OrderFailedViewController: UIViewController {
     
-    var result: String = ""
-    var restaurants: [Restaurant] = []
+    var floationgPanel = FloatingPanelController()
     
     private let errorLabel: UILabel = {
         let label = UILabel()
@@ -42,6 +35,7 @@ class OrderFailedViewController: UIViewController {
         button.backgroundColor = #colorLiteral(red: 0.4862297773, green: 0.4863032103, blue: 0.4862136245, alpha: 1)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(tryOnceMore), for: .touchUpInside)
         return button
     }()
     
@@ -52,6 +46,7 @@ class OrderFailedViewController: UIViewController {
         button.backgroundColor = #colorLiteral(red: 0.4862297773, green: 0.4863032103, blue: 0.4862136245, alpha: 1)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(changedPayment), for: .touchUpInside)
         return button
     }()
     
@@ -62,6 +57,7 @@ class OrderFailedViewController: UIViewController {
         button.backgroundColor = #colorLiteral(red: 0.4862297773, green: 0.4863032103, blue: 0.4862136245, alpha: 1)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(cancelOrder), for: .touchUpInside)
         return button
     }()
     
@@ -72,23 +68,32 @@ class OrderFailedViewController: UIViewController {
         setupConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.navigationItem.rightBarButtonItem = nil
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.title = setRestaurantName(id: String(result.split(separator: "_")[0]))
+    @objc private func changedPayment() {
+        let vc = SelectCardViewController()
+        floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
+            self.floationgPanel.set(contentViewController: vc)
+        }
     }
     
-    private func setRestaurantName(id: String) -> String {
-        var name = ""
-        restaurants.forEach { restaurant in
-            guard let restId = restaurant.id else {return}
-            if String(restId) == id {
-                guard let restName = restaurant.rest_name else {return}
-                name = restName
-            }
-        }
-        return name
+    @objc private func tryOnceMore() {
+        
+    }
+    
+    @objc private func cancelOrder() {
+        let alert = UIAlertController(title: "", message: "Вы действительно хотите \nотменить заказ?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak self] action in
+            self?.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self]  action in
+            let alert = UIAlertController(title: "", message: "Ваш заказ отменен", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "На главную", style: .default, handler: { [weak self] action in
+                let menuVC = MenuViewController()
+                self?.navigationController?.pushViewController(menuVC, animated: true)
+                self?.navigationController?.navigationBar.isHidden = true
+            }))
+            self?.present(alert, animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     func setupViews(){
