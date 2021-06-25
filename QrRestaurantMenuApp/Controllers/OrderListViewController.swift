@@ -28,6 +28,7 @@ class OrderListViewController: UIViewController {
         tableView.register(OrderTableViewCell.self, forCellReuseIdentifier: OrderTableViewCell.identifier)
         tableView.register(OrderHeaderView.self, forHeaderFooterViewReuseIdentifier: "orderHeaderID")
         tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
 
@@ -174,10 +175,6 @@ extension OrderListViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: OrderTableViewCell.identifier, for: indexPath) as! OrderTableViewCell
         cell.orderItem = orderItems[indexPath.row]
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

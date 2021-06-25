@@ -118,12 +118,11 @@ class OrderTableViewCell: UITableViewCell {
             $0.top.equalTo(orderName.snp.bottom).offset(10)
             //$0.right.equalTo(orderImage.snp.left).inset(10)
             $0.left.equalToSuperview().inset(10)
-            
         }
         orderPrice.snp.makeConstraints {
             $0.top.equalTo(orderDesc.snp.bottom).offset(10)
             $0.left.equalToSuperview().inset(10)
-
+            $0.bottom.equalToSuperview().inset(10)
         }
         orderCount.snp.makeConstraints {
             $0.top.equalTo(orderDesc.snp.bottom).offset(10)

@@ -107,9 +107,7 @@ class SelectCardViewController: UIViewController {
             orderVC.restaurants = restaurants
             navigationController?.pushViewController(orderVC, animated: true)
         } else {
-            let orderFailureVC = OrderFailedViewController()
-            orderFailureVC.result = result
-            orderFailureVC.restaurants = restaurants
+            let orderFailureVC = OrderFailedViewController()            
             navigationController?.pushViewController(orderFailureVC, animated: true)
         }
     }        

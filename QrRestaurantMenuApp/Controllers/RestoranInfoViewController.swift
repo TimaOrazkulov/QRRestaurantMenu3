@@ -27,7 +27,6 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.layer.cornerRadius = 10
-        scrollView.contentMode = .scaleAspectFit
         return scrollView
     }()
     
@@ -134,7 +133,8 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
             DispatchQueue.main.async() { [weak self] in
                 guard let image = UIImage(data: data) else {return}
                 let imageView = UIImageView(image: image)
-                imageView.contentMode = .scaleAspectFit
+                //imageView.contentMode = .scaleAspectFit
+                imageView.frame = CGRect(x: 0, y: 0, width: 355, height: 200)
                 self?.scrollView.addSubview(imageView)
             }
         }

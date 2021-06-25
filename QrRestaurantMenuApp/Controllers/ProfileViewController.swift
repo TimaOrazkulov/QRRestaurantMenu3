@@ -323,28 +323,28 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
         
     @objc func saveButtonTapped(){
-        guard let imageSelected = self.uploadImage else {
-            print("Avatar is nil")
-            return
-        }
-        guard let imageData = imageSelected.jpegData(compressionQuality: 0.4) else {return}
-        let storageRef = Storage.storage().reference(forURL: "gs://arcanaqrmenu.appspot.com")
-        let storageProfileRef = storageRef.child("profilePictures").child(uid)
-        let metaData = StorageMetadata()
         let docRef = Firestore.firestore().collection("users").document(uid)
-        metaData.contentType = "image/jpg"
-        storageProfileRef.putData(imageData, metadata: metaData) { storageMetaData, error in
-            guard let error = error else {return}
-            print(error.localizedDescription)
-        }
-        storageProfileRef.downloadURL { url, error in
-            if let imageURL = url?.absoluteString {
-                docRef.updateData(["profileURL" : imageURL])
+        if let imageSelected = self.uploadImage {
+            guard let imageData = imageSelected.jpegData(compressionQuality: 0.4) else {return}
+            let storageRef = Storage.storage().reference(forURL: "gs://arcanaqrmenu.appspot.com")
+            let storageProfileRef = storageRef.child("profilePictures").child(uid)
+            let metaData = StorageMetadata()
+            metaData.contentType = "image/jpg"
+            storageProfileRef.putData(imageData, metadata: metaData) { storageMetaData, error in
+                guard let error = error else {return}
+                print(error.localizedDescription)
             }
+            storageProfileRef.downloadURL { url, error in
+                if let imageURL = url?.absoluteString {
+                    docRef.updateData(["profileURL" : imageURL])
+                }
+            }
+        }else {
+            print("Avatar is nil")
         }
         docRef.updateData([
-            "birthDate" : self.dateTextField.text,
-            "gender" : self.genderTextField.text,
+            "birthDate" : self.dateTextField.text as Any,
+            "gender" : self.genderTextField.text as Any,
         ]) { err in
             if let err = err {
                 print(err.localizedDescription)
