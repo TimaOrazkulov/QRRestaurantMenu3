@@ -11,6 +11,20 @@
 		471317112684CE6D00570D74 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317102684CE6D00570D74 /* OrderTableViewCell.swift */; };
 		471317132684CE7B00570D74 /* OrderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317122684CE7B00570D74 /* OrderHeaderView.swift */; };
 		471317152684CE8100570D74 /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317142684CE8100570D74 /* OrderListViewController.swift */; };
+		47336E0626866FAE00445880 /* TabBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47336E0526866FAE00445880 /* TabBarTitleView.swift */; };
+		47336E162687259E00445880 /* Inter-VariableFont_slnt,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E092687259E00445880 /* Inter-VariableFont_slnt,wght.ttf */; };
+		47336E172687259E00445880 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0B2687259E00445880 /* Inter-Medium.ttf */; };
+		47336E182687259E00445880 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0C2687259E00445880 /* Inter-Light.ttf */; };
+		47336E192687259E00445880 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0D2687259E00445880 /* Inter-Thin.ttf */; };
+		47336E1A2687259E00445880 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0E2687259E00445880 /* Inter-Bold.ttf */; };
+		47336E1B2687259E00445880 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0F2687259E00445880 /* Inter-Regular.ttf */; };
+		47336E1C2687259E00445880 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E102687259E00445880 /* Inter-ExtraBold.ttf */; };
+		47336E1D2687259E00445880 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E112687259E00445880 /* Inter-ExtraLight.ttf */; };
+		47336E1E2687259E00445880 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E122687259E00445880 /* Inter-Black.ttf */; };
+		47336E1F2687259E00445880 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E132687259E00445880 /* Inter-SemiBold.ttf */; };
+		47336E202687259E00445880 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47336E142687259E00445880 /* OFL.txt */; };
+		47336E212687259E00445880 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47336E152687259E00445880 /* README.txt */; };
+		47336E272687BF3F00445880 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47336E262687BF3F00445880 /* CommentViewController.swift */; };
 		473EB47626733FAD0083068F /* CardCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EB47526733FAD0083068F /* CardCellTableViewCell.swift */; };
 		477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */; };
 		477377C6267214E300C9F2B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477377C5267214E300C9F2B2 /* User.swift */; };
@@ -85,6 +99,20 @@
 		471317102684CE6D00570D74 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		471317122684CE7B00570D74 /* OrderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderHeaderView.swift; sourceTree = "<group>"; };
 		471317142684CE8100570D74 /* OrderListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
+		47336E0526866FAE00445880 /* TabBarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTitleView.swift; sourceTree = "<group>"; };
+		47336E092687259E00445880 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
+		47336E0B2687259E00445880 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		47336E0C2687259E00445880 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
+		47336E0D2687259E00445880 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
+		47336E0E2687259E00445880 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		47336E0F2687259E00445880 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		47336E102687259E00445880 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		47336E112687259E00445880 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		47336E122687259E00445880 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
+		47336E132687259E00445880 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		47336E142687259E00445880 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		47336E152687259E00445880 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		47336E262687BF3F00445880 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		473EB47526733FAD0083068F /* CardCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCellTableViewCell.swift; sourceTree = "<group>"; };
 		477377C326710F6200C9F2B2 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		477377C5267214E300C9F2B2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -185,6 +213,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		47336E072687259300445880 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				47336E082687259E00445880 /* Inter */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		47336E082687259E00445880 /* Inter */ = {
+			isa = PBXGroup;
+			children = (
+				47336E092687259E00445880 /* Inter-VariableFont_slnt,wght.ttf */,
+				47336E0A2687259E00445880 /* static */,
+				47336E142687259E00445880 /* OFL.txt */,
+				47336E152687259E00445880 /* README.txt */,
+			);
+			path = Inter;
+			sourceTree = "<group>";
+		};
+		47336E0A2687259E00445880 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				47336E0B2687259E00445880 /* Inter-Medium.ttf */,
+				47336E0C2687259E00445880 /* Inter-Light.ttf */,
+				47336E0D2687259E00445880 /* Inter-Thin.ttf */,
+				47336E0E2687259E00445880 /* Inter-Bold.ttf */,
+				47336E0F2687259E00445880 /* Inter-Regular.ttf */,
+				47336E102687259E00445880 /* Inter-ExtraBold.ttf */,
+				47336E112687259E00445880 /* Inter-ExtraLight.ttf */,
+				47336E122687259E00445880 /* Inter-Black.ttf */,
+				47336E132687259E00445880 /* Inter-SemiBold.ttf */,
+			);
+			path = static;
+			sourceTree = "<group>";
+		};
 		47A02DF22670A3D100DFA715 = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +274,7 @@
 		47A02DFD2670A3D100DFA715 /* QrRestaurantMenuApp */ = {
 			isa = PBXGroup;
 			children = (
+				47336E072687259300445880 /* Fonts */,
 				47A02E522670A88900DFA715 /* Services */,
 				47A02E332670A6CF00DFA715 /* Models */,
 				47A02E322670A6CA00DFA715 /* Controllers */,
@@ -267,6 +331,7 @@
 				B62BB2C0267F5F4A003C3C8B /* OrderFooter.swift */,
 				471317122684CE7B00570D74 /* OrderHeaderView.swift */,
 				471317102684CE6D00570D74 /* OrderTableViewCell.swift */,
+				47336E0526866FAE00445880 /* TabBarTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -291,6 +356,7 @@
 				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
 				471317142684CE8100570D74 /* OrderListViewController.swift */,
 				B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */,
+				47336E262687BF3F00445880 /* CommentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -435,10 +501,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47336E202687259E00445880 /* OFL.txt in Resources */,
 				47A02E0B2670A3D200DFA715 /* LaunchScreen.storyboard in Resources */,
+				47336E1C2687259E00445880 /* Inter-ExtraBold.ttf in Resources */,
+				47336E162687259E00445880 /* Inter-VariableFont_slnt,wght.ttf in Resources */,
+				47336E172687259E00445880 /* Inter-Medium.ttf in Resources */,
+				47336E1A2687259E00445880 /* Inter-Bold.ttf in Resources */,
+				47336E212687259E00445880 /* README.txt in Resources */,
 				47A02E562670AC2500DFA715 /* GoogleService-Info.plist in Resources */,
+				47336E1F2687259E00445880 /* Inter-SemiBold.ttf in Resources */,
+				47336E1E2687259E00445880 /* Inter-Black.ttf in Resources */,
+				47336E192687259E00445880 /* Inter-Thin.ttf in Resources */,
+				47336E1D2687259E00445880 /* Inter-ExtraLight.ttf in Resources */,
+				47336E1B2687259E00445880 /* Inter-Regular.ttf in Resources */,
 				47A02E082670A3D200DFA715 /* Assets.xcassets in Resources */,
 				47A02E062670A3D100DFA715 /* Main.storyboard in Resources */,
+				47336E182687259E00445880 /* Inter-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +654,7 @@
 				47A02E382670A86800DFA715 /* Restaurant.swift in Sources */,
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
 				4776E6C426776FB900688792 /* AddCardViewController.swift in Sources */,
+				47336E0626866FAE00445880 /* TabBarTitleView.swift in Sources */,
 				B60282C5267C824B005CE565 /* OrderFailedViewController.swift in Sources */,
 				B60282CF267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift in Sources */,
 				47A02E502670A87C00DFA715 /* ProfileViewController.swift in Sources */,
@@ -587,6 +666,7 @@
 				477377CE26725A2400C9F2B2 /* CardViewController.swift in Sources */,
 				4776E6C82677733800688792 /* ExtensionUI.swift in Sources */,
 				47A02E462670A87C00DFA715 /* MenuViewController.swift in Sources */,
+				47336E272687BF3F00445880 /* CommentViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
 				B62BB2BC267F41B9003C3C8B /* OrderCell.swift in Sources */,

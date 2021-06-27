@@ -15,8 +15,7 @@ import AVFoundation
 class MenuViewController: UIViewController {
             
     var session: AVCaptureSession?
-    var result: String = ""
-    var restaurants: [Restaurant] = []
+    var result: String = "Дареджани_5"
     var countOfItems = 0 {
         didSet{
             basketCountLabel.text = "\(countOfItems)"
@@ -68,7 +67,7 @@ class MenuViewController: UIViewController {
         layer.scrollDirection = .horizontal
         layer.minimumLineSpacing = 10
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layer)
-        collection.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        collection.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         collection.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         collection.showsHorizontalScrollIndicator = false
         collection.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.restaurantId)
@@ -78,15 +77,17 @@ class MenuViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(MenuTableViewCell.self, forCellReuseIdentifier: MenuTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
+        tableView.separatorStyle = .none
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.allowsSelection = false
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
     
     private let basketView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.2784313725, blue: 0.2784313725, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.4, green: 0.949, blue: 0.831, alpha: 1)
         view.layer.cornerRadius = 10
         view.isHidden = true
         view.isUserInteractionEnabled = true
@@ -102,36 +103,47 @@ class MenuViewController: UIViewController {
     
     private let basketNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Корзина"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.text = "Ваш заказ"
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 17.5)
         return label
     }()
     
     private let basketCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.7332600355, green: 0.7333846688, blue: 0.7332436442, alpha: 1)
-        label.font = .boldSystemFont(ofSize: 16)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 17.5)
         return label
     }()
     
     private let basketTotalPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 17.5)
+        return label
+    }()
+    
+    private let searchErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Regular", size: 11.5)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
+        label.isHidden = true
+        label.text = "К сожалению, по вашему запросу ничего не найдено"
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupTableView()
-        getRestaurants()
         getCategories()
         getMenuItems()
-        setupNavigationController()
         setupBasketView()
+        view.addSubview(searchErrorLabel)
         setupConstraints()
     }
     
@@ -148,26 +160,27 @@ class MenuViewController: UIViewController {
         basketView.addSubview(basketButton)
     }
     
-    private func setRestaurantName(id: String) -> String {
-        var name = ""
-        restaurants.forEach { restaurant in
-            guard let restId = restaurant.id else {return}
-            if String(restId) == id {
-                guard let restName = restaurant.rest_name else {return}
-                name = restName
-            }
-        }
-        return name
-    }
     
     func setupNavigationController(){
         searchBar.sizeToFit()
-        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
         navigationController?.navigationBar.isHidden = true
+        let stackView = TabBarTitleView()
+        stackView.restaurantName = getRestaurantName()
+        stackView.seatNumber = getSeatNumber()
+        tabBarController?.navigationItem.titleView = stackView        
+    }
+    
+    private func getRestaurantName() -> String{
+        return String(result.split(separator: "_")[0])
+    }
+    
+    private func getSeatNumber() -> String {
+        return "Стол №\(result.split(separator: "_")[1])"
     }
     
     @objc func popVC(){
@@ -186,49 +199,19 @@ class MenuViewController: UIViewController {
         vc.basketMenu = basketItems
         vc.totalPrice = totalPrice
         vc.counter = countOfItems
-        vc.restaurants = restaurants
         vc.result = result
         navigationController?.pushViewController(vc, animated: true)
     }
     
     
-    private func getRestaurants(){
-        db.collection("restoran").addSnapshotListener { querySnapShot, error in
-            guard let documents = querySnapShot?.documents else{
-                print("No Documents")
-                return
-            }
-            var arr: [Restaurant] = []
-            documents.forEach { queryDocumentSnapshot in
-                let data = queryDocumentSnapshot.data()
-                let id = data["id"] as? Int ?? 0
-                let desc = data["rest_description"] as? String ?? ""
-                let restLoc = data["rest_locations"] as? [String] ?? []
-                let name = data["rest_name"] as? String ?? ""
-                let restImg = data["rest_image_url"] as? String ?? ""
-                var locArr: [String] = []
-                restLoc.forEach { location in
-                    locArr.append(location)
-                }
-                let restorant = Restaurant(id: id, rest_name: name, rest_description: desc, rest_image_url: restImg, rest_location: locArr)
-                arr.append(restorant)
-            }
-            
-            DispatchQueue.main.async {
-                self.restaurants = arr
-                self.tabBarController?.navigationItem.title = self.setRestaurantName(id: String(self.result.split(separator: "_")[0]))
-            }
-            
-        }
-    }
     private func setupTableView() {
         view.addSubview(categoryCollectionView)
         view.addSubview(menuTableView)
         menuTableView.register(SectionView.self, forHeaderFooterViewReuseIdentifier: SectionView.identifier)
         categoryCollectionView.delegate = self
-        categoryCollectionView.dataSource = self
-        menuTableView.delegate = self
+        categoryCollectionView.dataSource = self        
         menuTableView.dataSource = self
+        menuTableView.delegate = self
     }
     
     private func setupConstraints() {
@@ -242,7 +225,7 @@ class MenuViewController: UIViewController {
             $0.top.equalTo(categoryCollectionView.snp.bottom)
             $0.left.equalToSuperview().offset(10)
             $0.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(160)
+            $0.bottom.equalToSuperview().inset(130)
         }
         basketView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(10)
@@ -263,6 +246,12 @@ class MenuViewController: UIViewController {
         basketTotalPriceLabel.snp.makeConstraints{
             $0.right.equalTo(basketView.snp.right).inset(15)
             $0.centerY.equalTo(basketView.snp.centerY)
+        }
+        searchErrorLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(categoryCollectionView.snp.bottom).offset(30)
+            make.width.equalTo(192)
+            make.height.equalTo(42)
         }
     }
     
@@ -325,7 +314,7 @@ class MenuViewController: UIViewController {
                 }
                 menuItems[categoryId]?.append(menuItem)
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 self.menuItems = menuItems
                 self.menuItemsForTableView = menuItems
             }
@@ -334,6 +323,7 @@ class MenuViewController: UIViewController {
 }
 
 extension MenuViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
     }
@@ -350,6 +340,12 @@ extension MenuViewController: UICollectionViewDataSource {
             categoriesForTableView = []
             categoriesForTableView.append(item)
         }
+        cell.toColorView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CategoryCollectionViewCell
+        cell.defaultColorView()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -361,7 +357,7 @@ extension MenuViewController: UICollectionViewDataSource {
 }
 extension MenuViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 104, height: 30)
+        return CGSize(width: 77, height: 28)
     }
 }
 
@@ -385,11 +381,14 @@ extension MenuViewController: UITableViewDataSource {
         if let count = basketItems[cell.menuItem!] {
             if count > 0 {
                 cell.count = count
-                cell.makeButtonBig()
+                cell.setColorButton()
             }
         }
         return cell
     }
+}
+
+extension MenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionView.identifier) as! SectionView
         view.category = categoriesForTableView[section]
@@ -397,22 +396,21 @@ extension MenuViewController: UITableViewDataSource {
     }
 }
 
-extension MenuViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-}
-
 extension MenuViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tabBarController?.navigationItem.titleView = nil
+        let stackView = TabBarTitleView()
+        stackView.restaurantName = getRestaurantName()
+        stackView.seatNumber = getSeatNumber()
+        tabBarController?.navigationItem.titleView = stackView
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
+        self.searchErrorLabel.isHidden = true
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         menuItemsForTableView = [:]
         categoriesForTableView = []
         if searchText == "" {
+            self.searchErrorLabel.isHidden = true
             menuItemsForTableView = menuItems
             categoriesForTableView = categories
         }else{
@@ -427,6 +425,11 @@ extension MenuViewController: UISearchBarDelegate {
                         menuItemsForTableView[key]?.append(item)
                     }
                 }
+            }
+            if menuItemsForTableView.isEmpty {
+                self.searchErrorLabel.isHidden = false
+            }else{
+                self.searchErrorLabel.isHidden = true
             }
             let keys = menuItemsForTableView.keys
             categories.forEach { category in
@@ -447,29 +450,28 @@ extension MenuViewController: MenuTableViewCellDelegate {
         guard let price = menuItem.price else {return}
         totalPrice += price
         countOfItems += 1
-        basketItems[menuItem]! += 1
-    }
-    
-    func minusButtonTapped(menuItem: MenuItem, count: Int) {
-        guard let price = menuItem.price else {return}
-        totalPrice -= price
-        countOfItems -= 1
         if count == 0 {
-            basketItems[menuItem] = nil
-            if basketItems.isEmpty {
-                basketView.isHidden = true
-            }
+            basketView.isHidden = false
+            basketItems[menuItem] = 1
         } else {
-            basketItems[menuItem]! -= 1
+            basketItems[menuItem]! += 1
         }
     }
     
-    func smallButtonTapped(menuItem: MenuItem, count: Int) {
-        guard let price = menuItem.price else {return}
-        totalPrice += price
-        countOfItems += 1
-        basketItems[menuItem] = 1
-        basketView.isHidden = false
+    func minusButtonTapped(menuItem: MenuItem, count: Int) {
+        if count > 0 {
+            guard let price = menuItem.price else {return}
+            totalPrice -= price
+            countOfItems -= 1
+            if countOfItems == 0 {
+                basketView.isHidden = true
+            }
+            if count - 1 == 0 {
+                basketItems[menuItem] = nil
+            } else {
+                basketItems[menuItem]! -= 1
+            }
+        }
     }
 }
 

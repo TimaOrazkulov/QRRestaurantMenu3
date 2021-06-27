@@ -137,7 +137,7 @@ class SelectCardViewController: UIViewController {
         cardTableView.snp.makeConstraints {
             $0.top.equalTo(selectCardLabel.snp.bottom).offset(20)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(180)
+            $0.height.equalTo(250)
         }
         payButton.snp.makeConstraints {
             $0.top.equalTo(cardTableView.snp.bottom).offset(10)

@@ -34,7 +34,7 @@ class MainTabBar: UITabBarController {
         tabBar.layer.borderWidth = 0.50
         tabBar.layer.borderColor = UIColor.clear.cgColor
         tabBar.clipsToBounds = true
-        let qrVC = UINavigationController(rootViewController: QRScannerViewController())
+        let qrVC = UINavigationController(rootViewController: MenuViewController())
         qrVC.tabBarItem.image = qrImage
         qrVC.tabBarItem.title = "Заказать"
 

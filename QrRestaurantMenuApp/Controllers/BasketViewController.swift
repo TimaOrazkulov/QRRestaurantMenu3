@@ -13,8 +13,6 @@ import FloatingPanel
 
 class BasketViewController: UIViewController {
     var result: String = ""
-    var restaurants: [Restaurant] = []
-    var baskeView: BasketViewController!
     var floationgPanel = FloatingPanelController()
     var basketMenu: [MenuItem : Int] = [:] {
         didSet {
@@ -26,80 +24,124 @@ class BasketViewController: UIViewController {
             basketTableView.reloadData()
         }
     }
-    
+        
     var counter = 0 {
-        didSet{
-            basketCountLabel.text = String(counter)
+        didSet {
+            if counter == 0 {
+                payButton.alpha = 0.5
+                payButton.isEnabled = false
+            } else if counter > 0 {
+                payButton.alpha = 1
+                payButton.isEnabled = true
+            }
         }
     }
     
     var totalPrice: Double = 0 {
         didSet{
-            basketTotalPriceLabel.text = "\(totalPrice) \u{20B8}"
+            priceLabel.text = "\(totalPrice) \u{20B8}"
         }
     }
-    
-    private lazy var searchBar = UISearchBar()
 
     private let basketTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BasketTableViewCell.self, forCellReuseIdentifier: BasketTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
         return tableView
     }()
     
-    private let basketView: UIView = {
+    private let bottomView = UIView()
+    
+    private let commentView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.4195685685, green: 0.4196329713, blue: 0.4195545018, alpha: 1)
-        view.layer.cornerRadius = 10
-        view.isHidden = false
-        view.isUserInteractionEnabled = true
+        view.backgroundColor = .white
         return view
     }()
     
-    private let basketButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = #colorLiteral(red: 0.2784037888, green: 0.2784489989, blue: 0.2783938646, alpha: 1)
-        button.setTitle("Оплатить", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(basketViewOnTapped), for: .touchUpInside)
+    private lazy var commentButton: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(commentTapped), for: .touchUpInside)
+        button.backgroundColor = .none
         return button
     }()
     
-    private let basketNameLabel: UILabel = {
+    private let commentLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.text = "Добавить комментарий"
+        label.font = UIFont(name: "Inter-Medium", size: 14)
+        return label
+    }()
+    
+    private let commentImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "NextArrowIcon")
+        return imageView
+    }()
+    
+    private let spaceView1: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
+        return view
+    }()
+    
+    private let spaceView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
+        return view
+    }()
+    
+    private let totalView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let totalLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         label.text = "Итого"
-        label.textColor = #colorLiteral(red: 0.7175832391, green: 0.717688024, blue: 0.7175602913, alpha: 1)
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
     
-    private let basketCountLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
-    private let basketTotalPriceLabel: UILabel = {
-        let label = UILabel()
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         label.text = "0"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
+    
+    private let buttonView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var payButton: UIButton = {
+        var button = UIButton()
+        button.setTitle("Оплатить", for: .normal)
+        button.setTitleColor(UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 17.5)
+        button.addTarget(self, action: #selector(basketViewOnTapped), for: .touchUpInside)
+        button.backgroundColor = UIColor(red: 0.729, green: 1, blue: 0.941, alpha: 1)
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         floationgPanel.delegate = self
         setupTableView()        
-        setupBasketView()
+        setupPayView()
+        floationgPanel.contentMode = .fitToBounds
         setupConstraints()
         parseMenuData()
     }
@@ -109,42 +151,53 @@ class BasketViewController: UIViewController {
         setupNavigationController()
     }
     
-    private func setupBasketView() {
-        view.addSubview(basketView)
-        basketView.addSubview(basketNameLabel)
-        basketView.addSubview(basketCountLabel)
-        basketView.addSubview(basketTotalPriceLabel)
-        basketView.addSubview(basketButton)
+    private func setupPayView() {
+        view.addSubview(bottomView)
+        bottomView.addSubview(commentView)
+        bottomView.addSubview(spaceView1)
+        bottomView.addSubview(totalView)
+        bottomView.addSubview(spaceView2)
+        bottomView.addSubview(buttonView)
+        commentView.addSubview(commentLabel)
+        commentView.addSubview(commentImageView)
+        commentView.addSubview(commentButton)
+        totalView.addSubview(totalLabel)
+        totalView.addSubview(priceLabel)
+        buttonView.addSubview(payButton)
     }
     
+    private func getRestaurantName() -> String{
+        return String(result.split(separator: "_")[0])
+    }
+    
+    private func getSeatNumber() -> String {
+        return "Стол №\(result.split(separator: "_")[1])"
+    }
+    
+    @objc func commentTapped(){
+        let vc = CommentViewController()
+        floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
+            self.floationgPanel.set(contentViewController: vc)
+        }
+    }
     
     private func setupNavigationController() {
-        searchBar.sizeToFit()
-        tabBarController?.navigationItem.title = setRestaurantName(id: String(result.split(separator: "_")[0]))
-        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         tabBarController?.navigationController?.navigationBar.tintColor = .black
-        tabBarController?.navigationItem.rightBarButtonItem = nil
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Очистить", style: .plain, target: self, action: #selector(clearItems))
-        searchBar.delegate = self
         navigationController?.navigationBar.isHidden = true
-    }
-    
-    private func setRestaurantName(id: String) -> String {
-        var name = ""
-        restaurants.forEach { restaurant in
-            guard let restId = restaurant.id else {return}
-            if String(restId) == id {
-                guard let restName = restaurant.rest_name else {return}
-                name = restName
-            }
-        }
-        return name
+        let stackView = TabBarTitleView()
+        stackView.restaurantName = "Ваш заказ"
+        stackView.seatNumber = getSeatNumber()
+        tabBarController?.navigationItem.titleView = stackView
     }
     
     @objc func clearItems(){
         menuItems = []
         basketMenu = [:]
+        counter = 0
+        totalPrice = 0
     }
     
     @objc func popVC(){
@@ -154,13 +207,6 @@ class BasketViewController: UIViewController {
         vc?.basketItems = basketMenu
     }
     
-    @objc func handleSearchBar() {
-        navigationItem.titleView = searchBar
-        searchBar.showsCancelButton = true
-        navigationItem.rightBarButtonItem = nil
-        searchBar.becomeFirstResponder()
-    }
-    
     @objc func basketViewOnTapped() {
         let selectVC = SelectCardViewController()
         selectVC.totalCount = counter
@@ -168,7 +214,6 @@ class BasketViewController: UIViewController {
         selectVC.menuItems = menuItems
         selectVC.orderItems = basketMenu
         selectVC.result = result
-        selectVC.restaurants = restaurants
         floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
             self.floationgPanel.set(contentViewController: selectVC)
         }
@@ -185,38 +230,73 @@ class BasketViewController: UIViewController {
     }
     
     private func setupConstraints() {
+        bottomView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().inset(120)
+            make.height.equalTo(375)
+        }
+        buttonView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(90)
+        }
+        payButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(20)
+        }
+        spaceView1.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.right.left.equalToSuperview()
+            make.bottom.equalTo(buttonView.snp.top)
+        }
+        totalView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(spaceView1.snp.top)
+            make.height.equalTo(57)
+        }
+        totalLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().inset(20)
+        }
+        priceLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(20)
+        }
+        spaceView2.snp.makeConstraints { make in
+            make.bottom.equalTo(totalView.snp.top)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        commentView.snp.makeConstraints { make in
+            make.height.equalTo(64)
+            make.right.left.equalToSuperview()
+            make.bottom.equalTo(spaceView2.snp.top)
+        }
+        commentButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        commentLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(20)
+            make.centerY.equalToSuperview()
+        }
+        commentImageView.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(27)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(16)
+            make.width.equalTo(16)
+        }
         basketTableView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.left.equalToSuperview().offset(10)
             $0.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview()
-        }
-        basketView.snp.makeConstraints{
-            $0.left.right.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(100)
-            $0.height.equalTo(60)
-        }
-        basketButton.snp.makeConstraints{
-            $0.right.bottom.top.equalToSuperview().inset(10)
-            $0.width.equalTo(135)
-        }
-        basketTotalPriceLabel.snp.makeConstraints{
-            $0.left.equalToSuperview().inset(15)
-            $0.top.equalToSuperview().inset(10)
-        }
-        basketNameLabel.snp.makeConstraints{
-            $0.left.equalToSuperview().inset(15)
-            $0.top.equalTo(basketTotalPriceLabel.snp.bottom)
-            $0.bottom.equalToSuperview().inset(10)
-        }
-        basketCountLabel.snp.makeConstraints{
-            $0.left.equalTo(basketNameLabel.snp.right).offset(5)
-            $0.bottom.equalToSuperview().inset(10)
-            $0.top.equalTo(basketTotalPriceLabel.snp.bottom)
+            $0.bottom.equalTo(commentView.snp.top)
         }
     }
 }
 extension BasketViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menuItems.count
@@ -224,12 +304,12 @@ extension BasketViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: BasketTableViewCell.identifier, for: indexPath) as! BasketTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: BasketTableViewCell.identifier, for: indexPath) as! BasketTableViewCell        
         cell.menuItem = menuItems[indexPath.row]
         if let count = basketMenu[cell.menuItem!]{
         if count > 0  {
             cell.count = count
-            cell.makeButtonBig()
+            cell.setColorButton()
             }
         }
         cell.delegate = self
@@ -243,42 +323,29 @@ extension BasketViewController: UITableViewDelegate {
     }
 }
 
-extension BasketViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navigationItem.titleView = nil
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
-        searchBar.showsCancelButton = false
-    }
-}
-
 extension BasketViewController: BasketTableViewCellDelegate{
     func plusButtonTapped(menuItem: MenuItem, count: Int) {
         guard let price = menuItem.price else {return}
         totalPrice += price
         counter += 1
-        basketMenu[menuItem]! += 1
-    }
-    
-    func minusButtonTapped(menuItem: MenuItem, count: Int) {
-        guard let price = menuItem.price else {return}
-        totalPrice -= price
-        counter -= 1
         if count == 0 {
-            basketMenu[menuItem] = nil
-            if basketMenu.isEmpty {
-                basketView.isHidden = true
-            }
+            basketMenu[menuItem] = 1
         } else {
-            basketMenu[menuItem]! -= 1
+            basketMenu[menuItem]! += 1
         }
     }
     
-    func smallButtonTapped(menuItem: MenuItem, count: Int) {
-        guard let price = menuItem.price else {return}
-        totalPrice += price
-        counter += 1
-        basketMenu[menuItem] = 1
-        basketView.isHidden = false
+    func minusButtonTapped(menuItem: MenuItem, count: Int) {
+        if count > 0 {
+            guard let price = menuItem.price else {return}
+            totalPrice -= price
+            counter -= 1
+            if count == 0 {
+                basketMenu[menuItem] = nil
+            } else {
+                basketMenu[menuItem]! -= 1
+            }
+        }
     }
     
     func closeButtonTapped(menuItem: MenuItem, count: Int) {
@@ -293,10 +360,28 @@ extension BasketViewController: BasketTableViewCellDelegate{
         totalPrice -= price * Double(count)
         counter -= count
         if menuItems.isEmpty {
-            basketView.isHidden = true
+            payButton.isEnabled = false
+            payButton.alpha = 0.5
         }
     }
 }
 extension BasketViewController: FloatingPanelControllerDelegate {
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
     
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor size: CGSize) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
+}
+
+class MyFloatingPanelLayout: FloatingPanelLayout {
+    let position: FloatingPanelPosition = .bottom
+    let initialState: FloatingPanelState = .tip
+    var anchors: [FloatingPanelState : FloatingPanelLayoutAnchoring] {
+        return [
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 16, edge: .top, referenceGuide: .safeArea),
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 400, edge: .bottom, referenceGuide: .safeArea)
+        ]
+    }
 }

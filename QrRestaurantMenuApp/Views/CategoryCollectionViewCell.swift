@@ -16,13 +16,15 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         view.layer.cornerRadius = 15
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1).cgColor
         return view
     }()
     private let categoryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = UIFont(name: "Inter-Medium", size: 11.5)
         label.textAlignment = .center
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         return label
     }()
     
@@ -37,6 +39,14 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraint()
+    }
+    
+    func toColorView(){
+        view.backgroundColor = UIColor(red: 0.729, green: 1, blue: 0.941, alpha: 1)
+    }
+    
+    func defaultColorView(){
+        view.backgroundColor = .white
     }
     
     private func setupConstraint() {

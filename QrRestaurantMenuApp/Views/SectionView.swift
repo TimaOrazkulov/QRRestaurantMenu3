@@ -17,8 +17,8 @@ class SectionView: UITableViewHeaderFooterView {
     }
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: UIFont.Weight(600))
-        label.textColor = .black        
+        label.font = UIFont(name: "Inter-Bold", size: 21.88)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         return label
     }()
         
@@ -29,7 +29,7 @@ class SectionView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSubview(label)
-        contentView.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        contentView.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         setupConstraints()
     }
@@ -38,7 +38,7 @@ class SectionView: UITableViewHeaderFooterView {
         label.snp.makeConstraints { make in
             make.bottom.left.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
-            make.top.equalToSuperview().inset(15)
+            make.top.equalToSuperview().inset(6)
         }
     }
     
