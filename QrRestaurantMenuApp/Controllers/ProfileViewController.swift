@@ -257,7 +257,9 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.navigationItem.title = "Профиль"
+        let titleStackView = TabBarTitleView()
+        titleStackView.title = "Профиль"
+        tabBarController?.navigationItem.titleView = titleStackView
         tabBarController?.navigationItem.rightBarButtonItem = nil
         tabBarController?.navigationItem.leftBarButtonItem = nil
     }
@@ -282,7 +284,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             // let child = SnackbarViewController()
             // child.transitioningDelegate = transition   // 2
             // child.modalPresentationStyle = .custom  // 3
-            // present(child, animated: true)
+            // present(child, animated: true)   
         }
     }
 
@@ -296,7 +298,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @objc func logOutPressed(){
         uid = ""
         logoutUser()
-        
     }
     
     @objc func profileButtonTapped(){

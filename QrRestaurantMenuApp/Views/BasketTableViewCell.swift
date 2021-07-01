@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol BasketTableViewCellDelegate: class {
+protocol BasketTableViewCellDelegate: AnyObject {
     func plusButtonTapped(menuItem: MenuItem, count: Int)
     func minusButtonTapped(menuItem: MenuItem, count: Int)
     func closeButtonTapped(menuItem: MenuItem, count: Int)
@@ -137,7 +137,7 @@ class BasketTableViewCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupConstraints()
-        self.contentView.isUserInteractionEnabled = true
+        contentView.isUserInteractionEnabled = true
         isUserInteractionEnabled = true
     }
     
@@ -194,7 +194,7 @@ class BasketTableViewCell: UITableViewCell {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             // always update the UI from the main thread
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 self?.menuImageView.image = UIImage(data: data)
             }
         }
@@ -207,7 +207,7 @@ class BasketTableViewCell: UITableViewCell {
         }
         menuImageView.snp.makeConstraints{ make in
             make.top.equalToSuperview().offset(5)
-            make.right.equalToSuperview().inset(5)
+            make.right.equalToSuperview().inset(20)
             make.width.equalTo(101)
             make.height.equalTo(68)
         }
@@ -224,7 +224,7 @@ class BasketTableViewCell: UITableViewCell {
         }
         countView.snp.makeConstraints { make in
             make.top.equalTo(menuImageView.snp.bottom).offset(4)
-            make.right.equalToSuperview().inset(12)
+            make.right.equalToSuperview().inset(20)
             make.height.equalTo(30)
             make.width.equalTo(97)
             make.bottom.equalToSuperview().inset(20)

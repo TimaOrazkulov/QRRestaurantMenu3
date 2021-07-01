@@ -23,14 +23,14 @@ class RestaurantsTableViewCell: UITableViewCell {
     private let restImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        imageView.layer.cornerRadius = 20
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
     
     let restNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-SemiBold", size: 17.5)
         return label
     }()
     
@@ -40,6 +40,7 @@ class RestaurantsTableViewCell: UITableViewCell {
             if let image = restItem.rest_image_url {
                 downloadImage(from: URL(string: image))
             }
+            
             if let restName = restItem.rest_name {
                 restNameLabel.text = restName
             }
@@ -49,7 +50,8 @@ class RestaurantsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupConstraints()
-        backgroundColor = #colorLiteral(red: 0.7863221765, green: 0.7518113256, blue: 0.752297163, alpha: 1)
+        backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -61,11 +63,10 @@ class RestaurantsTableViewCell: UITableViewCell {
         guard let url = url else { return }
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
             // always update the UI from the main thread
             DispatchQueue.main.async() { [weak self] in
                 self?.restImage.image = UIImage(data: data)
+                self?.restImage.layer.cornerRadius = 10
             }
         }
     }
@@ -85,7 +86,6 @@ class RestaurantsTableViewCell: UITableViewCell {
         restNameLabel.snp.makeConstraints { make in
             make.top.equalTo(restImage.snp.bottom).offset(7)
             make.left.equalToSuperview().inset(10)
-            
         }
     }
 }

@@ -13,7 +13,14 @@ class QRScannerViewController: UIViewController {
     
     var video = AVCaptureVideoPreviewLayer()
     var session = AVCaptureSession()
-    let qrImageView = UIImageView()
+    let qrImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "QR")
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0.6
+        return imageView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +58,9 @@ class QRScannerViewController: UIViewController {
         
         video = AVCaptureVideoPreviewLayer(session: session)
         video.frame = view.layer.bounds
+        video.videoGravity = .resizeAspectFill
         view.layer.addSublayer(video)
-        view.bringSubviewToFront(qrImageView)
+        view.addSubview(qrImageView)
         session.startRunning()
     }
     

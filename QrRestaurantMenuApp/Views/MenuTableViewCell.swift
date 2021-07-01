@@ -10,7 +10,7 @@ import Firebase
 import SnapKit
 
 
-protocol MenuTableViewCellDelegate: class {
+protocol MenuTableViewCellDelegate: AnyObject {
     func plusButtonTapped(menuItem: MenuItem, count: Int)
     func minusButtonTapped(menuItem: MenuItem, count: Int)
 }
@@ -131,7 +131,7 @@ class MenuTableViewCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupConstraints()
-        self.contentView.isUserInteractionEnabled = true
+        contentView.isUserInteractionEnabled = true
         isUserInteractionEnabled = true
     }
     
@@ -182,7 +182,7 @@ class MenuTableViewCell: UITableViewCell {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             // always update the UI from the main thread
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 self?.menuImageView.image = UIImage(data: data)
             }
         }

@@ -15,28 +15,29 @@ class OrderCell: UITableViewCell {
     private let resName: UILabel = {
         let label = UILabel()
         label.text = "Luckee Yu"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 17.5)
+        label.numberOfLines = 0
         return label
     }()
     private let dateOrder: UILabel = {
         let label = UILabel()
         label.text = "1.06.2021"
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.4195591211, green: 0.4196358919, blue: 0.4195542336, alpha: 1)
+        label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
+        label.font = UIFont(name: "Inter-Regular", size: 14)
         return label
     }()
     private let totalPrice: UILabel = {
         let label = UILabel()
         label.text = "16970 T"
-        label.font = .systemFont(ofSize: 15)
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
     
     private let borderView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
         return view
     }()
     
@@ -66,7 +67,7 @@ class OrderCell: UITableViewCell {
         contentView.addSubview(borderView)
         
         resName.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().inset(5)
             $0.left.equalToSuperview().inset(20)
         }
         dateOrder.snp.makeConstraints {
@@ -74,12 +75,12 @@ class OrderCell: UITableViewCell {
             $0.left.equalToSuperview().inset(20)
         }
         totalPrice.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(26)
+            $0.top.bottom.equalToSuperview().inset(20)
             $0.right.equalToSuperview().inset(20)
         }
         borderView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(1)
+            make.height.equalTo(0.5)
         }
         
     }

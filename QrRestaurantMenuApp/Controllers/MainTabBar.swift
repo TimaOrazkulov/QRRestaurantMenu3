@@ -18,9 +18,7 @@ class MainTabBar: UITabBarController {
     
     let qrImage = UIImage(named: "qr-code")
     let profileImage = UIImage(named: "profile")
-    let homeImage = UIImage(named: "home")
-    
-    var uid = "wTkLYYvYSYaH3DClKLxG"
+    let homeImage = UIImage(named: "home")        
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +40,9 @@ class MainTabBar: UITabBarController {
         restVC.tabBarItem.image = homeImage
         restVC.tabBarItem.title = "Рестораны"
 
-        let profileVC = UINavigationController(rootViewController: ProfileViewController())
+        let profileVC = UINavigationController(rootViewController: UserProfileViewController())
         profileVC.tabBarItem.image = profileImage
         profileVC.tabBarItem.title = "Профиль"
-        profileVC.tabBarController?.title = "Профиль"
         viewControllers = [restVC, qrVC, profileVC]
 
         guard let items = tabBar.items else { return }

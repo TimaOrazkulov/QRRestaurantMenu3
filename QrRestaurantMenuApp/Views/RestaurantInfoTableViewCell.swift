@@ -20,15 +20,16 @@ class RestaurantInfoTableViewCell: UITableViewCell {
     
     private let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Regular", size: 14)
         return label
     }()       
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(addressLabel)
-        backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
+        selectionStyle = .none
         addressLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.bottom.equalToSuperview().inset(5)

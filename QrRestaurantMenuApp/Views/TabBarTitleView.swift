@@ -9,25 +9,25 @@ import UIKit
 
 class TabBarTitleView: UIStackView {
 
-    var restaurantName: String = "" {
+    var title: String = "" {
         didSet {
-            nameLabel.text = restaurantName
+            titleLabel.text = title
         }
     }
-    var seatNumber: String = "" {
+    var subTitle: String = "" {
         didSet {
-            seatLabel.text = seatNumber
+            subTitleLabel.text = subTitle
         }
     }
     
-    private let nameLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Inter-Medium", size: 17)
         label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         return label
     }()
     
-    private let seatLabel: UILabel = {
+    private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
         label.font = UIFont(name: "Inter-Regular", size: 11)        
@@ -39,8 +39,8 @@ class TabBarTitleView: UIStackView {
         spacing = 2
         axis = .vertical
         alignment = .center
-        addArrangedSubview(nameLabel)
-        addArrangedSubview(seatLabel)
+        addArrangedSubview(titleLabel)
+        addArrangedSubview(subTitleLabel)
 
     }
     

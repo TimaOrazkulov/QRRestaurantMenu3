@@ -22,17 +22,13 @@ class OrdersHistoryViewController: UIViewController {
         let table = UITableView()        
         table.register(OrderCell.self, forCellReuseIdentifier: OrderCell.orderID)
         table.separatorStyle = .none
-        let viewForTableBackground: UIView = {
-            let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
-            return view
-        }()
-        table.backgroundView = viewForTableBackground
+        table.backgroundColor = .white
+        table.rowHeight = UITableView.automaticDimension
         return table
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = .white
         getOrdersOfUser()
         setupTableView()
     }
@@ -40,7 +36,9 @@ class OrdersHistoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
-        tabBarController?.navigationItem.title = "История заказов"
+        let titleStackView = TabBarTitleView()
+        titleStackView.title = "История заказов"
+        tabBarController?.navigationItem.titleView = titleStackView
     }
     
     private func setupTableView() {
@@ -49,7 +47,7 @@ class OrdersHistoryViewController: UIViewController {
         orderList.delegate = self
         orderList.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
-            $0.left.right.equalToSuperview().inset(10)
+            $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview().inset(100)
         }
     }

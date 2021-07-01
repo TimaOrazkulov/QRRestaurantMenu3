@@ -170,8 +170,8 @@ class MenuViewController: UIViewController {
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
         navigationController?.navigationBar.isHidden = true
         let stackView = TabBarTitleView()
-        stackView.restaurantName = getRestaurantName()
-        stackView.seatNumber = getSeatNumber()
+        stackView.title = getRestaurantName()
+        stackView.subTitle = getSeatNumber()
         tabBarController?.navigationItem.titleView = stackView        
     }
     
@@ -196,6 +196,7 @@ class MenuViewController: UIViewController {
     
     @objc func basketViewOnTapped(){
         let vc = BasketViewController()
+        vc.delegate = self
         vc.basketMenu = basketItems
         vc.totalPrice = totalPrice
         vc.counter = countOfItems
@@ -262,17 +263,23 @@ class MenuViewController: UIViewController {
                 return
             }
             var categories: [Category] = []
+            categories.append(Category(id: 0, name: "Все"))
             documents.forEach { queryDocumentSnapshot in
                 let data = queryDocumentSnapshot.data()
                 let id = data["id"] as? Int ?? 0
                 let name = data["name"] as? String ?? ""
                 categories.append(Category(id: id, name: name))
             }
-            categories.append(Category(id: 5, name: "Все"))
             
             DispatchQueue.main.async {
                 self.categories = categories
                 self.categoriesForTableView = categories
+                self.categoriesForTableView.removeAll { category in
+                    if category.id == 0 {
+                        return true
+                    }
+                    return false
+                }
             }
             
         }
@@ -330,9 +337,15 @@ extension MenuViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CategoryCollectionViewCell
-        if cell.categoryItem?.id == 5 {
+        if cell.categoryItem?.id == 0 {
             menuItemsForTableView = menuItems
             categoriesForTableView = categories
+            categoriesForTableView.removeAll { category in
+                if category.id == 0 {
+                    return true
+                }
+                return false
+            }
         }else{
             guard let item = cell.categoryItem else {return}
             guard let id = item.id else {return}
@@ -364,9 +377,6 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
 extension MenuViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if categoriesForTableView.count > 1 {
-            return categoriesForTableView.count - 1
-        }
         return categoriesForTableView.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -374,7 +384,6 @@ extension MenuViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as! MenuTableViewCell
         cell.menuItem = menuItemsForTableView[categoriesForTableView[indexPath.section].id!]![indexPath.row]
         cell.delegate = self
@@ -385,6 +394,7 @@ extension MenuViewController: UITableViewDataSource {
             }
         }
         return cell
+
     }
 }
 
@@ -399,8 +409,8 @@ extension MenuViewController: UITableViewDelegate {
 extension MenuViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         let stackView = TabBarTitleView()
-        stackView.restaurantName = getRestaurantName()
-        stackView.seatNumber = getSeatNumber()
+        stackView.title = getRestaurantName()
+        stackView.subTitle = getSeatNumber()
         tabBarController?.navigationItem.titleView = stackView
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
@@ -413,6 +423,12 @@ extension MenuViewController: UISearchBarDelegate {
             self.searchErrorLabel.isHidden = true
             menuItemsForTableView = menuItems
             categoriesForTableView = categories
+            categoriesForTableView.removeAll { category in
+                if category.id == 0 {
+                    return true
+                }
+                return false
+            }
         }else{
             menuItems.forEach { key, menuItem in
                 menuItem.forEach { item in
@@ -440,6 +456,22 @@ extension MenuViewController: UISearchBarDelegate {
                     categoriesForTableView.append(category)
                 }
             }
+        }
+    }
+}
+
+extension MenuViewController: BasketViewControllerDelegate {
+    func popVCPressed(menuItems: [MenuItem], basketMenu: [MenuItem : Int], totalPrice: Double, counter: Int) {
+        self.basketItems = basketMenu
+        self.basketItems.forEach { menuItem, count in
+            if self.basketItems[menuItem] == 0 {
+                self.basketItems[menuItem] = nil
+            }
+        }
+        self.totalPrice = totalPrice
+        self.countOfItems = counter
+        if countOfItems == 0 && totalPrice == 0 {
+            basketView.isHidden = true
         }
     }
 }

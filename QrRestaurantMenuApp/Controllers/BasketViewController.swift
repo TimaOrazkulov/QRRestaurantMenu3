@@ -11,6 +11,10 @@ import SnapKit
 import FloatingPanel
 
 
+protocol BasketViewControllerDelegate {
+    func popVCPressed(menuItems: [MenuItem], basketMenu: [MenuItem : Int], totalPrice: Double, counter: Int)
+}
+
 class BasketViewController: UIViewController {
     var result: String = ""
     var floationgPanel = FloatingPanelController()
@@ -24,6 +28,8 @@ class BasketViewController: UIViewController {
             basketTableView.reloadData()
         }
     }
+    
+    var delegate: BasketViewControllerDelegate?
         
     var counter = 0 {
         didSet {
@@ -188,8 +194,8 @@ class BasketViewController: UIViewController {
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Очистить", style: .plain, target: self, action: #selector(clearItems))
         navigationController?.navigationBar.isHidden = true
         let stackView = TabBarTitleView()
-        stackView.restaurantName = "Ваш заказ"
-        stackView.seatNumber = getSeatNumber()
+        stackView.title = "Ваш заказ"
+        stackView.subTitle = getSeatNumber()
         tabBarController?.navigationItem.titleView = stackView
     }
     
@@ -198,13 +204,12 @@ class BasketViewController: UIViewController {
         basketMenu = [:]
         counter = 0
         totalPrice = 0
+        popVC()
     }
     
     @objc func popVC(){
-        let vc = navigationController?.popViewController(animated: true) as? MenuViewController
-        vc?.totalPrice = totalPrice
-        vc?.countOfItems = counter
-        vc?.basketItems = basketMenu
+        delegate?.popVCPressed(menuItems: menuItems, basketMenu: basketMenu, totalPrice: totalPrice, counter: counter)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func basketViewOnTapped() {

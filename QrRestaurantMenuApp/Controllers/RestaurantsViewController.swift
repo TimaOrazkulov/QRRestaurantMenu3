@@ -18,6 +18,12 @@ class RestaurantsViewController: UIViewController  {
         }
     }
     
+    private var restaurantForTableView: [Restaurant] = [] {
+        didSet {
+            restarauntTableView.reloadData()
+        }
+    }
+    
     private var db = Firestore.firestore()
             
     private lazy var searchBar = UISearchBar()
@@ -26,7 +32,7 @@ class RestaurantsViewController: UIViewController  {
         let table = UITableView()
         table.register(RestaurantsTableViewCell.self, forCellReuseIdentifier: RestaurantsTableViewCell.identifire)
         table.showsVerticalScrollIndicator = false
-        table.backgroundColor = #colorLiteral(red: 0.7863221765, green: 0.7518113256, blue: 0.752297163, alpha: 1)
+        table.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         table.separatorStyle = .none
         return table
     }()
@@ -35,7 +41,7 @@ class RestaurantsViewController: UIViewController  {
         super.viewDidLoad()        
         restarauntTableView.delegate = self
         restarauntTableView.dataSource = self
-        view.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupViews()
         setupConstraints()
         getRestaurants()
@@ -49,8 +55,10 @@ class RestaurantsViewController: UIViewController  {
       
     func setupNavigationController(){
         searchBar.sizeToFit()
-        tabBarController?.navigationItem.title = "Ресторан"
-        tabBarController?.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        let titleStackView = TabBarTitleView()
+        titleStackView.title = "Ресторан"
+        tabBarController?.navigationItem.titleView = titleStackView
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         tabBarController?.navigationController?.navigationBar.tintColor = .black
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.delegate = self
@@ -62,6 +70,16 @@ class RestaurantsViewController: UIViewController  {
         searchBar.showsCancelButton = true
         tabBarController?.navigationItem.rightBarButtonItem = nil
         searchBar.becomeFirstResponder()
+    }
+    
+    private func getRestaurantsByName(name: String) {
+        restaurantForTableView = []
+        restaurant.forEach { restaurant in
+            guard let resName = restaurant.rest_name else {return}
+            if resName.lowercased().contains(name.lowercased()) {
+                restaurantForTableView.append(restaurant)
+            }
+        }
     }
     
     private func getRestaurants(){
@@ -88,12 +106,11 @@ class RestaurantsViewController: UIViewController  {
             
             DispatchQueue.main.async {
                 self.restaurant = arr
+                self.restaurantForTableView = self.restaurant
             }
-            
         }
     }
 
-    
     func setupViews(){
         view.addSubview(restarauntTableView)
     }
@@ -106,13 +123,13 @@ class RestaurantsViewController: UIViewController  {
 extension RestaurantsViewController: UITableViewDataSource {
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurant.count        
+        return restaurantForTableView.count        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RestaurantsTableViewCell.identifire, for: indexPath) as! RestaurantsTableViewCell
         
-        cell.restItem = restaurant[indexPath.row]
+        cell.restItem = restaurantForTableView[indexPath.row]
        
         return cell
         
@@ -122,20 +139,30 @@ extension RestaurantsViewController: UITableViewDataSource {
 extension RestaurantsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuVC = RestoranInfoViewController()
-        menuVC.restaurant = restaurant[indexPath.row]
+        menuVC.restaurant = restaurantForTableView[indexPath.row]
         navigationController?.pushViewController(menuVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200        
+        return 200
     }
 }
 
 extension RestaurantsViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tabBarController?.navigationItem.titleView = nil
+        let titleStackView = TabBarTitleView()
+        titleStackView.title = "Ресторан"
+        tabBarController?.navigationItem.titleView = titleStackView
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearchBar))
         searchBar.showsCancelButton = false
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            restaurantForTableView = restaurant
+        }else {
+            getRestaurantsByName(name: searchText)
+        }
     }
 }
 

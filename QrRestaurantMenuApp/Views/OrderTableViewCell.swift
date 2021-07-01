@@ -17,11 +17,24 @@ class OrderTableViewCell: UITableViewCell {
             orderName.text = orderItem?.name
             orderDesc.text = orderItem?.description
             guard let price = orderItem?.price else {return}
-            orderPrice.text = "\(price)"
+            orderPrice.text = "\(price) \u{20B8}"
             guard let count = orderItem?.count else {return}
-            orderCount.text = "x\(count)"
+            if count > 1 {
+                orderCount.text = "\(count) x"
+            }
         }
     }
+    
+    private let cellView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 6)
+        view.layer.shadowRadius = 3
+        return view
+    }()
     
     private let orderImage: UIImageView = {
         let image = UIImageView()
@@ -32,47 +45,45 @@ class OrderTableViewCell: UITableViewCell {
     private let orderName: UILabel = {
         let label = UILabel()
         label.text = "Триумф"
-        label.font = .boldSystemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
 
     private let borderView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         return view
     }()
     
     private let orderDesc: UILabel = {
         let label = UILabel()
         label.text = "Калифорния классическая, Филадельфия лайт, Бостон, Зеленая миля"
-        label.font = .systemFont(ofSize: 14)
+        label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
+        label.font = UIFont(name: "Inter-Regular", size: 11.5)
         label.numberOfLines = 0
-        label.textColor = .black
         return label
     }()
 
     private let orderPrice: UILabel = {
         let label = UILabel()
         label.text = "\(11980) \u{20B8}"
-        label.font = .boldSystemFont(ofSize: 14)
-
-        label.textColor = .black
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
 
     private let orderCount: UILabel = {
         let label = UILabel()
-        label.text = "x2"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = #colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)
+        label.textColor = UIColor(red: 0.102, green: 0.667, blue: 0.545, alpha: 1)
+        label.font = UIFont(name: "Inter-Medium", size: 14)
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupConstraints()
-        backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
     }
 
     required init?(coder: NSCoder) {
@@ -99,39 +110,44 @@ class OrderTableViewCell: UITableViewCell {
        }
 
     private func setupConstraints() {
-        contentView.addSubview(orderImage)
-        contentView.addSubview(orderName)
-        contentView.addSubview(orderPrice)
-        contentView.addSubview(orderDesc)
-        contentView.addSubview(orderCount)
         contentView.addSubview(borderView)
-
-        orderImage.snp.makeConstraints {
-            $0.top.right.equalToSuperview().inset(10)
-            $0.left.equalTo(orderDesc.snp.right).offset(10)
-            $0.height.width.equalTo(66)
-        }
-        orderName.snp.makeConstraints {
-            $0.top.left.equalToSuperview().inset(10)
-        }
-        orderDesc.snp.makeConstraints {
-            $0.top.equalTo(orderName.snp.bottom).offset(10)
-            //$0.right.equalTo(orderImage.snp.left).inset(10)
-            $0.left.equalToSuperview().inset(10)
-        }
-        orderPrice.snp.makeConstraints {
-            $0.top.equalTo(orderDesc.snp.bottom).offset(10)
-            $0.left.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(10)
-        }
-        orderCount.snp.makeConstraints {
-            $0.top.equalTo(orderDesc.snp.bottom).offset(10)
-            $0.left.equalTo(orderPrice.snp.right).offset(10)
-        }
+        contentView.addSubview(cellView)
+        cellView.addSubview(orderImage)
+        cellView.addSubview(orderName)
+        cellView.addSubview(orderPrice)
+        cellView.addSubview(orderDesc)
+        cellView.addSubview(orderCount)
         borderView.snp.makeConstraints { make in
-            make.bottom.left.right.equalToSuperview()
-            make.height.equalTo(1)
+            make.left.right.equalToSuperview().inset(10)
+            make.height.equalTo(10)
+            make.bottom.equalToSuperview()
+        }
+        cellView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(10)
+            make.top.equalToSuperview()
+            make.bottom.equalTo(borderView.snp.top)
+        }
+        orderName.snp.makeConstraints { make in
+            make.left.top.equalToSuperview().inset(12)
+        }
+        orderImage.snp.makeConstraints { make in
+            make.right.top.equalToSuperview().inset(12)
+            make.height.equalTo(68)
+            make.width.equalTo(101)
+        }
+        orderDesc.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(12)
+            make.top.equalTo(orderName.snp.bottom).offset(4)
+            make.width.equalTo(185)
+        }
+        orderCount.snp.makeConstraints { make in
+            make.left.bottom.equalToSuperview().inset(12)
+            make.top.equalTo(orderDesc.snp.bottom).offset(10)
+        }
+        orderPrice.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(12)
+            make.left.equalTo(orderCount.snp.right).offset(5)
+            make.top.equalTo(orderDesc.snp.bottom).offset(10)
         }
     }
-
 }

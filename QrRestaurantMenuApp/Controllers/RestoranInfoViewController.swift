@@ -38,17 +38,18 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
     }()
     private let descLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(14)
         label.text = "Luckee Yu - здесь должно быть какое-то описание. Например, какая кухня или как тут вкусно и красиво. Пока."
-        label.textColor = .black
-        label.numberOfLines = 3
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-Regular", size: 14)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     private let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 14)
+        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.font = UIFont(name: "Inter-SemiBold", size: 14)
         label.text = "Адреса:"
-        label.textColor = .black
         return label
     }()
     
@@ -56,7 +57,7 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
         let tableView = UITableView()
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
-        tableView.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         tableView.separatorStyle = .none
         tableView.register(RestaurantInfoTableViewCell.self, forCellReuseIdentifier: RestaurantInfoTableViewCell.identifier)
         return tableView
@@ -65,7 +66,7 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = #colorLiteral(red: 0.7882352941, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupViews()
         setupConstraints()
         addressTableView.dataSource = self
@@ -74,7 +75,9 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.navigationItem.title = "Описание"
+        let titleStackView = TabBarTitleView()
+        titleStackView.title = "Описание"
+        tabBarController?.navigationItem.titleView = titleStackView
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .done, target: self, action: #selector(popVC))
         tabBarController?.navigationItem.rightBarButtonItem = nil
     }
@@ -130,11 +133,11 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
            print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
     
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let image = UIImage(data: data) else {return}
                 let imageView = UIImageView(image: image)
                 //imageView.contentMode = .scaleAspectFit
-                imageView.frame = CGRect(x: 0, y: 0, width: 355, height: 200)
+                imageView.frame = CGRect(x: 0, y: 0, width: 400, height: 200)
                 self?.scrollView.addSubview(imageView)
             }
         }
@@ -149,7 +152,7 @@ class RestoranInfoViewController: UIViewController, UIScrollViewDelegate {
 extension RestoranInfoViewController: UITableViewDataSource, UITableViewDelegate{
             
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurant?.rest_location.count ?? 0
+        restaurant?.rest_location.count ?? 0 // return removed
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

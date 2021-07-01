@@ -1,6 +1,6 @@
  //
 //  PhoneVerificationViewController.swift
-//  QRRestarantMenuApp
+//  QRRestaurantMenuApp
 //
 //  Created by Temirlan Orazkulov on 31.05.2021.
 //
@@ -50,7 +50,7 @@ class PhoneVerificationViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupConstaints()
+        setupConstraints()
         setupConfig()
         // Do any additional setup after loading the view.
     }
@@ -81,7 +81,7 @@ class PhoneVerificationViewController: UIViewController {
         codeTextView.delegate = self
     }
     
-    func setupConstaints(){
+    func setupConstraints(){
         view.backgroundColor = #colorLiteral(red: 0.8282918334, green: 0.798361063, blue: 0.7977046371, alpha: 1)
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
