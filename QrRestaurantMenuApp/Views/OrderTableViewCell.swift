@@ -84,6 +84,7 @@ class OrderTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupConstraints()
         backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
+        selectionStyle = .none
     }
 
     required init?(coder: NSCoder) {

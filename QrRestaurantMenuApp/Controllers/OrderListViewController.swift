@@ -120,7 +120,7 @@ class OrderListViewController: UIViewController {
         orderTableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview().inset(100)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(150)
         }
     }
 
@@ -148,8 +148,6 @@ extension OrderListViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension OrderListViewController: OrderFooterDelegate {
     func orderButtonTapped() {
-        
+        tabBarController?.selectedIndex = 1
     }
-    
-    
 }
