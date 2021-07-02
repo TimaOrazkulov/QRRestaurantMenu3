@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 import SnapKit
 import FloatingPanel
-
+import Firebase
 
 protocol BasketViewControllerDelegate {
     func popVCPressed(menuItems: [MenuItem], basketMenu: [MenuItem : Int], totalPrice: Double, counter: Int)
@@ -211,8 +211,17 @@ class BasketViewController: UIViewController {
         delegate?.popVCPressed(menuItems: menuItems, basketMenu: basketMenu, totalPrice: totalPrice, counter: counter)
         navigationController?.popViewController(animated: true)
     }
-    
+    private func checkAuth() {
+        if Auth.auth().currentUser?.uid == nil {
+            let child = SnackbarViewController()
+            floatingPanel.addPanel(toParent: self, at: 3, animated: true){
+                self.floatingPanel.set(contentViewController: child)
+            }
+
+        }
+    }
     @objc func basketViewOnTapped() {
+        checkAuth()
         let selectVC = SelectCardViewController()
         selectVC.totalCount = counter
         selectVC.totalPrice = totalPrice

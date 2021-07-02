@@ -156,7 +156,6 @@ class MenuViewController: UIViewController {
         floatingPanel.delegate = self
         floatingPanel.contentMode = .fitToBounds
 
-        checkAuth()
         getMenuItems()
         setupBasketView()
         view.addSubview(searchErrorLabel)

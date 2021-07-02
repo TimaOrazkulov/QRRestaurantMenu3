@@ -286,9 +286,10 @@ class UserProfileViewController: UIViewController {
 
     private func checkAuth() {
         if Auth.auth().currentUser?.uid == nil {
-            let vc = MainTabBar()
-            vc.selectedIndex = 2
+            tabBarController?.selectedIndex = 1
+            print("check  auz")
         }
+
     }
 
 

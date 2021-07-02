@@ -61,11 +61,11 @@
 		7DF4F6065FAD12457CD16594 /* Pods_QrRestaurantMenuApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */; };
 		94AB51B6268DDA640003F1A2 /* SnackbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB51B0268DDA600003F1A2 /* SnackbarViewController.swift */; };
 		94AB51BF268DDB1B0003F1A2 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB51BE268DDB1B0003F1A2 /* PhoneVerificationViewController.swift */; };
+		94AB51EE268F0E970003F1A2 /* OrderFailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB51EB268F0E970003F1A2 /* OrderFailedViewController.swift */; };
 		B602826B267B34F9005CE565 /* SelectCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602826A267B34F9005CE565 /* SelectCardViewController.swift */; };
 		B602828B267B831D005CE565 /* SelectedFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602828A267B831D005CE565 /* SelectedFooter.swift */; };
 		B6028290267B84E7005CE565 /* SelectedCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602828F267B84E7005CE565 /* SelectedCardCell.swift */; };
 		B60282C0267C8241005CE565 /* OrderSuccessfulTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282BF267C8241005CE565 /* OrderSuccessfulTableViewCell.swift */; };
-		B60282C5267C824B005CE565 /* OrderFailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282C4267C824B005CE565 /* OrderFailedViewController.swift */; };
 		B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */; };
 		B60282CF267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282CE267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift */; };
 		B60282D4267C8280005CE565 /* OrderSuccessfulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */; };
@@ -154,13 +154,13 @@
 		80AE9F6A0218D95D84328131 /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94AB51B0268DDA600003F1A2 /* SnackbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnackbarViewController.swift; sourceTree = "<group>"; };
 		94AB51BE268DDB1B0003F1A2 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
+		94AB51EB268F0E970003F1A2 /* OrderFailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderFailedViewController.swift; path = ../../../../Downloads/OrderFailedViewController.swift; sourceTree = "<group>"; };
 		A19D50A3F2EB5E11163C452B /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B602826A267B34F9005CE565 /* SelectCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCardViewController.swift; sourceTree = "<group>"; };
 		B602828A267B831D005CE565 /* SelectedFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFooter.swift; sourceTree = "<group>"; };
 		B602828F267B84E7005CE565 /* SelectedCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCardCell.swift; sourceTree = "<group>"; };
 		B60282BF267C8241005CE565 /* OrderSuccessfulTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewCell.swift; sourceTree = "<group>"; };
-		B60282C4267C824B005CE565 /* OrderFailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderFailedViewController.swift; sourceTree = "<group>"; };
 		B60282C9267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewFooter.swift; sourceTree = "<group>"; };
 		B60282CE267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulTableViewHeader.swift; sourceTree = "<group>"; };
 		B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSuccessfulViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +338,7 @@
 		47A02E322670A6CA00DFA715 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				94AB51EB268F0E970003F1A2 /* OrderFailedViewController.swift */,
 				473BE6EC268B8DB300363B29 /* UserProfileViewController.swift */,
 				94AB51B0268DDA600003F1A2 /* SnackbarViewController.swift */,
 				47A02E3A2670A87900DFA715 /* MenuViewController.swift */,
@@ -351,7 +352,6 @@
 				47A02E402670A87A00DFA715 /* MainTabBar.swift */,
 				47A02E412670A87B00DFA715 /* BasketViewController.swift */,
 				B60282D3267C8280005CE565 /* OrderSuccessfulViewController.swift */,
-				B60282C4267C824B005CE565 /* OrderFailedViewController.swift */,
 				477377CD26725A2400C9F2B2 /* CardViewController.swift */,
 				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
 				471317142684CE8100570D74 /* OrderListViewController.swift */,
@@ -655,7 +655,6 @@
 				47A02E4F2670A87C00DFA715 /* QRScannerViewController.swift in Sources */,
 				4776E6C426776FB900688792 /* AddCardViewController.swift in Sources */,
 				47336E0626866FAE00445880 /* TabBarTitleView.swift in Sources */,
-				B60282C5267C824B005CE565 /* OrderFailedViewController.swift in Sources */,
 				B60282CF267C8279005CE565 /* OrderSuccessfulTableViewHeader.swift in Sources */,
 				B60282D9267CA5AC005CE565 /* RestaurantInfoTableViewCell.swift in Sources */,
 				B602828B267B831D005CE565 /* SelectedFooter.swift in Sources */,
@@ -682,6 +681,7 @@
 				B60282CA267C825B005CE565 /* OrderSuccessfulTableViewFooter.swift in Sources */,
 				477377D026725B3100C9F2B2 /* FooterView.swift in Sources */,
 				47A02E372670A86800DFA715 /* MenuItem.swift in Sources */,
+				94AB51EE268F0E970003F1A2 /* OrderFailedViewController.swift in Sources */,
 				477377C6267214E300C9F2B2 /* User.swift in Sources */,
 				47A02DFF2670A3D100DFA715 /* AppDelegate.swift in Sources */,
 				47A02E012670A3D100DFA715 /* SceneDelegate.swift in Sources */,
