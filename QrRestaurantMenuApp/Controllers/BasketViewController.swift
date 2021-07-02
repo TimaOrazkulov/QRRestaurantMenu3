@@ -17,7 +17,7 @@ protocol BasketViewControllerDelegate {
 
 class BasketViewController: UIViewController {
     var result: String = ""
-    var floationgPanel = FloatingPanelController()
+    var floatingPanel = FloatingPanelController()
     var basketMenu: [MenuItem : Int] = [:] {
         didSet {
             basketTableView.reloadData()
@@ -144,10 +144,10 @@ class BasketViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
-        floationgPanel.delegate = self
+        floatingPanel.delegate = self
         setupTableView()        
         setupPayView()
-        floationgPanel.contentMode = .fitToBounds
+        floatingPanel.contentMode = .fitToBounds
         setupConstraints()
         parseMenuData()
     }
@@ -182,8 +182,8 @@ class BasketViewController: UIViewController {
     
     @objc func commentTapped(){
         let vc = CommentViewController()
-        floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
-            self.floationgPanel.set(contentViewController: vc)
+        floatingPanel.addPanel(toParent: self, at: 3, animated: true) {
+            self.floatingPanel.set(contentViewController: vc)
         }
     }
     
@@ -219,8 +219,8 @@ class BasketViewController: UIViewController {
         selectVC.menuItems = menuItems
         selectVC.orderItems = basketMenu
         selectVC.result = result
-        floationgPanel.addPanel(toParent: self, at: 3, animated: true) {
-            self.floationgPanel.set(contentViewController: selectVC)
+        floatingPanel.addPanel(toParent: self, at: 3, animated: true) {
+            self.floatingPanel.set(contentViewController: selectVC)
         }
     }
 
@@ -386,7 +386,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     var anchors: [FloatingPanelState : FloatingPanelLayoutAnchoring] {
         return [
             .full: FloatingPanelLayoutAnchor(absoluteInset: 16, edge: .top, referenceGuide: .safeArea),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 400, edge: .bottom, referenceGuide: .safeArea)
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 415, edge: .bottom, referenceGuide: .safeArea)
         ]
     }
 }

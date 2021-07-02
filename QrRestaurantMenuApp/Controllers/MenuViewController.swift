@@ -10,10 +10,11 @@ import Firebase
 import FirebaseFirestore
 import SnapKit
 import AVFoundation
-
+import FloatingPanel
 
 class MenuViewController: UIViewController {
-            
+
+    var floatingPanel = FloatingPanelController()
     var session: AVCaptureSession?
     var result: String = "Дареджани_5"
     var countOfItems = 0 {
@@ -135,12 +136,27 @@ class MenuViewController: UIViewController {
         label.text = "К сожалению, по вашему запросу ничего не найдено"
         return label
     }()
+
     
+    private func checkAuth() {
+        if Auth.auth().currentUser?.uid == nil {
+            let child = SnackbarViewController()
+            floatingPanel.addPanel(toParent: self, at: 3, animated: true){
+                self.floatingPanel.set(contentViewController: child)
+            }
+           
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupTableView()
         getCategories()
+        floatingPanel.delegate = self
+        floatingPanel.contentMode = .fitToBounds
+
+        checkAuth()
         getMenuItems()
         setupBasketView()
         view.addSubview(searchErrorLabel)
@@ -507,3 +523,12 @@ extension MenuViewController: MenuTableViewCellDelegate {
     }
 }
 
+extension MenuViewController: FloatingPanelControllerDelegate { 
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor size: CGSize) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
+
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
+}

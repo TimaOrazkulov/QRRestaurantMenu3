@@ -15,7 +15,7 @@ protocol EditProfileViewControllerDelegate {
 class EditProfileViewController: UIViewController {
 
     // MARK: -public properties
-    var uid = ""
+    var uid = "1234567891"
     
     var profilePhoto: UIImage? {
         didSet {
@@ -145,13 +145,12 @@ class EditProfileViewController: UIViewController {
     private lazy var saveButton: UIButton = {
         var button = UIButton()
         button.setTitle("Сохранить", for: .normal)
+        print(uid)
         button.setTitleColor(UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 17.5)
-        button.backgroundColor = UIColor(red: 0.729, green: 1, blue: 0.941, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0.7294117647, green: 1, blue: 0.9411764706, alpha: 1)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        button.isEnabled = false
-        button.alpha = 0.5
         return button
     }()
     
@@ -236,7 +235,29 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func saveButtonTapped(){
-        Firestore.firestore().collection("users").document(uid).updateData(["name" : nameTextField.text as Any, "surname" : surnameTextField.text as Any, "gender" : genderTextField.text as Any, "birthDate" : dateTextField.text as Any])
+        let ref = Firestore.firestore().collection("users").document(uid)
+        ref.getDocument { [self] (snapshot, error) in
+            guard let _snapshot = snapshot else {return}
+
+            print("qotaq")
+            if !_snapshot.exists {
+                ref.setData(
+                    ["name" : nameTextField.text as Any,
+                     "surname" : surnameTextField.text as Any,
+                     "gender" : genderTextField.text as Any,
+                     "birthDate" : dateTextField.text as Any])
+                return
+            }
+            else {
+                ref.updateData(
+                    ["name" : nameTextField.text as Any,
+                     "surname" : surnameTextField.text as Any,
+                     "gender" : genderTextField.text as Any,
+                     "birthDate" : dateTextField.text as Any])
+            }
+
+        }
+
         guard let name = nameTextField.text else {return}
         guard let surname = surnameTextField.text else {return}
         guard let gender = genderTextField.text else {return}

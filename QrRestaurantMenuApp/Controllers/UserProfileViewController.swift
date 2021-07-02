@@ -8,8 +8,9 @@
 import UIKit
 import Firebase
 
+
 class UserProfileViewController: UIViewController {
-    
+
     // MARK: -Public properties
     var fullName: String? {
         didSet{
@@ -65,7 +66,7 @@ class UserProfileViewController: UIViewController {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
         label.text = "Ваше Имя"
         return label
@@ -74,16 +75,15 @@ class UserProfileViewController: UIViewController {
     private lazy var editButton: UIButton = {
         var button = UIButton()
         button.setTitle("Редактировать профиль", for: .normal)
-        button.setTitleColor(UIColor(red: 0.102, green: 0.667, blue: 0.545, alpha: 1), for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.1019607843, green: 0.6666666667, blue: 0.5450980392, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
-        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private let phoneLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Regular", size: 11.5)
         label.text = "Номер телефона"
         return label
@@ -92,20 +92,20 @@ class UserProfileViewController: UIViewController {
     private let phoneNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "+7 (747) 190 77 50"
-        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
         return label
     }()
     
     private let spaceView1: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
+        view.backgroundColor =  UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
         return view
     }()
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Regular", size: 11.5)
         label.text = "Дата рождения"
         label.isHidden = true
@@ -114,9 +114,9 @@ class UserProfileViewController: UIViewController {
     
     private let dateUserLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
-        label.text = "Дата рождения"
+        label.text = "1 января 1900"
         return label
     }()
     
@@ -128,7 +128,7 @@ class UserProfileViewController: UIViewController {
     
     private let genderLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.353, green: 0.38, blue: 0.404, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Regular", size: 11.5)
         label.text = "Пол"
         label.isHidden = true
@@ -139,13 +139,13 @@ class UserProfileViewController: UIViewController {
         let label = UILabel()
         label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
-        label.text = "Пол"
+        label.text = "Нейтральный"
         return label
     }()
     
     private let spaceView3: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
         return view
     }()
     
@@ -164,7 +164,7 @@ class UserProfileViewController: UIViewController {
     
     private let historyLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
         label.text = "История заказов"
         return label
@@ -178,7 +178,7 @@ class UserProfileViewController: UIViewController {
     
     private let spaceView4: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
+        view.backgroundColor =  UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1)
         return view
     }()
     
@@ -197,7 +197,7 @@ class UserProfileViewController: UIViewController {
     
     private let cardLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.071, green: 0.2, blue: 0.298, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1)
         label.font = UIFont(name: "Inter-Medium", size: 17.5)
         label.text = "Мои карты"
         return label
@@ -220,25 +220,24 @@ class UserProfileViewController: UIViewController {
         
         return view
     }()
-    
-    private lazy var exitButton: UIButton = {
-        var button = UIButton()
-        button.backgroundColor = .none
+
+    private lazy var logOutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle( "Выйти", for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.862745098, green: 0.1019607843, blue: 0, alpha: 1), for: .normal)
+
+        button.layer.cornerRadius = 10
+        button.titleLabel?.font = .boldSystemFont(ofSize: 17.5)
+        button.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
         return button
-    }()
-    
-    private let exitLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 0.863, green: 0.103, blue: 0, alpha: 1)
-        label.font = UIFont(name: "Inter-Medium", size: 17.5)
-        label.text = "Выйти"
-        return label
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let titleStackView = TabBarTitleView()
         titleStackView.title = "Профиль"
+        uid = Auth.auth().currentUser?.uid ?? "uid is nil"
+        phoneNumber = Auth.auth().currentUser?.phoneNumber ?? "87472055404"
         tabBarController?.navigationItem.titleView = titleStackView
         tabBarController?.navigationItem.rightBarButtonItem = nil
         tabBarController?.navigationItem.leftBarButtonItem = nil
@@ -248,7 +247,9 @@ class UserProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
+        checkAuth()
         setupConstraints()
+       
         QRFirebaseDatabase.shared.getUser(uid: uid) { [weak self] user in
             DispatchQueue.main.async { [self] in
                 guard user != nil else {return}
@@ -282,7 +283,29 @@ class UserProfileViewController: UIViewController {
         gender = user?.gender
         birthDate = user?.birthDate
     }
-    
+
+    private func checkAuth() {
+        if Auth.auth().currentUser?.uid == nil {
+            let vc = MainTabBar()
+            vc.selectedIndex = 2
+        }
+    }
+
+
+    @objc func logOutPressed(){
+        do {
+            try Auth.auth().signOut()
+            uid = ""
+            phoneNumber = "+7 (747) 190 77 50"
+            birthDate = "01.01.1900"
+            gender = "Нейтральный"
+            fullName = "Ivan Ivanov"
+            checkAuth()
+        }
+        catch { print("already logged out") }
+        //navigationController?.popToRootViewController(animated: true)
+    }
+
     @objc private func transitionToHistory(){
         let vc = OrdersHistoryViewController()
         navigationController?.pushViewController(vc, animated: true)
@@ -303,12 +326,12 @@ class UserProfileViewController: UIViewController {
         let vc = EditProfileViewController()
         vc.phoneNumber = phoneNumber
         vc.profilePhoto = profileImageButton.currentImage
-        vc.uid = uid
+        vc.uid = self.uid
         vc.birthDate = dateUserLabel.text
         vc.gender = genderUserLabel.text
-        guard let fullName = fullName else {return}
-        vc.name = String(fullName.split(separator: " ")[0])
-        vc.surname = String(fullName.split(separator: " ")[1])
+        //guard let fullName = fullName else {return}
+        vc.name =  user?.name//String(fullName.split(separator: " ")[0])
+        vc.surname = user?.surname//String(fullName.split(separator: " ")[1])
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: false)
     }
@@ -346,8 +369,7 @@ class UserProfileViewController: UIViewController {
         cardView.addSubview(cardButton)
         cardView.addSubview(cardLabel)
         cardView.addSubview(cardImageView)
-        exitView.addSubview(exitButton)
-        exitView.addSubview(exitLabel)
+        exitView.addSubview(logOutButton)
     }
     
     func setupConstraints(){
@@ -457,10 +479,7 @@ class UserProfileViewController: UIViewController {
             make.height.equalTo(75)
             make.top.equalTo(spaceView5.snp.bottom)
         }
-        exitButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        exitLabel.snp.makeConstraints { make in
+        logOutButton.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(20)
             make.centerY.equalToSuperview()
         }
@@ -524,6 +543,8 @@ extension UserProfileViewController: EditProfileViewControllerDelegate {
     func saveButtonTapped(name: String, surname: String, gender: String, date: String) {
         fullName = "\(name) \(surname)"
         self.gender = gender
-        birthDate = date        
+        self.birthDate = date        
     }
 }
+
+
