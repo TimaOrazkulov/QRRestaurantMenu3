@@ -394,15 +394,11 @@ extension MenuViewController: UITableViewDataSource {
             }
         }
         return cell
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! MenuTableViewCell
-        cell.animation()
+
     }
 }
 
 extension MenuViewController: UITableViewDelegate {
-        
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionView.identifier) as! SectionView
         view.category = categoriesForTableView[section]
