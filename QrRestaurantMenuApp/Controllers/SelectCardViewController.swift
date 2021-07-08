@@ -171,8 +171,9 @@ class SelectCardViewController: UIViewController {
             let cardNumber = info?["numberCard"] as? String
             let cardHolderName = info?["holderName"] as? String
             let cvv = info?["cvv"] as? String
-            let date = info?["validDate"] as? String
-            let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv, key: key)
+            let dateMonth = info?["validMonth"] as? String
+            let dateYear = info?["validYear"] as? String
+            let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, dateMonth: dateMonth, dateYear: dateYear, cvv: cvv, key: key)
             updateCards.append(card)
         })
         DispatchQueue.main.async {

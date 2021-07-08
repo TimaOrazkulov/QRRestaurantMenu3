@@ -10,7 +10,8 @@ import Foundation
 struct Card : Codable, Hashable{
     var cardHolderName: String?
     var cardNumber: String?
-    var date: String?
+    var dateMonth: String?
+    var dateYear: String?
     var cvv: String?
     var key: String?
 }

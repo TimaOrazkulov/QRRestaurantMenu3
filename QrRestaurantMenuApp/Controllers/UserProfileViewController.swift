@@ -217,7 +217,6 @@ class UserProfileViewController: UIViewController {
     
     private let exitView: UIView = {
         let view = UIView()
-        
         return view
     }()
 
@@ -236,7 +235,7 @@ class UserProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         let titleStackView = TabBarTitleView()
         titleStackView.title = "Профиль"
-        uid = Auth.auth().currentUser?.uid ?? "uid is nil"
+        // uid = Auth.auth().currentUser?.uid ?? "uid is nil"
         phoneNumber = Auth.auth().currentUser?.phoneNumber ?? "87472055404"
         tabBarController?.navigationItem.titleView = titleStackView
         tabBarController?.navigationItem.rightBarButtonItem = nil
@@ -249,7 +248,6 @@ class UserProfileViewController: UIViewController {
         setupViews()
         checkAuth()
         setupConstraints()
-       
         QRFirebaseDatabase.shared.getUser(uid: uid) { [weak self] user in
             DispatchQueue.main.async { [self] in
                 guard user != nil else {return}
@@ -296,10 +294,6 @@ class UserProfileViewController: UIViewController {
         do {
             try Auth.auth().signOut()
             uid = ""
-            phoneNumber = "+7 (747) 190 77 50"
-            birthDate = "01.01.1900"
-            gender = "Нейтральный"
-            fullName = "Ivan Ivanov"
             checkAuth()
         }
         catch { print("already logged out") }

@@ -10,6 +10,9 @@
 		2EBE5976ACC60E6F2D713CF4 /* Pods_QrRestaurantMenuAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */; };
 		471317112684CE6D00570D74 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317102684CE6D00570D74 /* OrderTableViewCell.swift */; };
 		471317152684CE8100570D74 /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471317142684CE8100570D74 /* OrderListViewController.swift */; };
+		47324CAE2696E2B0003F4075 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47324CAD2696E2B0003F4075 /* TestViewController.swift */; };
+		47324CB22696FAE5003F4075 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47324CB12696FAE5003F4075 /* TabBar.swift */; };
+		47324CB42696FB48003F4075 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47324CB32696FB48003F4075 /* EmptyViewController.swift */; };
 		47336E0626866FAE00445880 /* TabBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47336E0526866FAE00445880 /* TabBarTitleView.swift */; };
 		47336E162687259E00445880 /* Inter-VariableFont_slnt,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E092687259E00445880 /* Inter-VariableFont_slnt,wght.ttf */; };
 		47336E172687259E00445880 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47336E0B2687259E00445880 /* Inter-Medium.ttf */; };
@@ -98,6 +101,9 @@
 		09ADAA72769BC07C1999A269 /* Pods_QrRestaurantMenuAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		471317102684CE6D00570D74 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		471317142684CE8100570D74 /* OrderListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
+		47324CAD2696E2B0003F4075 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		47324CB12696FAE5003F4075 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		47324CB32696FB48003F4075 /* EmptyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		47336E0526866FAE00445880 /* TabBarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTitleView.swift; sourceTree = "<group>"; };
 		47336E092687259E00445880 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
 		47336E0B2687259E00445880 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 		47A02E312670A6C500DFA715 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				47324CB12696FAE5003F4075 /* TabBar.swift */,
 				4776E6C72677733800688792 /* ExtensionUI.swift */,
 				4776E6C52677731600688792 /* ExtensionForCard.swift */,
 				473EB47526733FAD0083068F /* CardCellTableViewCell.swift */,
@@ -355,8 +362,10 @@
 				477377CD26725A2400C9F2B2 /* CardViewController.swift */,
 				B602826A267B34F9005CE565 /* SelectCardViewController.swift */,
 				471317142684CE8100570D74 /* OrderListViewController.swift */,
+				47324CB32696FB48003F4075 /* EmptyViewController.swift */,
 				B62BB2B6267F3F60003C3C8B /* OrdersHistoryViewController.swift */,
 				47336E262687BF3F00445880 /* CommentViewController.swift */,
+				47324CAD2696E2B0003F4075 /* TestViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -644,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47324CAE2696E2B0003F4075 /* TestViewController.swift in Sources */,
 				47A02E4C2670A87C00DFA715 /* MainTabBar.swift in Sources */,
 				47A02E482670A87C00DFA715 /* CategoryCollectionViewCell.swift in Sources */,
 				B60282E8267CB8F8005CE565 /* ChechButton.swift in Sources */,
@@ -668,6 +678,7 @@
 				47336E272687BF3F00445880 /* CommentViewController.swift in Sources */,
 				477377C426710F6200C9F2B2 /* BasketTableViewCell.swift in Sources */,
 				4776E6BC26773C9900688792 /* RestaurantsViewController.swift in Sources */,
+				47324CB22696FAE5003F4075 /* TabBar.swift in Sources */,
 				B62BB2BC267F41B9003C3C8B /* OrderCell.swift in Sources */,
 				47A02E392670A86800DFA715 /* Category.swift in Sources */,
 				471317112684CE6D00570D74 /* OrderTableViewCell.swift in Sources */,
@@ -689,6 +700,7 @@
 				B62BB2B7267F3F60003C3C8B /* OrdersHistoryViewController.swift in Sources */,
 				4776E6C22677562F00688792 /* RestScrollViewController.swift in Sources */,
 				473BE6ED268B8DB300363B29 /* UserProfileViewController.swift in Sources */,
+				47324CB42696FB48003F4075 /* EmptyViewController.swift in Sources */,
 				94AB51B6268DDA640003F1A2 /* SnackbarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

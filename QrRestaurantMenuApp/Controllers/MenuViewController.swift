@@ -13,8 +13,7 @@ import AVFoundation
 import FloatingPanel
 
 class MenuViewController: UIViewController {
-
-    var floatingPanel = FloatingPanelController()
+    
     var session: AVCaptureSession?
     var result: String = "Дареджани_5"
     var countOfItems = 0 {
@@ -137,26 +136,11 @@ class MenuViewController: UIViewController {
         return label
     }()
 
-    
-    private func checkAuth() {
-        if Auth.auth().currentUser?.uid == nil {
-            let child = SnackbarViewController()
-            floatingPanel.addPanel(toParent: self, at: 3, animated: true){
-                self.floatingPanel.set(contentViewController: child)
-            }
-           
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.954, green: 0.954, blue: 0.954, alpha: 1)
         setupTableView()
         getCategories()
-        floatingPanel.delegate = self
-        floatingPanel.contentMode = .fitToBounds
-
-        checkAuth()
         getMenuItems()
         setupBasketView()
         view.addSubview(searchErrorLabel)
@@ -410,11 +394,15 @@ extension MenuViewController: UITableViewDataSource {
             }
         }
         return cell
-
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! MenuTableViewCell
+        cell.animation()
     }
 }
 
 extension MenuViewController: UITableViewDelegate {
+        
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionView.identifier) as! SectionView
         view.category = categoriesForTableView[section]
@@ -520,15 +508,5 @@ extension MenuViewController: MenuTableViewCellDelegate {
                 basketItems[menuItem]! -= 1
             }
         }
-    }
-}
-
-extension MenuViewController: FloatingPanelControllerDelegate { 
-    func floatingPanel(_ fpc: FloatingPanelController, layoutFor size: CGSize) -> FloatingPanelLayout {
-        return MyFloatingPanelLayout()
-    }
-
-    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
-        return MyFloatingPanelLayout()
     }
 }

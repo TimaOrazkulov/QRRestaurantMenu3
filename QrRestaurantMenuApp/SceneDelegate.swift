@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navController = UINavigationController(rootViewController: MainTabBar())
+        let vc = MainTabBar()
+        let navController = UINavigationController(rootViewController: vc)
         window?.rootViewController = navController
 
     }

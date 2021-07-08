@@ -9,9 +9,13 @@ import UIKit
 import Firebase
 import SnapKit
 import FirebaseFirestore
+import FloatingPanel
 
 class RestaurantsViewController: UIViewController  {
-
+    
+    var result = "You got it!!!"
+    
+    var floatingPanel = FloatingPanelController()
     private var restaurant: [Restaurant] = [] {
         didSet {
             restarauntTableView.reloadData()
@@ -45,12 +49,14 @@ class RestaurantsViewController: UIViewController  {
         setupViews()
         setupConstraints()
         getRestaurants()
+        floatingPanel.delegate = self
+        floatingPanel.contentMode = .fitToBounds
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationController()
-        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = nil        
     }
       
     func setupNavigationController(){
@@ -78,6 +84,15 @@ class RestaurantsViewController: UIViewController  {
             guard let resName = restaurant.rest_name else {return}
             if resName.lowercased().contains(name.lowercased()) {
                 restaurantForTableView.append(restaurant)
+            }
+        }
+    }
+    
+    func checkAuth() {
+        if Auth.auth().currentUser?.uid == nil {
+            let child = SnackbarViewController()
+            floatingPanel.addPanel(toParent: self, at: 3, animated: true){
+                self.floatingPanel.set(contentViewController: child)
             }
         }
     }
@@ -166,3 +181,12 @@ extension RestaurantsViewController: UISearchBarDelegate {
     }
 }
 
+extension RestaurantsViewController: FloatingPanelControllerDelegate {
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor size: CGSize) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
+
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
+        return MyFloatingPanelLayout()
+    }
+}

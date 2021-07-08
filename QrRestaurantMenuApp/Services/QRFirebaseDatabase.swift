@@ -42,8 +42,9 @@ class QRFirebaseDatabase {
                     let cardNumber = map["numberCard"] as? String ?? ""
                     let cardHolderName = map["holderName"] as? String ?? ""
                     let cvv = map["cvv"] as? String ?? ""
-                    let date = map["validDate"] as? String ?? ""
-                    let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv)
+                    let dateYear = map["validYear"] as? String ?? ""
+                    let dateMonth = map["validMonth"] as? String ?? ""
+                    let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, dateMonth: dateMonth, dateYear: dateYear, cvv: cvv)
                     userCards.append(card)
                     }
                 let user = User(name: name, profileURL: profileURL, surname: surname, phone: phone, gender: gender, birthDate: birthDate, cards: userCards)
@@ -130,8 +131,9 @@ class QRFirebaseDatabase {
                     let cardNumber = map["numberCard"] as? String ?? ""
                     let cardHolderName = map["holderName"] as? String ?? ""
                     let cvv = map["cvv"] as? String ?? ""
-                    let date = map["validDate"] as? String ?? ""
-                    let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv)
+                    let dateYear = map["validYear"] as? String ?? ""
+                    let dateMonth = map["validMonth"] as? String ?? ""
+                    let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber,dateMonth: dateMonth, dateYear: dateYear, cvv: cvv)
                     userCards.append(card)
                     }
                 completion(userCards)
@@ -146,7 +148,7 @@ class QRFirebaseDatabase {
             guard error == nil else { completion(nil); return }
             if let document = document, document.exists {
                 let data = document.data()
-                let cards = data?["cards"] as! [String : [String : Any]]
+                let cards = data?["cards"] as? [String : [String : Any]] ?? [:] 
                 completion(cards)
             }
         }

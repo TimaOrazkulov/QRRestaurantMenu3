@@ -8,9 +8,11 @@
 import UIKit
 import FirebaseFirestore
 import SnapKit
+import FloatingPanel
 
 class CardViewController: UIViewController {
 
+    var floatingPanel = FloatingPanelController()
     private var newCards: [String: Any]? {
         didSet {
             parseDataToCards()
@@ -22,7 +24,8 @@ class CardViewController: UIViewController {
             cardTableView.reloadData()
         }
     }
-    var uid: String?
+    
+    var uid: String? = "wTkLYYvYSYaH3DClKLxG"
     private let cardTableView: UITableView = {
         let table = UITableView()
         table.register(CardCellTableViewCell.self, forCellReuseIdentifier: CardCellTableViewCell.cardCell)
@@ -32,10 +35,12 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         setupTableView()
         setupConstraintsTableView()
+        floatingPanel.surfaceView.grabberHandle.isHidden = true
         title = "Мои карты"
+        floatingPanel.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,8 +48,6 @@ class CardViewController: UIViewController {
             self?.newCards = cards
         }
         tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(popVC))
-        tabBarController?.navigationItem.title = "Карты"
-        
     }
     
     @objc private func popVC(){
@@ -53,7 +56,7 @@ class CardViewController: UIViewController {
     
     private func setupTableView() {
         view.addSubview(cardTableView)
-        cardTableView.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
+        cardTableView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cardTableView.delegate = self
         cardTableView.dataSource = self
     }
@@ -72,17 +75,23 @@ class CardViewController: UIViewController {
             self?.dismiss(animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self]  action in
-             let addCardVC = AddCardViewController()
+            self?.floating()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func floating() {
+        let addCardVC = AddCardViewController()
+        floatingPanel.addPanel(toParent: self, at: 3, animated: true) { [weak self] in
             addCardVC.saveCard = { [weak self] in
                 guard let uid = self?.uid else { return }
                 QRFirebaseDatabase.shared.getCardsOfUser(uid: uid) { [weak self] (cards) in
                     self?.newCards = cards
                 }
             }
-             self?.navigationController?.present(addCardVC, animated: true, completion: nil)
-        }))
-        present(alert, animated: true, completion: nil)
-    }        
+            self?.floatingPanel.set(contentViewController: addCardVC)
+        }
+    }
     
     private func parseDataToCards() {
         var updateCards: [Card] = []
@@ -91,8 +100,9 @@ class CardViewController: UIViewController {
             let cardNumber = info?["numberCard"] as? String
             let cardHolderName = info?["holderName"] as? String
             let cvv = info?["cvv"] as? String
-            let date = info?["validDate"] as? String
-            let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, date: date, cvv: cvv, key: key)
+            let dateMonth = info?["validMonth"] as? String
+            let dateYear = info?["validYear"] as? String
+            let card = Card(cardHolderName: cardHolderName, cardNumber: cardNumber, dateMonth: dateMonth, dateYear: dateYear, cvv: cvv, key: key)
             updateCards.append(card)
         })
         self.cards = updateCards
@@ -125,14 +135,14 @@ extension CardViewController: UITableViewDataSource, UITableViewDelegate {
 extension CardViewController: CardCellDelegate {
     func deleteCard(itemCard: Card) {
         newCards?[itemCard.key!] = nil
-        cards?.removeAll(where: { card in
+        cards?.removeAll(where: { card -> Bool in
             if card == itemCard {
                 return true
             }
             return false
         })
         db.collection("users").document("wTkLYYvYSYaH3DClKLxG").updateData([
-            "cards": newCards
+            "cards": newCards as Any
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -146,5 +156,24 @@ extension CardViewController: CardCellDelegate {
                 return false
             }
         }
+    }
+}
+extension CardViewController: FloatingPanelControllerDelegate {
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
+        return MyCardFloatingPanelLayout()
+    }
+    
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor size: CGSize) -> FloatingPanelLayout {
+        return MyCardFloatingPanelLayout()
+    }
+}
+
+class MyCardFloatingPanelLayout: FloatingPanelLayout {
+    let position: FloatingPanelPosition = .bottom
+    let initialState: FloatingPanelState = .tip
+    var anchors: [FloatingPanelState : FloatingPanelLayoutAnchoring] {
+        return [
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 415, edge: .bottom, referenceGuide: .safeArea)
+        ]
     }
 }

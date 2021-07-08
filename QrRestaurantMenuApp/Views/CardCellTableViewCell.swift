@@ -25,6 +25,7 @@ class CardCellTableViewCell: UITableViewCell {
     }()
     private let dotIcon: UIImageView = {
         let icon = UIImageView()
+        icon.image = #imageLiteral(resourceName: "dotIcon")
         icon.contentMode = .scaleAspectFit
         return icon
     }()
@@ -37,7 +38,7 @@ class CardCellTableViewCell: UITableViewCell {
     private let cardStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .equalSpacing
         stackView.spacing = 3
         return stackView
     }()
@@ -66,20 +67,34 @@ class CardCellTableViewCell: UITableViewCell {
     
     var card: Card? {
         didSet {
-            if let icon = UIImage(named: "masterCardIcon") {
-                iconImage.image = icon
-            }
-            if let brandCard = card?.cardHolderName {
-                nameCardLabel.text = brandCard
-            }
             if let numberCard = card?.cardNumber {
-                numberCardLabel.text = numberCard
+                let index = numberCard.index(numberCard.startIndex, offsetBy: 4)
+                numberCardLabel.text = String(numberCard[..<index])
+                
+                if numberCard.starts(with: "3") {
+                    iconImage.image = UIImage(named: "amex")
+                    nameCardLabel.text = "Amex"
+                } else if numberCard.starts(with: "4") {
+                    iconImage.image = UIImage(named: "visa")
+                    nameCardLabel.text = "Visa"
+                } else if numberCard.starts(with: "5") {
+                    iconImage.image = UIImage(named: "masterCard")
+                    nameCardLabel.text = "MasterCard"
+                } else if numberCard.starts(with: "6") {
+                    iconImage.image = UIImage(named: "discover")
+                    nameCardLabel.text = "Discover"
+                } else {
+                    iconImage.image = UIImage(named: "credit-card")
+                    nameCardLabel.text = "Unknown card"
+                }
             }
-            if let validDate = card?.date {
-                validDateLabel.text = validDate
+            if let dateYear = card?.dateYear, let month = card?.dateMonth {
+                validDateLabel.text = "\(month)/\(dateYear)"
             }
+            
         }
     }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addToView()
@@ -110,6 +125,9 @@ class CardCellTableViewCell: UITableViewCell {
         cardStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(15)
             $0.left.equalTo(iconImage.snp.right).offset(7)
+            $0.height.equalTo(17)
+            dotIcon.heightAnchor.constraint(equalToConstant: 4).isActive = true
+            dotIcon.widthAnchor.constraint(equalToConstant: 4).isActive = true
         }
         validDateLabel.snp.makeConstraints {
             $0.top.equalTo(cardStackView.snp.bottom).offset(3)
@@ -117,9 +135,10 @@ class CardCellTableViewCell: UITableViewCell {
         }
         
         removeButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(11.5)
-            $0.right.equalToSuperview().inset(14.5)
-            $0.width.height.equalTo(10)
+            $0.top.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(23.20)
+            $0.width.equalTo(17.63)
+            $0.height.equalTo(19.13)
         }
     }
     

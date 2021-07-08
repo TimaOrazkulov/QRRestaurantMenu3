@@ -90,8 +90,8 @@ class SelectedCardCell: UITableViewCell {
                     nameCardLabel.text = "Unknown card"
                 }
             }
-            if let validDate = card?.date {
-                validDateLabel.text = validDate
+            if let dateYear = card?.dateYear, let month = card?.dateMonth {
+                validDateLabel.text = "\(month)/\(dateYear)"
             }
             
         }

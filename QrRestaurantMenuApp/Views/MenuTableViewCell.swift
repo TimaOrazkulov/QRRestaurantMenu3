@@ -133,6 +133,7 @@ class MenuTableViewCell: UITableViewCell {
         setupConstraints()
         contentView.isUserInteractionEnabled = true
         isUserInteractionEnabled = true
+        imageView?.frame = CGRect(x: 20, y: 80, width: 100, height: 100)
     }
     
     private func setupViews(){
@@ -153,6 +154,16 @@ class MenuTableViewCell: UITableViewCell {
         countView.backgroundColor = .white
         countView.layer.borderWidth = 0.5
         count = 0
+    }
+    
+    func animation(){
+        let animation = CABasicAnimation()
+        animation.keyPath = "transform.scale"
+        animation.fromValue = 1
+        animation.toValue = 2
+        animation.duration = 0.5
+        imageView?.layer.add(animation, forKey: "basic")
+        imageView?.layer.transform = CATransform3DMakeScale(2, 2, 1)
     }
     
     @objc private func plusCount() {

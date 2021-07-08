@@ -15,7 +15,7 @@ protocol EditProfileViewControllerDelegate {
 class EditProfileViewController: UIViewController {
 
     // MARK: -public properties
-    var uid = "1234567891"
+    var uid = "wTkLYYvYSYaH3DClKLxG"
     
     var profilePhoto: UIImage? {
         didSet {
@@ -236,27 +236,11 @@ class EditProfileViewController: UIViewController {
     
     @objc func saveButtonTapped(){
         let ref = Firestore.firestore().collection("users").document(uid)
-        ref.getDocument { [self] (snapshot, error) in
-            guard let _snapshot = snapshot else {return}
-
-            print("qotaq")
-            if !_snapshot.exists {
-                ref.setData(
-                    ["name" : nameTextField.text as Any,
-                     "surname" : surnameTextField.text as Any,
-                     "gender" : genderTextField.text as Any,
-                     "birthDate" : dateTextField.text as Any])
-                return
-            }
-            else {
-                ref.updateData(
-                    ["name" : nameTextField.text as Any,
-                     "surname" : surnameTextField.text as Any,
-                     "gender" : genderTextField.text as Any,
-                     "birthDate" : dateTextField.text as Any])
-            }
-
-        }
+        ref.updateData(
+            ["name" : nameTextField.text as Any,
+             "surname" : surnameTextField.text as Any,
+             "gender" : genderTextField.text as Any,
+             "birthDate" : dateTextField.text as Any])
 
         guard let name = nameTextField.text else {return}
         guard let surname = surnameTextField.text else {return}
