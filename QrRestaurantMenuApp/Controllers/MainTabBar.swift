@@ -31,8 +31,7 @@ class MainTabBar: UITabBarController {
     var uid = "wTkLYYvYSYaH3DClKLxG"
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        setValue(bezierTabBar, forKey: "tabBar")
+        super.viewDidLoad()        
         setupTabBar()
         view.backgroundColor = #colorLiteral(red: 0.7890606523, green: 0.7528427243, blue: 0.7524210811, alpha: 1)
         delegate = self
