@@ -65,8 +65,7 @@ class QRScannerViewController: UIViewController {
     }
     
     private func transitionToMenu(result: String){
-        let menuVC = MenuViewController()
-        menuVC.session = session
+        let menuVC = MenuViewController()        
         menuVC.result = result
         navigationController?.pushViewController(menuVC, animated: true)
     }
