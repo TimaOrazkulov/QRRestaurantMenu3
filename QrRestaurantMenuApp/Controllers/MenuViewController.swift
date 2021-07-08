@@ -13,8 +13,7 @@ import AVFoundation
 
 
 class MenuViewController: UIViewController {
-            
-    var session: AVCaptureSession?
+    
     var result: String = "Дареджани_5"
     var countOfItems = 0 {
         didSet{

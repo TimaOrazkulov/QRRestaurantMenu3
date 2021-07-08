@@ -37,6 +37,7 @@ DerivedData/
 
 ## Obj-C/Swift specific
 *.hmap
+/QrRestaurantMenuApp.xcworkspace/xcuserdata/temirlanorazkulov.xcuserdatad/UserInterfaceState.xcuserstate
 /QrRestaurantMenuApp.xcworkspace/xcuserdata/ios-developer.xcuserdatad/UserInterfaceState.xcuserstate
 /QrRestaurantMenuApp.xcodeproj/xcuserdata/ios-developer.xcuserdatad/xcschemes/xcschememanagement.plist
 /Pods/Pods.xcodeproj/xcuserdata/ios-developer.xcuserdatad/xcschemes/xcschememanagement.plist
