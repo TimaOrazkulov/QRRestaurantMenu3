@@ -89,7 +89,7 @@ class MainTabBar: UITabBarController {
 
 extension MainTabBar: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if tabBarController.selectedIndex == 2{
+        if tabBarController.selectedIndex == 2 && Auth.auth().currentUser == nil{
             tabBarController.selectedIndex = 0
             let navVC = tabBarController.selectedViewController as? UINavigationController
             navVC?.popToRootViewController(animated: true)

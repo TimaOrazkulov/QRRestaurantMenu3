@@ -199,7 +199,7 @@ class PhoneVerificationViewController: UIViewController, UITextFieldDelegate {
 
     @objc func changeNumberAction(){
         let child = SnackbarViewController()
-        floatingPanel.dismiss(animated: false)
+        self.dismiss(animated: true, completion: nil)
         floatingPanel.addPanel(toParent: self, at: 4, animated: true){
             self.floatingPanel.set(contentViewController: child)
         }
@@ -235,10 +235,8 @@ class PhoneVerificationViewController: UIViewController, UITextFieldDelegate {
    }
 
    @objc func sendButtonAction(){
-        print("i am send code")
         guard let code = textField.text else {return}
         print(code)
-        print(verificationId)
         let credetional = PhoneAuthProvider.provider().credential(withVerificationID: verificationId!,verificationCode: code)
        Auth.auth().signIn(with: credetional) { (_, error) in
            if error != nil {

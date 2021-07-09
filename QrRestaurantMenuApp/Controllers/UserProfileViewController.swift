@@ -241,6 +241,8 @@ class UserProfileViewController: UIViewController {
         tabBarController?.navigationItem.rightBarButtonItem = nil
         tabBarController?.navigationItem.leftBarButtonItem = nil
     }
+
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -296,6 +298,7 @@ class UserProfileViewController: UIViewController {
             try Auth.auth().signOut()
             uid = ""
             checkAuth()
+            tabBarController?.selectedIndex = 0
         }
         catch { print("already logged out") }
         //navigationController?.popToRootViewController(animated: true)

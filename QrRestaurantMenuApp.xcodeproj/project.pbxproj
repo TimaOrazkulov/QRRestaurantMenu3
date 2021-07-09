@@ -63,6 +63,7 @@
 		47A02E562670AC2500DFA715 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47A02E552670AC2500DFA715 /* GoogleService-Info.plist */; };
 		58B41E28381769DC2DE583AE /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AE9F6A0218D95D84328131 /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework */; };
 		7DF4F6065FAD12457CD16594 /* Pods_QrRestaurantMenuApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB19907383E458A038A3C5B6 /* Pods_QrRestaurantMenuApp.framework */; };
+		9493E8A626983BC100DF551A /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 9493E8A526983BC100DF551A /* cancel.png */; };
 		94AB51B6268DDA640003F1A2 /* SnackbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB51B0268DDA600003F1A2 /* SnackbarViewController.swift */; };
 		94AB51BF268DDB1B0003F1A2 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB51BE268DDB1B0003F1A2 /* PhoneVerificationViewController.swift */; };
 		B602826B267B34F9005CE565 /* SelectCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B602826A267B34F9005CE565 /* SelectCardViewController.swift */; };
@@ -159,6 +160,7 @@
 		47A02E452670A87C00DFA715 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		47A02E552670AC2500DFA715 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80AE9F6A0218D95D84328131 /* Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QrRestaurantMenuApp_QrRestaurantMenuAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9493E8A526983BC100DF551A /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		94AB51B0268DDA600003F1A2 /* SnackbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnackbarViewController.swift; sourceTree = "<group>"; };
 		94AB51BE268DDB1B0003F1A2 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		A19D50A3F2EB5E11163C452B /* Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; path = "Target Support Files/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests/Pods-QrRestaurantMenuApp-QrRestaurantMenuAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				47A02E002670A3D100DFA715 /* SceneDelegate.swift */,
 				47A02E042670A3D100DFA715 /* Main.storyboard */,
 				47A02E072670A3D200DFA715 /* Assets.xcassets */,
+				9493E8A526983BC100DF551A /* cancel.png */,
 				47A02E092670A3D200DFA715 /* LaunchScreen.storyboard */,
 				47A02E0C2670A3D200DFA715 /* Info.plist */,
 			);
@@ -517,6 +520,7 @@
 				47336E172687259E00445880 /* Inter-Medium.ttf in Resources */,
 				47336E1A2687259E00445880 /* Inter-Bold.ttf in Resources */,
 				47336E212687259E00445880 /* README.txt in Resources */,
+				9493E8A626983BC100DF551A /* cancel.png in Resources */,
 				47A02E562670AC2500DFA715 /* GoogleService-Info.plist in Resources */,
 				47336E1F2687259E00445880 /* Inter-SemiBold.ttf in Resources */,
 				47336E1E2687259E00445880 /* Inter-Black.ttf in Resources */,

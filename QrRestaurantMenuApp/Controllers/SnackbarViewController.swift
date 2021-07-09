@@ -54,7 +54,7 @@ class SnackbarViewController: UIViewController, UIViewControllerTransitioningDel
         button.backgroundColor = #colorLiteral(red: 0.7294117647, green: 1, blue: 0.9411764706, alpha: 1)
         button.layer.cornerRadius = 10
         button.setTitleColor(#colorLiteral(red: 0.07058823529, green: 0.2, blue: 0.2980392157, alpha: 1), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 21)  
+        button.titleLabel?.font = .systemFont(ofSize: 21)
         button.addTarget(self, action: #selector(sendButtonAction), for: .touchUpInside)
         button.isEnabled = false
         button.alpha = 1
@@ -64,7 +64,7 @@ class SnackbarViewController: UIViewController, UIViewControllerTransitioningDel
     @objc private func sendButtonAction() {
         guard phoneNumber != nil else {return}
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber!, uiDelegate: nil) { verificationId, error in
-            
+
             if error != nil {
                 print(error?.localizedDescription ?? "is empty")
             }else {
@@ -72,17 +72,29 @@ class SnackbarViewController: UIViewController, UIViewControllerTransitioningDel
             }
         }
     }
-    
+
     private func transitionToVerificationView(verificationId: String?) {
-        floatingPanel.dismiss(animated: false)
+        self.floatingPanel.dismiss(animated: false)
         let child = PhoneVerificationViewController()
         child.verificationId = verificationId
         floatingPanel.addPanel(toParent: self, at: 3, animated: true) {
             self.floatingPanel.set(contentViewController: child)
         }
     }
+    lazy private var closeButton: UIButton = {
+        var button = UIButton()
+        if let image = UIImage(named: "CloseButton.png") {
+            button.setImage(image, for: .normal)
+        }
+        button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        button.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
+        return button
+    }()
 
-    
+    @objc private func closeButtonAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -117,6 +129,14 @@ class SnackbarViewController: UIViewController, UIViewControllerTransitioningDel
         view.addSubview(textLabel)
         view.addSubview(phoneTextField)
         view.addSubview(sendButton)
+        view.addSubview(closeButton)
+
+        closeButton.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(20)
+            $0.height.equalTo(25)
+            $0.width.equalTo(25)
+        }
 
         textLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(20)

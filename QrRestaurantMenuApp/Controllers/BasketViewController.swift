@@ -212,7 +212,9 @@ class BasketViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     private func checkAuth() {
-        if Auth.auth().currentUser?.uid == nil {
+        print("suka")
+    
+        if Auth.auth().currentUser?.uid == "" {
             let child = SnackbarViewController()
             floatingPanel.addPanel(toParent: self, at: 3, animated: true){
                 self.floatingPanel.set(contentViewController: child)
